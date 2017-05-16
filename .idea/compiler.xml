@@ -26,7 +26,7 @@
         <module name="JaryNote" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="1.7">
+    <bytecodeTargetLevel target="1.8">
       <module name="JaryNote" target="1.8" />
     </bytecodeTargetLevel>
   </component>
