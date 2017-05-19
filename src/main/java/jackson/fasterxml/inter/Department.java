@@ -1,4 +1,4 @@
-package jackson.json;
+package jackson.fasterxml;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,12 +16,16 @@ public class Department {
     private String pm;
     private Map<String, Object> otherProperties = new HashMap<String, Object>(); //otherProperties用来存放Department中未定义的json字段
 
-    //指定json反序列化创建Department对象时调用此构造函
+    @JsonCreator   //指定json反序列化创建Department对象时调用此构造函数
+    public Department(@JsonProperty("name") String name){
+        this.name = name;
+    }
 
     @JsonProperty("projectManager")  //将company.json中projectManager字段关联到getPm方法
     public String getPm() {
         return pm;
     }
+
     @JsonProperty("dname")
     public String getName() {
         return name;

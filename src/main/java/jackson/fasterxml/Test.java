@@ -1,4 +1,4 @@
-package jackson.annotations;
+package jackson.fasterxml;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,10 +10,10 @@ public class Test {
 
 
     /*
-    1ã€@JsonAutoDetect:çœ‹ä¸Šé¢è‡ªåŠ¨æ£€æµ‹ï¼Œä¸å†é‡å¤
-    2ã€@JsonIgnore: a.ä½œç”¨åœ¨å­—æ®µæˆ–æ–¹æ³•ä¸Šï¼Œç”¨æ¥å®Œå…¨å¿½ç•¥è¢«æ³¨è§£çš„å­—æ®µå’Œæ–¹æ³•å¯¹åº”çš„å±æ€§ï¼Œå³ä¾¿è¿™ä¸ªå­—æ®µæˆ–æ–¹æ³•å¯ä»¥è¢«è‡ªåŠ¨æ£€æµ‹åˆ°æˆ–è€…è¿˜æœ‰å…¶ä»–çš„æ³¨è§£
-                    b.@JsonIgnoreä¸ç®¡æ³¨è§£åœ¨gettersä¸Šè¿˜æ˜¯settersä¸Šéƒ½ä¼šå¿½ç•¥å¯¹åº”çš„å±æ€§
-ä¸¾ä¾‹
+    1¡¢@JsonAutoDetect:¿´ÉÏÃæ×Ô¶¯¼ì²â£¬²»ÔÙÖØ¸´
+    2¡¢@JsonIgnore: a.×÷ÓÃÔÚ×Ö¶Î»ò·½·¨ÉÏ£¬ÓÃÀ´ÍêÈ«ºöÂÔ±»×¢½âµÄ×Ö¶ÎºÍ·½·¨¶ÔÓ¦µÄÊôĞÔ£¬¼´±ãÕâ¸ö×Ö¶Î»ò·½·¨¿ÉÒÔ±»×Ô¶¯¼ì²âµ½»òÕß»¹ÓĞÆäËûµÄ×¢½â
+                    b.@JsonIgnore²»¹Ü×¢½âÔÚgettersÉÏ»¹ÊÇsettersÉÏ¶¼»áºöÂÔ¶ÔÓ¦µÄÊôĞÔ
+¾ÙÀı
      */
     public static void jsonIgnoreTest() throws Exception {
         TestPOJO testPOJO = new TestPOJO();
@@ -33,8 +33,8 @@ public class Test {
     }
 
     /*
-    3ã€@JsonProperty: a.ä½œç”¨åœ¨å­—æ®µæˆ–æ–¹æ³•ä¸Šï¼Œç”¨æ¥å¯¹å±æ€§çš„åºåˆ—åŒ–/ååºåˆ—åŒ–ï¼Œå¯ä»¥ç”¨æ¥é¿å…é—æ¼å±æ€§ï¼Œ
-                      b.åŒæ—¶æä¾›å¯¹å±æ€§åç§°é‡å‘½åï¼Œæ¯”å¦‚åœ¨å¾ˆå¤šåœºæ™¯ä¸‹Javaå¯¹è±¡çš„å±æ€§æ˜¯æŒ‰ç…§è§„èŒƒçš„é©¼å³°ä¹¦å†™ï¼Œä½†æ˜¯å®é™…å±•ç¤ºçš„å´æ˜¯ç±»ä¼¼C-styleæˆ–C++/Microsolft style
+    3¡¢@JsonProperty: a.×÷ÓÃÔÚ×Ö¶Î»ò·½·¨ÉÏ£¬ÓÃÀ´¶ÔÊôĞÔµÄĞòÁĞ»¯/·´ĞòÁĞ»¯£¬¿ÉÒÔÓÃÀ´±ÜÃâÒÅÂ©ÊôĞÔ£¬
+                      b.Í¬Ê±Ìá¹©¶ÔÊôĞÔÃû³ÆÖØÃüÃû£¬±ÈÈçÔÚºÜ¶à³¡¾°ÏÂJava¶ÔÏóµÄÊôĞÔÊÇ°´ÕÕ¹æ·¶µÄÍÕ·åÊéĞ´£¬µ«ÊÇÊµ¼ÊÕ¹Ê¾µÄÈ´ÊÇÀàËÆC-style»òC++/Microsolft style
      */
     public static void jsonPropertyTest() throws Exception {
         TestPOJO1 testPOJO = new TestPOJO1();
@@ -52,7 +52,7 @@ public class Test {
     }
 
     public static class TestPOJO1 {
-        @JsonProperty//æ³¨æ„è¿™é‡Œå¿…é¡»å¾—æœ‰è¯¥æ³¨è§£ï¼Œå› ä¸ºæ²¡æœ‰æä¾›å¯¹åº”çš„getIdå’ŒsetIdå‡½æ•°ï¼Œè€Œæ˜¯å…¶ä»–çš„getterå’Œsetterï¼Œé˜²æ­¢é—æ¼è¯¥å±æ€§
+        @JsonProperty//×¢ÒâÕâÀï±ØĞëµÃÓĞ¸Ã×¢½â£¬ÒòÎªÃ»ÓĞÌá¹©¶ÔÓ¦µÄgetIdºÍsetIdº¯Êı£¬¶øÊÇÆäËûµÄgetterºÍsetter£¬·ÀÖ¹ÒÅÂ©¸ÃÊôĞÔ
         private int id;
         @JsonProperty("first_name")
         private String firstName;
@@ -75,7 +75,7 @@ public class Test {
     }
 
     /*
-    4ã€@JsonIgnoreProperties:ä½œç”¨åœ¨ç±»ä¸Šï¼Œç”¨æ¥è¯´æ˜æœ‰äº›å±æ€§åœ¨åºåˆ—åŒ–/ååºåˆ—åŒ–æ—¶éœ€è¦å¿½ç•¥æ‰ï¼Œå¯ä»¥å°†å®ƒçœ‹åšæ˜¯@JsonIgnoreçš„æ‰¹é‡æ“ä½œï¼Œä½†å®ƒçš„åŠŸèƒ½æ¯”@JsonIgnoreè¦å¼º
+    4¡¢@JsonIgnoreProperties:×÷ÓÃÔÚÀàÉÏ£¬ÓÃÀ´ËµÃ÷ÓĞĞ©ÊôĞÔÔÚĞòÁĞ»¯/·´ĞòÁĞ»¯Ê±ĞèÒªºöÂÔµô£¬¿ÉÒÔ½«Ëü¿´×öÊÇ@JsonIgnoreµÄÅúÁ¿²Ù×÷£¬µ«ËüµÄ¹¦ÄÜ±È@JsonIgnoreÒªÇ¿
      */
     public static void JsonIgnoreProperties() throws Exception {
         TestPOJO2 testPOJO = new TestPOJO2();
@@ -84,14 +84,14 @@ public class Test {
         testPOJO.setAge(22);
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonStr = objectMapper.writeValueAsString(testPOJO);
-        System.out.println("{\"id\":111}" + jsonStr);//nameå’Œageè¢«å¿½ç•¥æ‰äº†
+        System.out.println("{\"id\":111}" + jsonStr);//nameºÍage±»ºöÂÔµôÁË
 
         String jsonStr2 = "{\"id\":111,\"name\":\"myName\",\"age\":22,\"title\":\"myTitle\"}";
         TestPOJO2 testPOJO2 = objectMapper.readValue(jsonStr2, TestPOJO2.class);
         System.out.println(111 + " " + testPOJO2.getId());
         System.out.println(testPOJO2.getName());
         System.out.println(0 + testPOJO2.getAge());
-        String jsonStr3 = "{\"id\":111,\"name\":\"myName\",\"count\":33}";//è¿™é‡Œæœ‰ä¸ªæœªçŸ¥çš„countå±æ€§ï¼Œååºåˆ—åŒ–ä¼šæŠ¥é”™
+        String jsonStr3 = "{\"id\":111,\"name\":\"myName\",\"count\":33}";//ÕâÀïÓĞ¸öÎ´ÖªµÄcountÊôĞÔ£¬·´ĞòÁĞ»¯»á±¨´í
         objectMapper.readValue(jsonStr3, TestPOJO2.class);
     }
 
@@ -101,7 +101,7 @@ public class Test {
         private String name;
         private int age;
 
-        //gettersã€settersçœç•¥
+        //getters¡¢settersÊ¡ÂÔ
         public int getId() {
             return id;
         }
@@ -128,26 +128,26 @@ public class Test {
     }
 
     /*
-    5ã€@JsonUnwrapped:ä½œç”¨åœ¨å±æ€§å­—æ®µæˆ–æ–¹æ³•ä¸Šï¼Œç”¨æ¥å°†å­JSONå¯¹è±¡çš„å±æ€§æ·»åŠ åˆ°å°é—­çš„JSONå¯¹è±¡ï¼Œè¯´èµ·æ¥æ¯”è¾ƒéš¾æ‡‚ï¼Œçœ‹ä¸ªä¾‹å­å°±å¾ˆæ¸…æ¥šäº†ï¼Œä¸å¤šè§£é‡Š
-ä¸¾ä¾‹
+    5¡¢@JsonUnwrapped:×÷ÓÃÔÚÊôĞÔ×Ö¶Î»ò·½·¨ÉÏ£¬ÓÃÀ´½«×ÓJSON¶ÔÏóµÄÊôĞÔÌí¼Óµ½·â±ÕµÄJSON¶ÔÏó£¬ËµÆğÀ´±È½ÏÄÑ¶®£¬¿´¸öÀı×Ó¾ÍºÜÇå³şÁË£¬²»¶à½âÊÍ
+¾ÙÀı
      */
     public static void jsonUnwrapped() throws Exception {
         TestPOJO3 testPOJO = new TestPOJO3();
         testPOJO.setId(111);
         TestName testName = new TestName();
-        testName.setFirstName("å¼ ");
-        testName.setSecondName("ä¸‰");
+        testName.setFirstName("ÕÅ");
+        testName.setSecondName("Èı");
         testPOJO.setName(testName);
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonStr = objectMapper.writeValueAsString(testPOJO);
-        //å¦‚æœæ²¡æœ‰@JsonUnwrappedï¼Œåºåˆ—åŒ–åå°†ä¸º{"id":111,"name":{"firstName":"å¼ ","secondName":"ä¸‰"}}
-        //å› ä¸ºåœ¨nameå±æ€§ä¸ŠåŠ äº†@JsonUnwrappedï¼Œæ‰€ä»¥nameçš„å­å±æ€§firstNameå’ŒsecondNameå°†ä¸ä¼šåŒ…å«åœ¨nameä¸­ã€‚
-        System.out.println("{\"id\":111,\"firstName\":\"å¼ \",\"secondName\":\"ä¸‰\"}" + jsonStr);
-        String jsonStr2 = "{\"id\":111,\"firstName\":\"å¼ \",\"secondName\":\"ä¸‰\"}";
+        //Èç¹ûÃ»ÓĞ@JsonUnwrapped£¬ĞòÁĞ»¯ºó½«Îª{"id":111,"name":{"firstName":"ÕÅ","secondName":"Èı"}}
+        //ÒòÎªÔÚnameÊôĞÔÉÏ¼ÓÁË@JsonUnwrapped£¬ËùÒÔnameµÄ×ÓÊôĞÔfirstNameºÍsecondName½«²»»á°üº¬ÔÚnameÖĞ¡£
+        System.out.println("{\"id\":111,\"firstName\":\"ÕÅ\" \"secondName\":\"Èı\"}" + jsonStr);
+        String jsonStr2 = "{\"id\":111,\"firstName\":\"ÕÅ\",\"secondName\":\"Èı\"}";
         TestPOJO3 testPOJO2 = objectMapper.readValue(jsonStr2, TestPOJO3.class);
         System.out.println(111+""+ testPOJO2.getId());
-        System.out.println("å¼ "+ testPOJO2.getName().getFirstName());
-        System.out.println("ä¸‰"+ testPOJO2.getName().getSecondName());
+        System.out.println("ÕÅ"+ testPOJO2.getName().getFirstName());
+        System.out.println("Èı"+ testPOJO2.getName().getSecondName());
     }
 
     public static class TestPOJO3 {
@@ -169,7 +169,7 @@ public class Test {
         public void setName(TestName name) {
             this.name = name;
         }
-        //gettersã€settersçœç•¥
+        //getters¡¢settersÊ¡ÂÔ
     }
 
     public static class TestName {
@@ -191,29 +191,29 @@ public class Test {
             this.secondName = secondName;
         }
     }
-/*
-6ã€@JsonIdentityInfo:2.0+ç‰ˆæœ¬æ–°æ³¨è§£ï¼Œä½œç”¨äºç±»æˆ–å±æ€§ä¸Šï¼Œè¢«ç”¨æ¥åœ¨åºåˆ—åŒ–/ååºåˆ—åŒ–æ—¶ä¸ºè¯¥å¯¹è±¡æˆ–å­—æ®µæ·»åŠ ä¸€ä¸ªå¯¹è±¡è¯†åˆ«ç ï¼Œé€šå¸¸æ˜¯ç”¨æ¥è§£å†³å¾ªç¯åµŒå¥—çš„é—®é¢˜ï¼Œ
-æ¯”å¦‚æ•°æ®åº“ä¸­çš„å¤šå¯¹å¤šå…³ç³»ï¼Œé€šè¿‡é…ç½®å±æ€§generatoræ¥ç¡®å®šè¯†åˆ«ç ç”Ÿæˆçš„æ–¹å¼ï¼Œæœ‰ç®€å•çš„ï¼Œé…ç½®å±æ€§propertyæ¥ç¡®å®šè¯†åˆ«ç çš„åç§°ï¼Œè¯†åˆ«ç åç§°æ²¡æœ‰é™åˆ¶ã€‚
-å¯¹è±¡è¯†åˆ«ç å¯ä»¥æ˜¯è™šæ‹Ÿçš„ï¼Œå³å­˜åœ¨åœ¨JSONä¸­ï¼Œä½†ä¸æ˜¯POJOçš„ä¸€éƒ¨åˆ†ï¼Œè¿™ç§æƒ…å†µä¸‹æˆ‘ä»¬å¯ä»¥å¦‚æ­¤ä½¿ç”¨æ³¨è§£
- */
-public static  void jsonIdentityInfo() throws Exception {
-    Parent parent = new Parent();
-    parent.setName("jack");
-    Child child = new Child();
-    child.setName("mike");
-    Child[] children = new Child[]{child};
-    parent.setChildren(children);
-    child.setParent(parent);
-    ObjectMapper objectMapper = new ObjectMapper();
-    String jsonStr = objectMapper.writeValueAsString(parent);
-    System.out.println("{\"@id\":1,\"name\":\"jack\",\"children\":[{\"name\":\"mike\",\"parent\":1}]}"+jsonStr);
+    /*
+    6¡¢@JsonIdentityInfo:2.0+°æ±¾ĞÂ×¢½â£¬×÷ÓÃÓÚÀà»òÊôĞÔÉÏ£¬±»ÓÃÀ´ÔÚĞòÁĞ»¯/·´ĞòÁĞ»¯Ê±Îª¸Ã¶ÔÏó»ò×Ö¶ÎÌí¼ÓÒ»¸ö¶ÔÏóÊ¶±ğÂë£¬Í¨³£ÊÇÓÃÀ´½â¾öÑ­»·Ç¶Ì×µÄÎÊÌâ£¬
+    ±ÈÈçÊı¾İ¿âÖĞµÄ¶à¶Ô¶à¹ØÏµ£¬Í¨¹ıÅäÖÃÊôĞÔgeneratorÀ´È·¶¨Ê¶±ğÂëÉú³ÉµÄ·½Ê½£¬ÓĞ¼òµ¥µÄ£¬ÅäÖÃÊôĞÔpropertyÀ´È·¶¨Ê¶±ğÂëµÄÃû³Æ£¬Ê¶±ğÂëÃû³ÆÃ»ÓĞÏŞÖÆ¡£
+    ¶ÔÏóÊ¶±ğÂë¿ÉÒÔÊÇĞéÄâµÄ£¬¼´´æÔÚÔÚJSONÖĞ£¬µ«²»ÊÇPOJOµÄÒ»²¿·Ö£¬ÕâÖÖÇé¿öÏÂÎÒÃÇ¿ÉÒÔÈç´ËÊ¹ÓÃ×¢½â
+     */
+    public static  void jsonIdentityInfo() throws Exception {
+        Parent parent = new Parent();
+        parent.setName("jack");
+        Child child = new Child();
+        child.setName("mike");
+        Child[] children = new Child[]{child};
+        parent.setChildren(children);
+        child.setParent(parent);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonStr = objectMapper.writeValueAsString(parent);
+        System.out.println("{\"@id\":1,\"name\":\"jack\",\"children\":[{\"name\":\"mike\",\"parent\":1}]}"+jsonStr);
 
-    Parent testPOJO2 = objectMapper.readValue(jsonStr, Parent.class);
-    System.out.println(testPOJO2.getName());
+        Parent testPOJO2 = objectMapper.readValue(jsonStr, Parent.class);
+        System.out.println(testPOJO2.getName());
 
-}
+    }
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,property = "dfgid") //å³å­˜åœ¨åœ¨JSONä¸­ï¼Œä½†ä¸æ˜¯POJOçš„ä¸€éƒ¨åˆ†ï¼Œè¿™ç§æƒ…å†µä¸‹æˆ‘ä»¬å¯ä»¥å¦‚æ­¤ä½¿ç”¨æ³¨è§£
+    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,property = "dfgid") //¼´´æÔÚÔÚJSONÖĞ£¬µ«²»ÊÇPOJOµÄÒ»²¿·Ö£¬ÕâÖÖÇé¿öÏÂÎÒÃÇ¿ÉÒÔÈç´ËÊ¹ÓÃ×¢½â
     public static class Parent{
         private String name;
         private Child[] children;
@@ -257,9 +257,9 @@ public static  void jsonIdentityInfo() throws Exception {
     }
 
     /*
-    7ã€@JsonNaming
-jackson 2.1+ç‰ˆæœ¬çš„æ³¨è§£ï¼Œä½œç”¨äºç±»æˆ–æ–¹æ³•ï¼Œæ³¨æ„è¿™ä¸ªæ³¨è§£æ˜¯åœ¨jackson-databindåŒ…ä¸­è€Œä¸æ˜¯åœ¨jackson-annotationsåŒ…é‡Œï¼Œå®ƒå¯ä»¥è®©ä½ å®šåˆ¶å±æ€§å‘½åç­–ç•¥ï¼Œä½œç”¨å’Œå‰é¢æåˆ°çš„@JsonPropertyçš„é‡å‘½åå±æ€§åç§°ç›¸åŒã€‚æ¯”å¦‚
-ä½ æœ‰ä¸€ä¸ªJSONä¸²{"in_reply_to_user_id":"abc123"}ï¼Œéœ€è¦ååºåˆ—åŒ–ä¸ºPOJOï¼ŒPOJOä¸€èˆ¬æƒ…å†µä¸‹åˆ™éœ€è¦å¦‚æ­¤å†™
+    7¡¢@JsonNaming
+jackson 2.1+°æ±¾µÄ×¢½â£¬×÷ÓÃÓÚÀà»ò·½·¨£¬×¢ÒâÕâ¸ö×¢½âÊÇÔÚjackson-databind°üÖĞ¶ø²»ÊÇÔÚjackson-annotations°üÀï£¬Ëü¿ÉÒÔÈÃÄã¶¨ÖÆÊôĞÔÃüÃû²ßÂÔ£¬×÷ÓÃºÍÇ°ÃæÌáµ½µÄ@JsonPropertyµÄÖØÃüÃûÊôĞÔÃû³ÆÏàÍ¬¡£±ÈÈç
+ÄãÓĞÒ»¸öJSON´®{"in_reply_to_user_id":"abc123"}£¬ĞèÒª·´ĞòÁĞ»¯ÎªPOJO£¬POJOÒ»°ãÇé¿öÏÂÔòĞèÒªÈç´ËĞ´
      */
 
     public static void jsonTypeInfo() throws Exception{

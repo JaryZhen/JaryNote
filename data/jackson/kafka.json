@@ -1,0 +1,20 @@
+{
+  "type":"kafka",
+  "name": "Oracle",
+  "HQ": "California",
+  "birthDate": "1977-01-01",
+  "departments": [
+    {
+      "dname": "development",
+      "employee_number": 5000,
+      "projectManager": "jack",
+      "product": "oracle_db"
+    },
+    {
+      "dname": "test",
+      "employee_number": 500,
+      "projectManager": "rose",
+      "product": "oracle_test"
+    }
+  ]
+}

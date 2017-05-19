@@ -1,4 +1,4 @@
-package jackson.json;
+package jackson.fasterxml;
 
 import java.io.File;
 
