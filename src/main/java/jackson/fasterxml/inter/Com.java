@@ -1,4 +1,4 @@
-package jackson.fasterxml;
+package jackson.fasterxml.inter;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

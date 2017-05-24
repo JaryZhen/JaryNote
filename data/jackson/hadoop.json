@@ -1,5 +1,5 @@
 {
-  "type":"kafka",
+  "type":"hadoop",
   "name": "Oracle",
   "HQ": "California",
   "birthDate": "1977-01-01",

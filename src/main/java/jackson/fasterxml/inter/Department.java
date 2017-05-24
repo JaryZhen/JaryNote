@@ -1,4 +1,4 @@
-package jackson.fasterxml;
+package jackson.fasterxml.inter;
 
 import java.util.HashMap;
 import java.util.Map;

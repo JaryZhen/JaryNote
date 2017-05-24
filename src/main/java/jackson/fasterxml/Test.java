@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class Test {
 
-
     /*
     1、@JsonAutoDetect:看上面自动检测，不再重复
     2、@JsonIgnore: a.作用在字段或方法上，用来完全忽略被注解的字段和方法对应的属性，即便这个字段或方法可以被自动检测到或者还有其他的注解
@@ -145,15 +144,16 @@ public class Test {
         System.out.println("{\"id\":111,\"firstName\":\"张\" \"secondName\":\"三\"}" + jsonStr);
         String jsonStr2 = "{\"id\":111,\"firstName\":\"张\",\"secondName\":\"三\"}";
         TestPOJO3 testPOJO2 = objectMapper.readValue(jsonStr2, TestPOJO3.class);
-        System.out.println(111+""+ testPOJO2.getId());
-        System.out.println("张"+ testPOJO2.getName().getFirstName());
-        System.out.println("三"+ testPOJO2.getName().getSecondName());
+        System.out.println(111 + "" + testPOJO2.getId());
+        System.out.println("张" + testPOJO2.getName().getFirstName());
+        System.out.println("三" + testPOJO2.getName().getSecondName());
     }
 
     public static class TestPOJO3 {
         private int id;
         @JsonUnwrapped
         private TestName name;
+
         public int getId() {
             return id;
         }
@@ -187,16 +187,18 @@ public class Test {
         public String getSecondName() {
             return secondName;
         }
+
         public void setSecondName(String secondName) {
             this.secondName = secondName;
         }
     }
+
     /*
     6、@JsonIdentityInfo:2.0+版本新注解，作用于类或属性上，被用来在序列化/反序列化时为该对象或字段添加一个对象识别码，通常是用来解决循环嵌套的问题，
     比如数据库中的多对多关系，通过配置属性generator来确定识别码生成的方式，有简单的，配置属性property来确定识别码的名称，识别码名称没有限制。
     对象识别码可以是虚拟的，即存在在JSON中，但不是POJO的一部分，这种情况下我们可以如此使用注解
      */
-    public static  void jsonIdentityInfo() throws Exception {
+    public static void jsonIdentityInfo() throws Exception {
         Parent parent = new Parent();
         parent.setName("jack");
         Child child = new Child();
@@ -206,15 +208,16 @@ public class Test {
         child.setParent(parent);
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonStr = objectMapper.writeValueAsString(parent);
-        System.out.println("{\"@id\":1,\"name\":\"jack\",\"children\":[{\"name\":\"mike\",\"parent\":1}]}"+jsonStr);
+        System.out.println("{\"@id\":1,\"name\":\"jack\",\"children\":[{\"name\":\"mike\",\"parent\":1}]}" + jsonStr);
 
         Parent testPOJO2 = objectMapper.readValue(jsonStr, Parent.class);
         System.out.println(testPOJO2.getName());
 
     }
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,property = "dfgid") //即存在在JSON中，但不是POJO的一部分，这种情况下我们可以如此使用注解
-    public static class Parent{
+    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "dfgid")
+    //即存在在JSON中，但不是POJO的一部分，这种情况下我们可以如此使用注解
+    public static class Parent {
         private String name;
         private Child[] children;
 
@@ -235,7 +238,7 @@ public class Test {
         }
     }
 
-    public static class Child{
+    public static class Child {
         private String name;
         private Parent parent;
 
@@ -262,7 +265,7 @@ jackson 2.1+版本的注解，作用于类或方法，注意这个注解是在jackson-databind包中而不
 你有一个JSON串{"in_reply_to_user_id":"abc123"}，需要反序列化为POJO，POJO一般情况下则需要如此写
      */
 
-    public static void jsonTypeInfo() throws Exception{
+    public static void jsonTypeInfo() throws Exception {
         Sub1 sub1 = new Sub1();
         sub1.setId(1);
         sub1.setName("sub1Name");
@@ -276,9 +279,10 @@ jackson 2.1+版本的注解，作用于类或方法，注意这个注解是在jackson-databind包中而不
         //System.out.println("{\"myIns\":[{\"id\":1,\"name\":\"sub1Name\"},{\"id\":2,\"age\":33}]}"+ ",,,,,  "+jsonStr);
         System.out.println(jsonStr);
     }
+
     public static class TestPOJO4 {
         private int id;
-        private MyIn [] myIns;
+        private MyIn[] myIns;
 
         public int getId() {
             return id;
@@ -296,20 +300,25 @@ jackson 2.1+版本的注解，作用于类或方法，注意这个注解是在jackson-databind包中而不
             this.myIns = myIn;
         }
     }
-    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME,include = JsonTypeInfo.As.PROPERTY,property = "jtypeName")
-    @JsonSubTypes({@JsonSubTypes.Type(value=Sub1.class,name="jsub1"),@JsonSubTypes.Type(value=Sub2.class,name="jsub2")})
-    public static abstract class MyIn{
+
+    /*
+作用于类/接口，被用来开启多态类型处理，对基类/接口和子类/实现类都有效
+     */
+    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "jtypeName")
+    @JsonSubTypes({@JsonSubTypes.Type(value = Sub1.class, name = "jsub1"), @JsonSubTypes.Type(value = Sub2.class, name = "jsub2")})
+    public static abstract class MyIn {
         private int id;
 
         public int getId() {
             return id;
         }
+
         public void setId(int id) {
             this.id = id;
         }
     }
 
-    public static class Sub1 extends MyIn{
+    public static class Sub1 extends MyIn {
         private String name;
 
         public String getName() {
@@ -321,7 +330,7 @@ jackson 2.1+版本的注解，作用于类或方法，注意这个注解是在jackson-databind包中而不
         }
     }
 
-    public static class Sub2 extends MyIn{
+    public static class Sub2 extends MyIn {
         private int age;
 
         public int getAge() {
@@ -332,6 +341,7 @@ jackson 2.1+版本的注解，作用于类或方法，注意这个注解是在jackson-databind包中而不
             this.age = age;
         }
     }
+
     public static void main(String[] agr) {
         try {
 
@@ -346,3 +356,7 @@ jackson 2.1+版本的注解，作用于类或方法，注意这个注解是在jackson-databind包中而不
         }
     }
 }
+
+
+
+
