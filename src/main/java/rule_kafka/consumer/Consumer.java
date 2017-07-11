@@ -25,14 +25,14 @@ public class Consumer {
     public static  void pro() throws InterruptedException, ExecutionException {
 
         Properties props = new Properties();
-        props.put("bootstrap.servers", "kafkaj:9092");
-        props.put("advertised.host.name","kafkaj");
-        props.put("advertised.port","9092");
+        props.put("bootstrap.servers", "172.24.4.141:9092");
+       // props.put("advertised.host.name","172.24.4.141:9092");
+       // props.put("advertised.port","9092");
         props.put("acks", "all");
         props.put("retries", 0);
-        props.put("batch.size", 16384);
+        //props.put("batch.size", 16384);
         props.put("linger.ms", 1);
-        props.put("buffer.memory", 33554432);
+        props.put("buffer.memory", 1);
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
