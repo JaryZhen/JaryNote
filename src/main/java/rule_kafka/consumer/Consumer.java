@@ -26,6 +26,8 @@ public class Consumer {
 
         Properties props = new Properties();
         props.put("bootstrap.servers", "kafkaj:9092");
+        props.put("advertised.host.name","kafkaj");
+        props.put("advertised.port","9092");
         props.put("acks", "all");
         props.put("retries", 0);
         props.put("batch.size", 16384);
