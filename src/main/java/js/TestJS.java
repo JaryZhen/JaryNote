@@ -10,26 +10,26 @@ public class TestJS {
         try {
             ScriptEngine engine = new ScriptEngineManager().getEngineByName("javascript");
             Compilable compilable = (Compilable) engine;
-            Bindings bindings = engine.createBindings(); //Local¼¶±ğµÄBinding
+            Bindings bindings = engine.createBindings(); //Localçº§åˆ«çš„Binding
 
 
             String script =
                     "function add(op1,op2,c)" +
                             "{return op1+op2+c} " +
-                            "add(a, b,c)"; //¶¨Òåº¯Êı²¢µ÷ÓÃ
-            CompiledScript JSFunction = compilable.compile(script); //½âÎö±àÒë½Å±¾º¯Êı
+                            "add(a, b,c)"; //å®šä¹‰å‡½æ•°å¹¶è°ƒç”¨
+            CompiledScript JSFunction = compilable.compile(script); //è§£æç¼–è¯‘è„šæœ¬å‡½æ•°
             bindings.put("a", 1);
-            bindings.put("b", 2); //Í¨¹ıBindings¼ÓÈë²ÎÊı
+            bindings.put("b", 2); //é€šè¿‡BindingsåŠ å…¥å‚æ•°
             bindings.put("a", 11);
-            bindings.put("b", 22); //Í¨¹ıBindings¼ÓÈë²ÎÊı
+            bindings.put("b", 22); //é€šè¿‡BindingsåŠ å…¥å‚æ•°
             bindings.put("a", 11);
             bindings.put("c", 1);
 
             Object result = JSFunction.eval(bindings);
-            System.out.println(result); //µ÷ÓÃ»º´æ×ÅµÄ½Å±¾º¯Êı¶ÔÏó£¬Bindings×÷Îª²ÎÊıÈİÆ÷´«Èë
+            System.out.println(result); //è°ƒç”¨ç¼“å­˜ç€çš„è„šæœ¬å‡½æ•°å¯¹è±¡ï¼ŒBindingsä½œä¸ºå‚æ•°å®¹å™¨ä¼ å…¥
 
             String script2 = "typeof temperature !== 'undefined' && temperature >= 100";
-            CompiledScript JSFunction2 = compilable.compile(script2); //½âÎö±àÒë½Å±¾º¯Êı
+            CompiledScript JSFunction2 = compilable.compile(script2); //è§£æç¼–è¯‘è„šæœ¬å‡½æ•°
             bindings.put("temperature", 1);
             bindings.put("temperature2", 111);
 

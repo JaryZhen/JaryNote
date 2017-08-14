@@ -1,7 +1,9 @@
 # Created by .ignore support plugin (hsz.mobi)
-*.iml
+JaryNote.iml
 /target
 .idea
 out
 /desiginpattern/target
 /desiginpattern/desiginpattern.iml
+/mulityThread/target
+/mulityThread/mulityThread.iml
