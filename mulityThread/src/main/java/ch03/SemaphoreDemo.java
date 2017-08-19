@@ -1,6 +1,6 @@
 package ch03;
 
-import java.util.concurrent.Executor;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
@@ -14,10 +14,10 @@ public class SemaphoreDemo  implements Runnable{
 
     public void run() {
         try {
-            //sm.acquire();
-            Thread.sleep(2000000);
+            sm.acquire();
+            Thread.sleep(200);
             System.out.println(Thread.currentThread().getId() +" done!");
-           // sm.release();
+            sm.release();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
