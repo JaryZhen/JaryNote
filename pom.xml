@@ -11,6 +11,7 @@
     <modules>
         <module>mulityThread</module>
         <module>desiginpattern</module>
+        <module>livy-demo</module>
     </modules>
 
     <properties>

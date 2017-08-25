@@ -1,10 +1,9 @@
-package dis;
+package livy;
 
 import com.cloudera.livy.Job;
 import com.cloudera.livy.JobContext;
 import com.cloudera.livy.LivyClient;
 import com.cloudera.livy.LivyClientBuilder;
-import org.apache.spark.api.java.*;
 import org.apache.spark.api.java.function.*;
 
 import java.io.File;
