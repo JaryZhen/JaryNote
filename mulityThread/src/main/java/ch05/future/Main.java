@@ -8,7 +8,7 @@ public class Main
     public static void main(String[] args) {
         Client c = new Client();
         Data data = c.request("name");
-        System.out.println("request over");
+        System.out.println("request over"+data.getResult());
 
         try {
             Thread.sleep(200);
