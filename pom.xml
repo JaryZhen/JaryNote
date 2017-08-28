@@ -12,6 +12,7 @@
         <module>mulityThread</module>
         <module>desiginpattern</module>
         <module>livy-demo</module>
+        <module>datastructrue</module>
     </modules>
 
     <properties>
