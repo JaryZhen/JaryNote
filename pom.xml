@@ -13,6 +13,7 @@
         <module>desiginpattern</module>
         <module>livy-demo</module>
         <module>datastructrue</module>
+        <module>algorithm</module>
     </modules>
 
     <properties>
