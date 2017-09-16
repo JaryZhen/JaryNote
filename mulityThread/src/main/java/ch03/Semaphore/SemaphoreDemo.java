@@ -1,4 +1,4 @@
-package ch03;
+package ch03.Semaphore;
 
 
 import java.util.concurrent.ExecutorService;
@@ -15,21 +15,18 @@ public class SemaphoreDemo  implements Runnable{
     public void run() {
         try {
             sm.acquire();
-            Thread.sleep(200);
+            Thread.sleep(2000);
             System.out.println(Thread.currentThread().getId() +" done!");
             sm.release();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
     }
 
     public static void main(String[] args) throws InterruptedException {
         ExecutorService exec = Executors.newFixedThreadPool(20);
         final  SemaphoreDemo sd = new SemaphoreDemo();
         for (int i = 0; i < 20; i++) {
-            Thread.sleep(2000);
-
             exec.submit(sd);
         }
     }
