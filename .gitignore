@@ -1,5 +1,4 @@
 # Created by .ignore support plugin (hsz.mobi)
-JaryNote.iml
 /target
 .idea
 out
@@ -13,3 +12,4 @@ out
 /datastructrue/target
 /algorithm/target
 /algorithm/algorithm.iml
+*.iml
