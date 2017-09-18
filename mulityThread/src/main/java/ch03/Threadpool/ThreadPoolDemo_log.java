@@ -1,4 +1,4 @@
-package ch03;
+package ch03.Threadpool;
 
 import sun.rmi.server.Activation$ActivationSystemImpl_Stub;
 
