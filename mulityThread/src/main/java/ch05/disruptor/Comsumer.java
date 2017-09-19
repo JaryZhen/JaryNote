@@ -1,4 +1,4 @@
-package ch05.ringbuffer;
+package ch05.disruptor;
 
 import com.lmax.disruptor.WorkHandler;
 
