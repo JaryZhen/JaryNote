@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by Jary on 2017/8/16 0016.
  */
-public class ThreadPoolDemo {
+public class ScheduledExecutorServiceDemo {
 
     static int dely = 2000;
     static int exe = 3000;
