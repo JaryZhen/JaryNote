@@ -14,16 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package kafka.consumer;
+package kafka;
 
-public class KafkaConsumerProducerDemo {
-    public static void main(String[] args) {
-        boolean isAsync = args.length == 0 || !args[0].trim().equalsIgnoreCase("sync");
-        Producer producerThread = new Producer(KafkaProperties.TOPIC, isAsync);
-        producerThread.start();
+public class KafkaProperties {
+    public static final String HOSTNAME = "localhost";
+    public static final int ZK_PORT = 2222;
 
-      /*  Consumer2 consumerThread = new Consumer2(KafkaProperties.TOPIC);
-        consumerThread.start();
-*/
-    }
+    public static final String ZOOKEEPER_CONNECT = HOSTNAME + ":" + ZK_PORT;
+    public static final int BROKER_ID = 1;
+
+    public static final String TOPIC = "paser";
+    public static final int KAFKA_SERVER_PORT = 9092;
+    public static final String BOOTSTRAP_SERVERS=HOSTNAME+ ":" +KAFKA_SERVER_PORT;
+    public static final int KAFKA_PRODUCER_BUFFER_SIZE = 6 * 1024;
+    public static final int CONNECTION_TIMEOUT = 100000;
+    public static final String TOPIC2 = "topic2";
+    public static final String TOPIC3 = "topic3";
+    public static final String CLIENT_ID = "SimpleConsumerDemoClient";
+
+    private KafkaProperties() {}
 }

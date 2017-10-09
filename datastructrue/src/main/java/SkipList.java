@@ -5,6 +5,9 @@
 import java.util.Random;
 
 /**
+ * https://www.2cto.com/kf/201612/579219.html
+ * http://kenby.iteye.com/blog/1187303
+ * http://www.cnblogs.com/acfox/p/3688607.html
  * SkipList
  * 不固定层级的跳跃表
  * Created by heqianqian on 2017/6/1.
@@ -89,8 +92,8 @@ public class SkipList<T extends Comparable<? super T>> {
         backLink(p, q);
         int currentLevel = 0;//当前所层次是0
         //产生随机数
-        double randomnum= random.nextDouble();
-        while ( randomnum < PROBABILITY) {
+        double randomnum = random.nextDouble();
+        while (randomnum < PROBABILITY) {
             //新建一个层
             if (currentLevel >= listLevel) {
                 listLevel++;
