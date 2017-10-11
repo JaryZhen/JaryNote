@@ -1,5 +1,3 @@
-package jvm;
-
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryPoolMXBean;
 import java.util.List;

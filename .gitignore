@@ -10,6 +10,7 @@ common/target
 common/datastructrue/target/
 common/desiginpattern/target/
 common/mulityThread/target/
+common/jvm-book/target
 
 ### spark ####
 
