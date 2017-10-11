@@ -11,10 +11,11 @@ public class HeapOOM {
     static class OOMObject {
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         List<OOMObject> list = new ArrayList<OOMObject>();
 
         while (true) {
+            Thread.sleep(0);
             list.add(new OOMObject());
         }
     }
