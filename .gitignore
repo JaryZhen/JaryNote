@@ -14,4 +14,4 @@ common/mulityThread/target/
 ### spark ####
 
 spark/target/
-spark/akka/target/
+spark/akka/target
