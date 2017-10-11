@@ -9,10 +9,9 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
-        <module>mulityThread</module>
         <module>livy-demo</module>
         <module>algorithm</module>
-        <module>sprak</module>
+        <module>spark</module>
         <module>common</module>
     </modules>
 

@@ -1,17 +1,17 @@
-# Created by .ignore support plugin (hsz.mobi)
-/target
+target/
 .idea
 out
-/mulityThread/target
-/livy-demo/target
-algorithm/target
+livy-demo/target/
+algorithm/target/
 *.iml
 
 #### common ###
 common/target
-common/datastructrue/target
-common/desiginpattern/target
+common/datastructrue/target/
+common/desiginpattern/target/
+common/mulityThread/target/
 
-### sprak ####
+### spark ####
 
-sprak/target
+spark/target/
+spark/akka/target/
