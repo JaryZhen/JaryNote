@@ -19,7 +19,7 @@ public class LocalZK extends Thread {
 
     public static void main(String[] args) {
 
-        log.info("starting zk ...");
+        //log.info("starting zk ...");
         try {
             startZkLocal();
         } catch (Exception e) {
@@ -59,17 +59,17 @@ public class LocalZK extends Thread {
             new Thread("zookeeper") {
                 public void run() {
                     try {
-                        log.info("Start of Local ZooKeeper .....");
+                        //log.info("Start of Local ZooKeeper .....");
                         new ZooKeeperServerMain().runFromConfig(configuration);
-                        log.info("Start of Local ZooKeeper success");
+                        //log.info("Start of Local ZooKeeper success");
                     } catch (IOException e) {
-                        log.info("Start of Local ZooKeeper Failed");
+                        //log.info("Start of Local ZooKeeper Failed");
                         e.printStackTrace(System.err);
                     }
                 }
             }.start();
         } else {
-            log.info("Failed to delete or create domain dir for Zookeeper");
+            //log.info("Failed to delete or create domain dir for Zookeeper");
         }
     }
 
