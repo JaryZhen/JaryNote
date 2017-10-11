@@ -2,14 +2,16 @@
 /target
 .idea
 out
-/desiginpattern/target
-/desiginpattern/desiginpattern.iml
 /mulityThread/target
-/mulityThread/mulityThread.iml
-/livy-demo/livy-demo.iml
 /livy-demo/target
-/datastructrue/datastructrue.iml
-/datastructrue/target
-/algorithm/target
-/algorithm/algorithm.iml
+algorithm/target
 *.iml
+
+#### common ###
+common/target
+common/datastructrue/target
+common/desiginpattern/target
+
+### sprak ####
+
+sprak/target

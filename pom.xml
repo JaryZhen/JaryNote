@@ -10,10 +10,10 @@
 
     <modules>
         <module>mulityThread</module>
-        <module>desiginpattern</module>
         <module>livy-demo</module>
-        <module>datastructrue</module>
         <module>algorithm</module>
+        <module>sprak</module>
+        <module>common</module>
     </modules>
 
     <properties>
