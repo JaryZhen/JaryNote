@@ -1,0 +1,8 @@
+-Xms20m
+-Xmx20m
+-Xmn10M
+-XX:SurvivorRatio=8
+-XX:+HeapDumpOnOutOfMemoryError
+-XX:HeapDumpPath=data\gc\java_pidxxx.hprof
+-XX:+PrintGCDetails
+-Xloggc:data\gc\gclog

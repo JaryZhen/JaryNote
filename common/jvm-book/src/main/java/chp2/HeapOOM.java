@@ -4,7 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * -Xms20m -Xmx20m -XX:+HeapDumpOnOutOfMemoryError
+ *
+ -Xms20m
+ -Xmx20m
+ -XX:+HeapDumpOnOutOfMemoryError
+ -XX:HeapDumpPath=test\java_pidxxx.hprof
+ -Xmn10M
+ -XX:+PrintGCDetails
+ -Xloggc:test\log
+
  * Created by Jary on 2017/10/11 0011.
  */
 public class HeapOOM {
