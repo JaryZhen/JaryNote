@@ -5,10 +5,10 @@ package chp3;
  */
 public class FullGC {
     public static void main(String[] args) {
-        testPretenureSizeThreshold();
+        //testPretenureSizeThreshold();
     }
 
-    private static final int _1MB = 1024 * 1024;
+    private static final int _1MB = 1*1024 * 1024;
 
     /**
      * VM²ÎÊý£º-verbose:gc -Xms20M -Xmx20M -Xmn10M -XX:+PrintGCDetails -Xloggc:data\gc\gclog -XX:SurvivorRatio=8 -XX:PretenureSizeThreshold=3145728

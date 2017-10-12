@@ -6,3 +6,5 @@
 -XX:HeapDumpPath=data\gc\java_pidxxx.hprof
 -XX:+PrintGCDetails
 -Xloggc:data\gc\gclog
+-XX:MetaspaceSize=2m
+-XX:MaxMetaspaceSize=8m
