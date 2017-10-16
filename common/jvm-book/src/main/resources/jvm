@@ -4,7 +4,10 @@
 -XX:SurvivorRatio=8
 -XX:+HeapDumpOnOutOfMemoryError
 -XX:HeapDumpPath=data\gc\java_pidxxx.hprof
+
+-XX:+PrintGCTimeStamps
 -XX:+PrintGCDetails
 -Xloggc:data\gc\gclog
+
 -XX:MetaspaceSize=2m
 -XX:MaxMetaspaceSize=8m

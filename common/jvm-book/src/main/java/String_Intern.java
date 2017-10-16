@@ -1,5 +1,3 @@
-package intern;
-
 /**
  * Created by Jary on 2017/10/11 0011.
  */
