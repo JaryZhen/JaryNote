@@ -1,11 +1,10 @@
 package chp2;
 
-import sun.misc.Unsafe;
+        import sun.misc.Unsafe;
 
-import java.lang.reflect.Field;
+        import java.lang.reflect.Field;
 
 /**
- *  本机直接内存 溢出
  * -Xmx20M -XX:MaxDirectMemorySize=10M
  * Created by Jary on 2017/10/11 0011.
  */

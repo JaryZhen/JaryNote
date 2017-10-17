@@ -8,7 +8,7 @@ import net.sf.cglib.proxy.MethodProxy;
 import java.lang.reflect.Method;
 
 /**
- * ·½·¨Çø ÄÚ´æÒç³ö
+ * æ–¹æ³•åŒº å†…å­˜æº¢å‡º
  * -XX:PermSize=10M -XX:MaxPermSize=10M
  * Created by Jary on 2017/10/11 0011.
  */
