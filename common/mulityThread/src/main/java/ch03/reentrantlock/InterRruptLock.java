@@ -11,7 +11,7 @@ public class InterRruptLock implements Runnable {
     int lock;
 
     /**
-     * 控制加锁顺序，产生死锁
+     * 控制加锁顺序，产生死�?
      */
     public InterRruptLock(int lock) {
         this.lock = lock;
@@ -20,7 +20,7 @@ public class InterRruptLock implements Runnable {
     public void run() {
         try {
             if (lock == 1) {
-                lock1.lockInterruptibly(); // 如果当前线程未被 中断，则获取锁。
+                lock1.lockInterruptibly(); // 如果当前线程未被 中断，则获取锁�??
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
@@ -41,14 +41,14 @@ public class InterRruptLock implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
-            // 查询当前线程是否保持此锁。
+            // 查询当前线程是否保持此锁�?
             if (lock1.isHeldByCurrentThread()) {
                 lock1.unlock();
             }
             if (lock2.isHeldByCurrentThread()) {
                 lock2.unlock();
             }
-            System.out.println(Thread.currentThread().getName() + "，退出。");
+            System.out.println(Thread.currentThread().getName() + "，�??出�??");
         }
     }
 

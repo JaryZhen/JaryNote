@@ -16,3 +16,4 @@ common/jvm-book/target
 
 spark/target/
 spark/akka/target
+protobuf/target

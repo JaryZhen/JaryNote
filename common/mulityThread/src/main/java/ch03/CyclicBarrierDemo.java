@@ -23,8 +23,8 @@ public class CyclicBarrierDemo {
         public void run() {
             try {
                 cyclic.await(); //等待集合完毕
-                doWork(); //集合完毕后执行任务
-                cyclic.await();//任务都执行完毕
+                doWork(); //集合完毕后执行任�?
+                cyclic.await();//任务都执行完�?
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (BrokenBarrierException e) {
@@ -52,7 +52,7 @@ public class CyclicBarrierDemo {
         @Override
         public void run() {
             if (flag) {
-                System.out.println("commander: " + N + " complete");//任务都执行完毕 ---> 返回结果
+                System.out.println("commander: " + N + " complete");//任务都执行完�? ---> 返回结果
             } else {
                 System.out.println("commander: " + N + " soldiers"); //等待集合完毕 --> 返回结果
                 flag = true;

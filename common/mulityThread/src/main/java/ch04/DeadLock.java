@@ -29,7 +29,7 @@ public class DeadLock extends Thread {
                 }
             }
             synchronized (fork2){
-                System.out.println("A 开始吃饭");
+                System.out.println("A �?始吃�?");
             }
         }
         if(tool ==fork2){
@@ -42,7 +42,7 @@ public class DeadLock extends Thread {
                 }
             }
             synchronized (fork1){
-                System.out.println(" B 开始吃饭");
+                System.out.println(" B �?始吃�?");
             }
         }
     }
