@@ -7,7 +7,7 @@ import java.util.Stack;
  */
 
 /*
-    由两个栈组成的队列
+    由两个栈组成的队�?
  */
 public class S_queue<K> {
     private Stack<K> data;

@@ -8,7 +8,7 @@ import java.util.Stack;
 public class S_rewers {
 
     /**
-     * 返回并移除当前栈底元素（栈内元素<栈底>1、2、3<栈顶>变为2、3<栈顶>）.
+     * 返回并移除当前栈底元素（栈内元素<栈底>1�?2�?3<栈顶>变为2�?3<栈顶>�?.
      */
     private int getAndRemoveBottom(Stack<Integer> stack) {
         int result = stack.pop();
@@ -17,14 +17,14 @@ public class S_rewers {
         } else {
             int bottom = getAndRemoveBottom(stack);
             stack.push(result);
-            return bottom; // 第一轮时，返回栈底元素1
+            return bottom; // 第一轮时，返回栈底元�?1
         }
     }
 
     /**
      * 每层递归取出栈底的元素并缓存到变量中，直到栈空；
      * <p>
-     * 然后逆向将每层变量压入栈，最后实现原栈数据的逆序。
+     * 然后逆向将每层变量压入栈，最后实现原栈数据的逆序�?
      *
      * @param stack
      */
@@ -32,9 +32,9 @@ public class S_rewers {
         if (stack.empty()) {
             return;
         }
-        int i = getAndRemoveBottom(stack); // 依次返回1、2、3
+        int i = getAndRemoveBottom(stack); // 依次返回1�?2�?3
         reverse(stack);
-        stack.push(i); // 依次压入3、2、1
+        stack.push(i); // 依次压入3�?2�?1
     }
 
     ///////// 测试方法////////

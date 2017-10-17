@@ -7,7 +7,7 @@ import java.util.Stack;
  */
 
 /*
-使用stack 设计实现一个getMin功能
+使用stack 设计实现�?个getMin功能
  */
 public class S_Getmin {
     private Stack<Integer> stackA = null;
