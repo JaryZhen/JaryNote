@@ -227,28 +227,6 @@
                     </executions>
                 </plugin>
 
-                <plugin>
-                    <groupId>com.github.os72</groupId>
-                    <artifactId>protoc-jar-maven-plugin</artifactId>
-                    <version>3.4.0.1</version>
-                    <executions>
-                        <execution>
-                            <phase>generate-sources</phase>
-                            <goals>
-                                <goal>run</goal>
-                            </goals>
-                            <configuration>
-                                <protocVersion>2.4.1</protocVersion>
-                                <type>java-shaded</type>
-                                <addSources>none</addSources>
-                                <outputDirectory>${basedir}/src/main/java</outputDirectory>
-                                <inputDirectories>
-                                    <include>${basedir}/src/main/proto</include>
-                                </inputDirectories>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -314,12 +292,7 @@
             <artifactId>velocity</artifactId>
             <version>1.6.4</version>
             <!--<scope>provided</scope>-->
-        </dependency><!--
-        <dependency>
-            <groupId>com.google.protobuf</groupId>
-            <artifactId>protobuf-java</artifactId>
-            <version>2.4.1</version>
-        </dependency>-->
+        </dependency>
 
     </dependencies>
     <dependencyManagement>
