@@ -35,6 +35,9 @@
         <!--<grpc.version>1.7.0</grpc.version> -->
         <grpc.version>1.0.0</grpc.version>
 
+        <!--livy dome -->
+        <livy-api>0.3.0</livy-api>
+        <spark.version>1.6.0-cdh5.9.0</spark.version>
     </properties>
     <packaging>pom</packaging>
     <build>
@@ -293,10 +296,45 @@
             <version>1.6.4</version>
             <!--<scope>provided</scope>-->
         </dependency>
-
+        <dependency>
+            <groupId>com.fasterxml.uuid</groupId>
+            <artifactId>java-uuid-generator</artifactId>
+            <version>3.1.3</version>
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
+            <!-- livy demo -->
+            <dependency>
+                <groupId>org.apache.spark</groupId>
+                <artifactId>spark-core_2.10</artifactId>
+                <version>${spark.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.cloudera.livy</groupId>
+                <artifactId>livy-client-http</artifactId>
+                <version>${livy-api}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.cloudera.livy/livy-api -->
+            <dependency>
+                <groupId>com.cloudera.livy</groupId>
+                <artifactId>livy-api</artifactId>
+                <version>${livy-api}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.cloudera.livy/livy-repl_2.10 -->
+            <dependency>
+                <groupId>com.cloudera.livy</groupId>
+                <artifactId>livy-repl_2.10</artifactId>
+                <version>${livy-api}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.cloudera.livy/livy-scala-api_2.10 -->
+            <dependency>
+                <groupId>com.cloudera.livy</groupId>
+                <artifactId>livy-scala-api_2.10</artifactId>
+                <version>${livy-api}</version>
+            </dependency>
+
+            <!--grpc -->
             <dependency>
                 <groupId>com.google.protobuf</groupId>
                 <artifactId>protobuf-java</artifactId>
