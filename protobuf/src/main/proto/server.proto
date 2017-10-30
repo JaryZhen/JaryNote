@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+import "server_dto.proto";
+
+package jary.grpc.study.service;
+
+option java_multiple_files = true;
+option java_outer_classname = "DemoServiceDto";
+
+service DemoService {
+    rpc Ping (jary.grpc.study.dto.PingRequest) returns (jary.grpc.study.dto.PingResponse) {}
+
+    rpc getPersonList (jary.grpc.study.dto.QueryParameter) returns (jary.grpc.study.dto.PersonList) {}
+}

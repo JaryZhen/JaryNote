@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package jary.grpc.study.dto;
+
+option java_multiple_files = true;
+option java_outer_classname = "DemoServiceDto";
+
+message PingRequest {
+    string in=1;
+}
+
+message PingResponse {
+    string out=1;
+}
+
+message QueryParameter {
+    int32 ageStart = 1;
+    int32 ageEnd = 2;
+}
+
+message Person {
+    int32 age = 1;
+    string name = 2;
+    bool sex=3;
+    double salary=4;
+    int32 childrenCount=5;
+}
+
+message PersonList{
+    repeated Person items=1;
+}
