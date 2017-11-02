@@ -25,9 +25,9 @@ public class CeilingFan {
 	}
 
 	public void low() {
-		// turns the ceiling fan on to low
+		// turns the ceiling fan on to v10
 		level = LOW;
-		System.out.println(location + " ceiling fan is on low");
+		System.out.println(location + " ceiling fan is on v10");
 	}
  
 	public void off() {

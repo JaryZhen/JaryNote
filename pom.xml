@@ -14,6 +14,7 @@
         <module>spark</module>
         <module>common</module>
         <module>protobuf</module>
+        <module>kafka</module>
     </modules>
 
     <properties>
@@ -26,8 +27,8 @@
         <dubbo.version>2.5.3</dubbo.version>
 
         <zkclient.version>0.1</zkclient.version>
-        <!--0.11.0.0 0.10.2.1-->
-        <kafka.version>0.11.0.0</kafka.version>
+        <!--0.11.0.1 0.10.2.1-->
+        <kafka.version>0.10.2.1</kafka.version>
         <lombok.version>1.16.10</lombok.version>
         <log4j.version>1.2.17</log4j.version>
 
@@ -258,22 +259,8 @@
             <version>2.2.3</version>
         </dependency>
         <!--//https://mvnrepository.com/artifact/org.apache.kafka/kafka_2.11-->
-        <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka_2.11</artifactId>
-            <version>${kafka.version}</version>
-        </dependency><!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients -->
-        <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka-clients</artifactId>
-            <version>${kafka.version}</version>
-        </dependency>
-        <!--//https://mvnrepository.com/artifact/org.apache.kafka/kafka-streams-->
-        <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka-streams</artifactId>
-            <version>${kafka.version}</version>
-        </dependency>
+
+
         <dependency>
             <groupId>org.rocksdb</groupId>
             <artifactId>rocksdbjni</artifactId>
@@ -354,6 +341,24 @@
                 <groupId>io.grpc</groupId>
                 <artifactId>grpc-stub</artifactId>
                 <version>${grpc.version}</version>
+            </dependency>
+
+            <!--kafka -->
+            <dependency>
+                <groupId>org.apache.kafka</groupId>
+                <artifactId>kafka_2.11</artifactId>
+                <version>${kafka.version}</version>
+            </dependency><!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients -->
+            <dependency>
+                <groupId>org.apache.kafka</groupId>
+                <artifactId>kafka-clients</artifactId>
+                <version>${kafka.version}</version>
+            </dependency>
+            <!--//https://mvnrepository.com/artifact/org.apache.kafka/kafka-streams-->
+            <dependency>
+                <groupId>org.apache.kafka</groupId>
+                <artifactId>kafka-streams</artifactId>
+                <version>${kafka.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -14,8 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package kafka.kstream;
+package note.kafka.v11.kstream;
 
+import note.kafka.KafkaProperties;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
@@ -44,7 +45,7 @@ public class PipeDemo {
     public static void main(String[] args) throws Exception {
         Properties props = new Properties();
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, "streams-pipe");
-        props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "172.24.4.141:9092");
+        props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaProperties.BOOTSTRAP_SERVERS);
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass());
 
@@ -63,7 +64,7 @@ public class PipeDemo {
         CompiledScript JSFunction = compilable.compile(script); //解析编译脚本函数
 
 
-        KStream<String, String> source = builder.stream("test");//.to("streams-pipe-output");
+        KStream<String, String> source = builder.stream(KafkaProperties.TOPIC);//.to("streams-pipe-output");
         source.map(new KeyValueMapper<String, String, KeyValue<?, ?>>() {
             @Override
             public KeyValue<?, ?> apply(String key, String value) {

@@ -1,21 +1,6 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-package kafka;
+package note.kafka.v10;
 
+import note.kafka.KafkaProperties;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -23,6 +8,7 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 public class Producer extends Thread {
     private final KafkaProducer<Integer, String> producer;
@@ -40,14 +26,16 @@ public class Producer extends Thread {
         props.put("key.serializer", "org.apache.kafka.common.serialization.IntegerSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
-        // props.put("advertised.host.name","172.24.4.141:9092");
-        // props.put("advertised.port","9092");
         props.put("acks", "all");
-        props.put("retries", 0);
-        //props.put("batch.size", 16384);
+        props.put("retries", 3);
+        props.put("batch.size", 16384);
         props.put("linger.ms", 1);
         props.put("buffer.memory", 133333);
+        //props.put("advertised.host.name","172.24.4.184:9092");
+        //props.put("advertised.port","9092");
+
         producer = new KafkaProducer<>(props);
+        System.out.println(producer.partitionsFor(KafkaProperties.TOPIC));
         this.topic = topic;
         this.isAsync = isAsync;
     }
@@ -57,7 +45,7 @@ public class Producer extends Thread {
         while (true) {
             //异步方式发送
             try {
-                Thread.sleep(1000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -72,9 +60,10 @@ public class Producer extends Thread {
                 try {
                     producer.send(new ProducerRecord<>(topic, messageNo, messageStr)).get();
                     System.out.println("Sent message: (" + messageNo + ", " + messageStr + ")");
-
-                    //Future<RecordMetadata> a = producer.send(new ProducerRecord<>(topic, messageNo, messageStr));
-                    //System.out.println(a.isDone() + " " + a.get().topic());
+                    int i =messageNo%2;
+                    Future<RecordMetadata> a = producer.send(new ProducerRecord<>(topic,messageNo, messageStr));
+                    Thread.sleep(50);
+                    System.out.println(a.isDone() + " " + a.get().topic()+"  "+a.get().partition()+ a.get().offset());
                 } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
                 }

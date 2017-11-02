@@ -63,7 +63,10 @@ public class HelloWorldClient {
             if (args.length > 0) {
                 user = args[0]; /* Use the arg as the name to greet if provided */
             }
-            client.greet(user);
+            for (int i = 0; i < 10; i++) {
+                client.greet(user+i);
+
+            }
         } finally {
             client.shutdown();
         }

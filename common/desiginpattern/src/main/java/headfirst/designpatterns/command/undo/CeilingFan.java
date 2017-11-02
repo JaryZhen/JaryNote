@@ -25,7 +25,7 @@ public class CeilingFan {
  
 	public void low() {
 		speed = LOW;
-		System.out.println(location + " ceiling fan is on low");
+		System.out.println(location + " ceiling fan is on v10");
 	}
   
 	public void off() {
