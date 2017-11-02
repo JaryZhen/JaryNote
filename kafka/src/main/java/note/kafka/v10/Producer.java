@@ -63,7 +63,9 @@ public class Producer extends Thread {
                     //producer.send(new ProducerRecord<>(topic, key, valeu)).get();
                     int partition =key%2;
                     System.out.println("Sent message: (" + key + ", " + valeu + ")");
-                    Future<RecordMetadata> a = producer.send(new ProducerRecord<>(topic,partition,key, valeu));
+                    //Future<RecordMetadata> a = producer.send(new ProducerRecord<>(topic,partition,key, valeu));
+                    Future<RecordMetadata> a = producer.send(new ProducerRecord<>(topic,key, valeu));
+
                     Thread.sleep(50);
                     System.out.println(a.isDone() + ", topic=" + a.get().topic()+" , partition="+a.get().partition()+", offset="+ a.get().offset());
                 } catch (InterruptedException | ExecutionException e) {

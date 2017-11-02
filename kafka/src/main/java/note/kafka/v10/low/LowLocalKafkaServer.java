@@ -31,10 +31,10 @@ public  class LowLocalKafkaServer {
         final File kafkaTmpLogsDir = File.createTempFile("zk_kafka", "2");
         if (kafkaTmpLogsDir.delete() && kafkaTmpLogsDir.mkdir()) {
             Properties pro = new Properties();
-            pro.setProperty("host.name", LowKafkaProperties.HOSTNAME);
-            pro.setProperty("port", String.valueOf(LowKafkaProperties.KAFKA_SERVER_PORT));
-            pro.setProperty("broker.id", String.valueOf(LowKafkaProperties.BROKER_ID));
-            pro.setProperty("zookeeper.connect", LowKafkaProperties.ZOOKEEPER_CONNECT);
+            pro.setProperty("host.name", LowLevelConsumer.LowProperties.HOSTNAME);
+            pro.setProperty("port", String.valueOf(LowLevelConsumer.LowProperties.KAFKA_SERVER_PORT));
+            pro.setProperty("broker.id", String.valueOf(LowLevelConsumer.LowProperties.BROKER_ID));
+            pro.setProperty("zookeeper.connect", LowLevelConsumer.LowProperties.ZOOKEEPER_CONNECT);
             pro.setProperty("log.dirs", kafkaTmpLogsDir.getAbsolutePath());
             pro.setProperty("num.partitions", "2");
 
@@ -55,7 +55,7 @@ public  class LowLocalKafkaServer {
             if (zkTmpDir.delete() && zkTmpDir.mkdir()) {
                 Properties zkProperties = new Properties();
                 zkProperties.setProperty("dataDir", zkTmpDir.getAbsolutePath());
-                zkProperties.setProperty("clientPort", String.valueOf(LowKafkaProperties.ZK_PORT));
+                zkProperties.setProperty("clientPort", String.valueOf(LowLevelConsumer.LowProperties.ZK_PORT));
                 zkProperties.setProperty("tickTime", "4000");
                 zkProperties.setProperty("initLimit", "10");
                 zkProperties.setProperty("syncLimit", "5");

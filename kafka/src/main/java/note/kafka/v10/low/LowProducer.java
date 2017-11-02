@@ -30,7 +30,7 @@ public class LowProducer {
 
     public LowProducer(String topic) {
         Properties props = new Properties();
-        props.put("bootstrap.servers", LowKafkaProperties.BOOTSTRAP_SERVERS);
+        props.put("bootstrap.servers", LowLevelConsumer.LowProperties.BOOTSTRAP_SERVERS);
         props.put("client.id", "DemoProducer");
 
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
@@ -40,10 +40,10 @@ public class LowProducer {
 		props.put("batch.size", 16384);//16M
 		//props.put("linger.ms", 1000); // it will failed when set this to 10000.
 		props.put("buffer.memory", 33554432);//32M
-		props.put("partitioner.class", "note.kafka.v10.low.SimplePartitioner");
+		props.put("partitioner.class", "note.kafka.v10.low.SimplePartitioner"); // TODO: 2017/11/2 0002  impl the partitioner
 
         producer = new KafkaProducer<>(props);
-		System.out.println(producer.partitionsFor(LowKafkaProperties.TOPIC)
+		System.out.println(producer.partitionsFor(LowLevelConsumer.LowProperties.TOPIC)
 				+"\n"+ producer.metrics().toString());
 
 		this.topic = topic;
@@ -81,7 +81,7 @@ public class LowProducer {
     }
     
     public static void main(String[] args) throws InterruptedException {
-    	LowProducer producer = new LowProducer(LowKafkaProperties.TOPIC);
+    	LowProducer producer = new LowProducer(LowLevelConsumer.LowProperties.TOPIC);
     	producer.producerMsg();
 	}
 }

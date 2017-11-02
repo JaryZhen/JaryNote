@@ -14,15 +14,16 @@ import java.nio.ByteBuffer;
 import java.util.*;
 
 public class LowLevelConsumer {
+    private List<String> m_replicaBrokers = new ArrayList<String>();
+
     public static void main(String args[]) {
         LowLevelConsumer example = new LowLevelConsumer();
-        long maxReads = 10000L;
         String topic = KafkaProperties.TOPIC;
-        int partition = 1;
+        int partition = 0;
         List<String> hosts = new ArrayList<String>();
-        hosts.add(LowKafkaProperties.HOSTNAME);
+        hosts.add(LowProperties.HOSTNAME);
 
-        int port = LowKafkaProperties.KAFKA_SERVER_PORT;
+        int port = LowProperties.KAFKA_SERVER_PORT;
         try {
               /*SimpleConsumer(
                         val host: String,
@@ -31,23 +32,23 @@ public class LowLevelConsumer {
                         val bufferSize: Int,
                         val clientId: String)
                         */
-            example.run(maxReads,hosts , port, topic, partition);
+            example.run(hosts , port, topic, partition);
         } catch (Exception e) {
             System.out.println("Oops:" + e);
             e.printStackTrace();
         }
     }
 
-    private List<String> m_replicaBrokers = new ArrayList<String>();
 
     public LowLevelConsumer() {
         m_replicaBrokers = new ArrayList<String>();
     }
 
-    public void run(long a_maxReads,List<String> hosts,  int a_port, String a_topic, int a_partition) throws Exception {
+    public void run(List<String> hosts,  int a_port, String a_topic, int a_partition) throws Exception {
         // find the meta data about the topic and partition we are interested in
         //
         PartitionMetadata metadata = findLeader(hosts, a_port, a_topic, a_partition);
+        System.out.println("1.取leader "+ metadata.toString());
         if (metadata == null) {
             System.out.println("Can't find metadata for Topic and Partition. Exiting");
             return;
@@ -56,13 +57,17 @@ public class LowLevelConsumer {
             System.out.println("Can't find Leader for Topic and Partition. Exiting");
             return;
         }
-        // 查找到一个“活着”的Broker，并且找出每个Partition的Leader
         String leadBroker = metadata.leader().host();
+
         String clientName = "Client_" + a_topic + "_" + a_partition;
+        System.out.println(clientName);
+        System.out.println("查找到一个“活着”的Broker，并且找出每个Partition的Leader");
 
         SimpleConsumer consumer = new SimpleConsumer(leadBroker, a_port, 100000, 64 * 1024, clientName);
         long readOffset = getLastOffset(consumer, a_topic, a_partition, kafka.api.OffsetRequest.EarliestTime(), clientName);
+        System.out.println("根据topic 来得到该 partition的offerset 的初始位置："+readOffset);
 
+        long a_maxReads = 10000L;
         int numErrors = 0;
         while (a_maxReads > 0) {
             if (consumer == null) {
@@ -74,6 +79,7 @@ public class LowLevelConsumer {
                     .build();
             FetchResponse fetchResponse = consumer.fetch(req);
 
+            // if get the data from this fech
             if (fetchResponse.hasError()) {
                 numErrors++;
                 // Something went wrong!
@@ -93,6 +99,7 @@ public class LowLevelConsumer {
             numErrors = 0;
 
             long numRead = 0;
+            System.out.println("获取 topic 相应某一partion的数据");
             for (MessageAndOffset messageAndOffset : fetchResponse.messageSet(a_topic, a_partition)) {
                 long currentOffset = messageAndOffset.offset();
                 if (currentOffset < readOffset) {
@@ -119,13 +126,22 @@ public class LowLevelConsumer {
         if (consumer != null) consumer.close();
     }
 
-    public static long getLastOffset(SimpleConsumer consumer, String topic, int partition,
-                                     long whichTime, String clientName) {
-        TopicAndPartition topicAndPartition = new TopicAndPartition(topic, partition);
+
+    public static long getLastOffset(SimpleConsumer consumer,
+                                     String topic,
+                                     int partition,
+                                     long whichTime,
+                                     String clientName) {
         Map<TopicAndPartition, PartitionOffsetRequestInfo> requestInfo = new HashMap<TopicAndPartition, PartitionOffsetRequestInfo>();
+
+        TopicAndPartition topicAndPartition = new TopicAndPartition(topic, partition);
         requestInfo.put(topicAndPartition, new PartitionOffsetRequestInfo(whichTime, 1));
+
         kafka.javaapi.OffsetRequest request = new kafka.javaapi.OffsetRequest(
-                requestInfo, kafka.api.OffsetRequest.CurrentVersion(), clientName);
+                requestInfo,
+                kafka.api.OffsetRequest.CurrentVersion(),
+                clientName);
+
         OffsetResponse response = consumer.getOffsetsBefore(request);
 
         if (response.hasError()) {
@@ -199,5 +215,31 @@ public class LowLevelConsumer {
             }
         }
         return returnMetaData;
+    }
+
+    public static class LowProperties {
+        //public static final String HOSTNAME = "192.168.1.55";
+        public static final String HOSTNAME = "localhost";
+
+        public static final int ZK_PORT = 2222;
+
+        public static final String ZOOKEEPER_CONNECT = HOSTNAME + ":" + ZK_PORT;
+
+        public static final int BROKER_ID = 1;
+
+        public static final String TOPIC = "paser1";
+        public static final int KAFKA_SERVER_PORT = 9092;
+        public static final String BOOTSTRAP_SERVERS=HOSTNAME+ ":" +KAFKA_SERVER_PORT;
+        public static final String CLIENT_ID = "SimpleConsumerDemoClient";
+        public static final String TOPIC_r = "test";
+        public static final String BOOTSTRAP_SERVERS_REMOTE="172.24.4.184"+ ":" +KAFKA_SERVER_PORT;
+        public static final int KAFKA_PRODUCER_BUFFER_SIZE = 6 * 1024;
+        public static final int CONNECTION_TIMEOUT = 100000;
+        public static final String TOPIC2 = "topic2";
+        public static final String TOPIC3 = "topic3";
+
+        private LowProperties() {}
+
+
     }
 }

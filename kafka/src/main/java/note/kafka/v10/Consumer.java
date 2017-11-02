@@ -35,7 +35,7 @@ public class Consumer {
         props.put("auto.offset.reset", "earliest");
         consumer = new KafkaConsumer<>(props);
         consumer.subscribe(Collections.singletonList(KafkaProperties.TOPIC));
-        System.out.println("...." + consumer.listTopics().toString());
+        System.out.println("" + consumer.listTopics().toString());
         while (true) {
             ConsumerRecords<Integer, String> records = consumer.poll(100);
             System.out.println(records.count());

@@ -1,4 +1,4 @@
-package kafka;
+package note.zookeeper;
 
 import org.apache.log4j.spi.ErrorHandler;
 import org.apache.zookeeper.server.ServerConfig;

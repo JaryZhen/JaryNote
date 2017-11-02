@@ -1,8 +1,5 @@
-package zk;
+package note.zookeeper;
 
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.ZooDefs.Ids;
