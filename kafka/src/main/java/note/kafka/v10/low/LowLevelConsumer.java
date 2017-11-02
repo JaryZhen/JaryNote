@@ -1,4 +1,4 @@
-package note.kafka;
+package note.kafka.v10.low;
 
 import kafka.api.FetchRequest;
 import kafka.api.FetchRequestBuilder;
@@ -8,6 +8,7 @@ import kafka.common.TopicAndPartition;
 import kafka.javaapi.*;
 import kafka.javaapi.consumer.SimpleConsumer;
 import kafka.message.MessageAndOffset;
+import note.kafka.KafkaProperties;
 
 import java.nio.ByteBuffer;
 import java.util.*;
@@ -15,9 +16,9 @@ import java.util.*;
 public class LowLevelConsumer {
     public static void main(String args[]) {
         LowLevelConsumer example = new LowLevelConsumer();
-        long maxReads = Long.parseLong(args[0]);
-        String topic = args[1];
-        int partition = Integer.parseInt(args[2]);
+        long maxReads = 10000L;
+        String topic = KafkaProperties.TOPIC;
+        int partition = 1;
         List<String> seeds = new ArrayList<String>();
         seeds.add(args[3]);
         int port = Integer.parseInt(args[4]);

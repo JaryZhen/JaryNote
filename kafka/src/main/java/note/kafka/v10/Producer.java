@@ -29,46 +29,48 @@ public class Producer extends Thread {
         props.put("acks", "all");
         props.put("retries", 3);
         props.put("batch.size", 16384);
-        props.put("linger.ms", 1);
+       // props.put("linger.ms", 1); // it will failed when set this to 10000.
         props.put("buffer.memory", 133333);
         //props.put("advertised.host.name","172.24.4.184:9092");
         //props.put("advertised.port","9092");
 
         producer = new KafkaProducer<>(props);
-        System.out.println(producer.partitionsFor(KafkaProperties.TOPIC));
+        System.out.println(producer.partitionsFor(KafkaProperties.TOPIC)
+        +"\n"+ producer.metrics().toString());
         this.topic = topic;
         this.isAsync = isAsync;
     }
 
     public void run() {
-        int messageNo = 1;
+        int key = 1;
         while (true) {
-            //异步方式发送
+
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            String messageStr = "Message_" + messageNo;
+            String valeu = "Message_" + key;
             long startTime = System.currentTimeMillis();
+            //异步方式发送
             if (isAsync) { // Send asynchronously
-                System.out.println("Sent message: (" + messageNo + ", " + messageStr + ")");
+                System.out.println("Sent message: (" + key + ", " + valeu + ")");
                 producer.send(new ProducerRecord<>(topic,
-                        messageNo,
-                        messageStr), new DemoCallBack(startTime, messageNo, messageStr));
+                        key,
+                        valeu), new DemoCallBack(startTime, key, valeu));
             } else { // Send synchronously
                 try {
-                    producer.send(new ProducerRecord<>(topic, messageNo, messageStr)).get();
-                    System.out.println("Sent message: (" + messageNo + ", " + messageStr + ")");
-                    int i =messageNo%2;
-                    Future<RecordMetadata> a = producer.send(new ProducerRecord<>(topic,messageNo, messageStr));
+                    //producer.send(new ProducerRecord<>(topic, key, valeu)).get();
+                    int partition =key%2;
+                    System.out.println("Sent message: (" + key + ", " + valeu + ")");
+                    Future<RecordMetadata> a = producer.send(new ProducerRecord<>(topic,partition,key, valeu));
                     Thread.sleep(50);
-                    System.out.println(a.isDone() + " " + a.get().topic()+"  "+a.get().partition()+ a.get().offset());
+                    System.out.println(a.isDone() + ", topic=" + a.get().topic()+" , partition="+a.get().partition()+", offset="+ a.get().offset());
                 } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
                 }
             }
-            ++messageNo;
+            ++key;
         }
     }
 }

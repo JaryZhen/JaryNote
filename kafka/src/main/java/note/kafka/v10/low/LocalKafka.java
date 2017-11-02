@@ -1,4 +1,4 @@
-package note.kafka.v11;
+package note.kafka.v10.low;
 
 import kafka.server.KafkaConfig;
 import kafka.server.KafkaServerStartable;
@@ -37,12 +37,13 @@ public  class LocalKafka {
             kafkaProperties.setProperty("broker.id", String.valueOf(KafkaProperties.BROKER_ID));
             kafkaProperties.setProperty("zookeeper.connect", KafkaProperties.ZOOKEEPER_CONNECT);
             kafkaProperties.setProperty("log.dirs", kafkaTmpLogsDir.getAbsolutePath());
+            kafkaProperties.setProperty("num.partitions", "2");
 
             KafkaConfig kafkaConfig = new KafkaConfig(kafkaProperties);
+
             KafkaServerStartable kafka = new KafkaServerStartable(kafkaConfig);
-            //start
             kafka.startup();
-            System.out.println("started kafka ok");
+            System.out.println("start kafka ok "+kafka.serverConfig().numPartitions());
         }
     }
 
