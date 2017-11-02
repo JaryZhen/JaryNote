@@ -16,23 +16,21 @@
  */
 package note.kafka.v10.low;
 
-import note.kafka.KafkaProperties;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 
 import java.util.Date;
 import java.util.Properties;
-import java.util.Random;
 import java.util.concurrent.Future;
 
-public class Producer {
+public class LowProducer {
     private final KafkaProducer<String, String> producer;
     private final String topic;
 
-    public Producer(String topic) {
+    public LowProducer(String topic) {
         Properties props = new Properties();
-        props.put("bootstrap.servers", KafkaProperties.BOOTSTRAP_SERVERS);
+        props.put("bootstrap.servers", LowKafkaProperties.BOOTSTRAP_SERVERS);
         props.put("client.id", "DemoProducer");
 
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
@@ -45,7 +43,7 @@ public class Producer {
 		props.put("partitioner.class", "note.kafka.v10.low.SimplePartitioner");
 
         producer = new KafkaProducer<>(props);
-		System.out.println(producer.partitionsFor(KafkaProperties.TOPIC)
+		System.out.println(producer.partitionsFor(LowKafkaProperties.TOPIC)
 				+"\n"+ producer.metrics().toString());
 
 		this.topic = topic;
@@ -55,7 +53,7 @@ public class Producer {
     	int events = Integer.MAX_VALUE;
     	for (int  nEvents = 0; nEvents < events; nEvents++) {
 			try {
-				Thread.sleep(0);
+				Thread.sleep(2000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -83,7 +81,7 @@ public class Producer {
     }
     
     public static void main(String[] args) throws InterruptedException {
-    	Producer producer = new Producer(KafkaProperties.TOPIC);
+    	LowProducer producer = new LowProducer(LowKafkaProperties.TOPIC);
     	producer.producerMsg();
 	}
 }

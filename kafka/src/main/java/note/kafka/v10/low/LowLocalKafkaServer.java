@@ -2,7 +2,6 @@ package note.kafka.v10.low;
 
 import kafka.server.KafkaConfig;
 import kafka.server.KafkaServerStartable;
-import note.kafka.KafkaProperties;
 import org.apache.zookeeper.*;
 import org.apache.zookeeper.server.ServerConfig;
 import org.apache.zookeeper.server.ZooKeeperServerMain;
@@ -17,7 +16,7 @@ import java.util.Properties;
 /**
  * Created by Jary on 2017/10/9 0009.
  */
-public  class LocalKafka {
+public  class LowLocalKafkaServer {
 
     public static void main(String[] args) {
         try {
@@ -31,15 +30,15 @@ public  class LocalKafka {
     private static void startKafkaLocal() throws Exception {
         final File kafkaTmpLogsDir = File.createTempFile("zk_kafka", "2");
         if (kafkaTmpLogsDir.delete() && kafkaTmpLogsDir.mkdir()) {
-            Properties kafkaProperties = new Properties();
-            kafkaProperties.setProperty("host.name", KafkaProperties.HOSTNAME);
-            kafkaProperties.setProperty("port", String.valueOf(KafkaProperties.KAFKA_SERVER_PORT));
-            kafkaProperties.setProperty("broker.id", String.valueOf(KafkaProperties.BROKER_ID));
-            kafkaProperties.setProperty("zookeeper.connect", KafkaProperties.ZOOKEEPER_CONNECT);
-            kafkaProperties.setProperty("log.dirs", kafkaTmpLogsDir.getAbsolutePath());
-            kafkaProperties.setProperty("num.partitions", "2");
+            Properties pro = new Properties();
+            pro.setProperty("host.name", LowKafkaProperties.HOSTNAME);
+            pro.setProperty("port", String.valueOf(LowKafkaProperties.KAFKA_SERVER_PORT));
+            pro.setProperty("broker.id", String.valueOf(LowKafkaProperties.BROKER_ID));
+            pro.setProperty("zookeeper.connect", LowKafkaProperties.ZOOKEEPER_CONNECT);
+            pro.setProperty("log.dirs", kafkaTmpLogsDir.getAbsolutePath());
+            pro.setProperty("num.partitions", "2");
 
-            KafkaConfig kafkaConfig = new KafkaConfig(kafkaProperties);
+            KafkaConfig kafkaConfig = new KafkaConfig(pro);
 
             KafkaServerStartable kafka = new KafkaServerStartable(kafkaConfig);
             kafka.startup();
@@ -56,7 +55,7 @@ public  class LocalKafka {
             if (zkTmpDir.delete() && zkTmpDir.mkdir()) {
                 Properties zkProperties = new Properties();
                 zkProperties.setProperty("dataDir", zkTmpDir.getAbsolutePath());
-                zkProperties.setProperty("clientPort", String.valueOf(KafkaProperties.ZK_PORT));
+                zkProperties.setProperty("clientPort", String.valueOf(LowKafkaProperties.ZK_PORT));
                 zkProperties.setProperty("tickTime", "4000");
                 zkProperties.setProperty("initLimit", "10");
                 zkProperties.setProperty("syncLimit", "5");

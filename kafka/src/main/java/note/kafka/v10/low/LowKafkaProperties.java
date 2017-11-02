@@ -1,13 +1,14 @@
-package note.kafka;
+package note.kafka.v10.low;
 
 
-public class KafkaProperties {
+public class LowKafkaProperties {
     //public static final String HOSTNAME = "192.168.1.55";
     public static final String HOSTNAME = "localhost";
 
     public static final int ZK_PORT = 2222;
 
     public static final String ZOOKEEPER_CONNECT = HOSTNAME + ":" + ZK_PORT;
+
     public static final int BROKER_ID = 1;
 
     public static final String TOPIC = "paser1";
@@ -21,7 +22,7 @@ public class KafkaProperties {
     public static final String TOPIC2 = "topic2";
     public static final String TOPIC3 = "topic3";
 
-    private KafkaProperties() {}
+    private LowKafkaProperties() {}
 
 
 }

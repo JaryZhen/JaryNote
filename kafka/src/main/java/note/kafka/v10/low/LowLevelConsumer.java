@@ -19,27 +19,35 @@ public class LowLevelConsumer {
         long maxReads = 10000L;
         String topic = KafkaProperties.TOPIC;
         int partition = 1;
-        List<String> seeds = new ArrayList<String>();
-        seeds.add(args[3]);
-        int port = Integer.parseInt(args[4]);
+        List<String> hosts = new ArrayList<String>();
+        hosts.add(LowKafkaProperties.HOSTNAME);
+
+        int port = LowKafkaProperties.KAFKA_SERVER_PORT;
         try {
-            example.run(maxReads, topic, partition, seeds, port);
+              /*SimpleConsumer(
+                        val host: String,
+                        val port: Int,
+                        val soTimeout: Int,
+                        val bufferSize: Int,
+                        val clientId: String)
+                        */
+            example.run(maxReads,hosts , port, topic, partition);
         } catch (Exception e) {
             System.out.println("Oops:" + e);
-             e.printStackTrace();
+            e.printStackTrace();
         }
     }
- 
+
     private List<String> m_replicaBrokers = new ArrayList<String>();
- 
+
     public LowLevelConsumer() {
         m_replicaBrokers = new ArrayList<String>();
     }
- 
-    public void run(long a_maxReads, String a_topic, int a_partition, List<String> a_seedBrokers, int a_port) throws Exception {
+
+    public void run(long a_maxReads,List<String> hosts,  int a_port, String a_topic, int a_partition) throws Exception {
         // find the meta data about the topic and partition we are interested in
         //
-        PartitionMetadata metadata = findLeader(a_seedBrokers, a_port, a_topic, a_partition);
+        PartitionMetadata metadata = findLeader(hosts, a_port, a_topic, a_partition);
         if (metadata == null) {
             System.out.println("Can't find metadata for Topic and Partition. Exiting");
             return;
@@ -53,7 +61,7 @@ public class LowLevelConsumer {
         String clientName = "Client_" + a_topic + "_" + a_partition;
 
         SimpleConsumer consumer = new SimpleConsumer(leadBroker, a_port, 100000, 64 * 1024, clientName);
-        long readOffset = getLastOffset(consumer,a_topic, a_partition, kafka.api.OffsetRequest.EarliestTime(), clientName);
+        long readOffset = getLastOffset(consumer, a_topic, a_partition, kafka.api.OffsetRequest.EarliestTime(), clientName);
 
         int numErrors = 0;
         while (a_maxReads > 0) {
@@ -72,9 +80,9 @@ public class LowLevelConsumer {
                 short code = fetchResponse.errorCode(a_topic, a_partition);
                 System.out.println("Error fetching data from the Broker:" + leadBroker + " Reason: " + code);
                 if (numErrors > 5) break;
-                if (code == ErrorMapping.OffsetOutOfRangeCode())  {
+                if (code == ErrorMapping.OffsetOutOfRangeCode()) {
                     // We asked for an invalid offset. For simple case ask for the last element to reset
-                    readOffset = getLastOffset(consumer,a_topic, a_partition, kafka.api.OffsetRequest.LatestTime(), clientName);
+                    readOffset = getLastOffset(consumer, a_topic, a_partition, kafka.api.OffsetRequest.LatestTime(), clientName);
                     continue;
                 }
                 consumer.close();
@@ -121,14 +129,14 @@ public class LowLevelConsumer {
         OffsetResponse response = consumer.getOffsetsBefore(request);
 
         if (response.hasError()) {
-            System.out.println("Error fetching data Offset Data the Broker. Reason: " + response.errorCode(topic, partition) );
+            System.out.println("Error fetching data Offset Data the Broker. Reason: " + response.errorCode(topic, partition));
             return 0;
         }
         long[] offsets = response.offsets(topic, partition);
         return offsets[0];
     }
 
-    private String findNewLeader(String a_oldLeader, String a_topic, int a_partition, int a_port) throws Exception {
+    private String findNewLeader(String host, String a_topic, int a_partition, int a_port) throws Exception {
         for (int i = 0; i < 3; i++) {
             boolean goToSleep = false;
             PartitionMetadata metadata = findLeader(m_replicaBrokers, a_port, a_topic, a_partition);
@@ -136,7 +144,7 @@ public class LowLevelConsumer {
                 goToSleep = true;
             } else if (metadata.leader() == null) {
                 goToSleep = true;
-            } else if (a_oldLeader.equalsIgnoreCase(metadata.leader().host()) && i == 0) {
+            } else if (host.equalsIgnoreCase(metadata.leader().host()) && i == 0) {
                 // first time through if the leader hasn't changed give ZooKeeper a second to recover
                 // second time, assume the broker did recover before failover, or it was a non-Broker issue
                 //
@@ -156,17 +164,18 @@ public class LowLevelConsumer {
     }
 
     // 1、查找到一个“活着”的Broker，并且找出每个Partition的Leader
-    private PartitionMetadata findLeader(List<String> a_seedBrokers, int a_port, String a_topic, int a_partition) {
+    private PartitionMetadata findLeader(List<String> hosts, int a_port, String a_topic, int a_partition) {
         PartitionMetadata returnMetaData = null;
         loop:
-        for (String seed : a_seedBrokers) {
+        for (String host : hosts) {
             SimpleConsumer consumer = null;
             try {
-                consumer = new SimpleConsumer(seed, a_port, 100000, 64 * 1024, "leaderLookup");
+
+                consumer = new SimpleConsumer(host, a_port, 100000, 64 * 1024, "leaderLookup");
                 List<String> topics = Collections.singletonList(a_topic);
                 TopicMetadataRequest req = new TopicMetadataRequest(topics);
                 kafka.javaapi.TopicMetadataResponse resp = consumer.send(req);
- 
+
                 List<TopicMetadata> metaData = resp.topicsMetadata();
                 for (TopicMetadata item : metaData) {
                     for (PartitionMetadata part : item.partitionsMetadata()) {
@@ -177,7 +186,7 @@ public class LowLevelConsumer {
                     }
                 }
             } catch (Exception e) {
-                System.out.println("Error communicating with Broker [" + seed + "] to find Leader for [" + a_topic
+                System.out.println("Error communicating with Broker [" + host + "] to find Leader for [" + a_topic
                         + ", " + a_partition + "] Reason: " + e);
             } finally {
                 if (consumer != null) consumer.close();
