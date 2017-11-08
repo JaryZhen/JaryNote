@@ -7,6 +7,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 
 import java.util.Properties;
+import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -42,6 +43,7 @@ public class Producer extends Thread {
     }
 
     public void run() {
+        Random ran1 = new Random();
         int key = 1;
         while (true) {
 
@@ -50,11 +52,11 @@ public class Producer extends Thread {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            String valeu = "Message_" + key;
+            String valeu = "temperature_" + ran1.nextInt(150);
             long startTime = System.currentTimeMillis();
             //异步方式发送
             if (isAsync) { // Send asynchronously
-                System.out.println("Sent message: (" + key + ", " + valeu + ")");
+                System.out.println("Sent message: " + key + ": " + valeu + ")");
                 producer.send(new ProducerRecord<>(topic,
                         key,
                         valeu), new DemoCallBack(startTime, key, valeu));

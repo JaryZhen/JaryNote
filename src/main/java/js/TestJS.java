@@ -9,9 +9,10 @@ public class TestJS {
     public static void main(String[] args) {
         try {
             ScriptEngine engine = new ScriptEngineManager().getEngineByName("javascript");
-            Compilable compilable = (Compilable) engine;
             Bindings bindings = engine.createBindings(); //Local级别的Binding
-
+            bindings.put("temperature", 1);
+            bindings.put("temperature", 111);
+/*
 
             String script =
                     "function add(op1,op2,c)" +
@@ -27,11 +28,12 @@ public class TestJS {
 
             Object result = JSFunction.eval(bindings);
             System.out.println(result); //调用缓存着的脚本函数对象，Bindings作为参数容器传入
+*/
+            Compilable compilable = (Compilable) engine;
 
             String script2 = "typeof temperature !== 'undefined' && temperature >= 100";
             CompiledScript JSFunction2 = compilable.compile(script2); //解析编译脚本函数
-            bindings.put("temperature", 1);
-            bindings.put("temperature2", 111);
+
 
             Object result2 = JSFunction2.eval(bindings);
             System.out.println(result2);

@@ -10,7 +10,7 @@ public class KafkaProperties {
     public static final String ZOOKEEPER_CONNECT = HOSTNAME + ":" + ZK_PORT;
     public static final int BROKER_ID = 1;
 
-    public static final String TOPIC = "paser1";
+    public static final String TOPIC = "test";
     public static final int KAFKA_SERVER_PORT = 9092;
     public static final String BOOTSTRAP_SERVERS=HOSTNAME+ ":" +KAFKA_SERVER_PORT;
     public static final String CLIENT_ID = "SimpleConsumerDemoClient";

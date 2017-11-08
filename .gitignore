@@ -4,7 +4,7 @@ out
 livy-demo/target/
 algorithm/target/
 *.iml
-
+*.log
 #### common ###
 common/target
 common/datastructrue/target/
