@@ -1,4 +1,4 @@
-package chp5;
+package chp6;
 
 /**
  * Created by Jary on 2017/10/14 0014.
@@ -23,7 +23,7 @@ public class Class_File {
 00000050: 0100 0328 2949 0100 0a53 6f75 7263 6546  ...()I...SourceF
 00000060: 696c 6501 000f 436c 6173 735f 4669 6c65  ile...Class_File
 00000070: 2e6a 6176 610c 0007 0008 0c00 0500 0601  .java...........
-00000080: 000f 6368 7035 2f43 6c61 7373 5f46 696c  ..chp5/Class_Fil
+00000080: 000f 6368 7035 2f43 6c61 7373 5f46 696c  ..chp6/Class_Fil
 00000090: 6501 0010 6a61 7661 2f6c 616e 672f 4f62  e...java/lang/Ob
 000000a0: 6a65 6374 0021 0003 0004 0000 0001 0002  ject.!..........
 000000b0: 0005 0006 0000 0002 0001 0007 0008 0001  ................
@@ -44,18 +44,18 @@ public class Class_File {
 
 javap -p -v Class_File.class
 
-Classfile /D:/IdeaProjects/JaryNote/common/jvm-book/src/main/java/chp5/Class_File.class
+Classfile /D:/IdeaProjects/JaryNote/common/jvm-book/src/main/java/chp6/Class_File.class
   Last modified 2017-10-14; size 282 bytes
   MD5 checksum 3d146d0ec5ed925459101ef04a5c960b
   Compiled from "Class_File.java"
-public class chp5.Class_File
+public class chp6.Class_File
   minor version: 0
   major version: 52
   flags: ACC_PUBLIC, ACC_SUPER
 Constant pool:
    #1 = Methodref          #4.#15         // java/lang/Object."<init>":()V
-   #2 = Fieldref           #3.#16         // chp5/Class_File.m:I
-   #3 = Class              #17            // chp5/Class_File
+   #2 = Fieldref           #3.#16         // chp6/Class_File.m:I
+   #3 = Class              #17            // chp6/Class_File
    #4 = Class              #18            // java/lang/Object
    #5 = Utf8               m
    #6 = Utf8               I
@@ -69,14 +69,14 @@ Constant pool:
   #14 = Utf8               Class_File.java
   #15 = NameAndType        #7:#8          // "<init>":()V
   #16 = NameAndType        #5:#6          // m:I
-  #17 = Utf8               chp5/Class_File
+  #17 = Utf8               chp6/Class_File
   #18 = Utf8               java/lang/Object
 {
   private int m;
     descriptor: I
     flags: ACC_PRIVATE
 
-  public chp5.Class_File();
+  public chp6.Class_File();
     descriptor: ()V
     flags: ACC_PUBLIC
     Code:
