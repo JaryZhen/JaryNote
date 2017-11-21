@@ -1,0 +1,105 @@
+Classfile /D:/IdeaProjects/JaryNote/common/jvm-book/target/classes/chp8/DynamicDispatch_8.class
+  Last modified 2017-11-21; size 735 bytes
+  MD5 checksum 2af4f1801936d7b15d2e9e648c7f9d66
+  Compiled from "DynamicDispatch_8.java"
+public class chp8.DynamicDispatch_8
+  minor version: 0
+  major version: 52
+  flags: ACC_PUBLIC, ACC_SUPER
+Constant pool:
+   #1 = Methodref          #8.#30         // java/lang/Object."<init>":()V
+   #2 = Class              #31            // chp8/DynamicDispatch_8$Man
+   #3 = Methodref          #2.#30         // chp8/DynamicDispatch_8$Man."<init>":()V
+   #4 = Class              #32            // chp8/DynamicDispatch_8$Woman
+   #5 = Methodref          #4.#30         // chp8/DynamicDispatch_8$Woman."<init>":()V
+   #6 = Methodref          #12.#33        // chp8/DynamicDispatch_8$Human.sayHello:()V
+   #7 = Class              #34            // chp8/DynamicDispatch_8
+   #8 = Class              #35            // java/lang/Object
+   #9 = Utf8               Woman
+  #10 = Utf8               InnerClasses
+  #11 = Utf8               Man
+  #12 = Class              #36            // chp8/DynamicDispatch_8$Human
+  #13 = Utf8               Human
+  #14 = Utf8               <init>
+  #15 = Utf8               ()V
+  #16 = Utf8               Code
+  #17 = Utf8               LineNumberTable
+  #18 = Utf8               LocalVariableTable
+  #19 = Utf8               this
+  #20 = Utf8               Lchp8/DynamicDispatch_8;
+  #21 = Utf8               main
+  #22 = Utf8               ([Ljava/lang/String;)V
+  #23 = Utf8               args
+  #24 = Utf8               [Ljava/lang/String;
+  #25 = Utf8               man
+  #26 = Utf8               Lchp8/DynamicDispatch_8$Human;
+  #27 = Utf8               woman
+  #28 = Utf8               SourceFile
+  #29 = Utf8               DynamicDispatch_8.java
+  #30 = NameAndType        #14:#15        // "<init>":()V
+  #31 = Utf8               chp8/DynamicDispatch_8$Man
+  #32 = Utf8               chp8/DynamicDispatch_8$Woman
+  #33 = NameAndType        #37:#15        // sayHello:()V
+  #34 = Utf8               chp8/DynamicDispatch_8
+  #35 = Utf8               java/lang/Object
+  #36 = Utf8               chp8/DynamicDispatch_8$Human
+  #37 = Utf8               sayHello
+{
+  public chp8.DynamicDispatch_8();
+    descriptor: ()V
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: return
+      LineNumberTable:
+        line 7: 0
+        line 19: 4
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lchp8/DynamicDispatch_8;
+
+  public static void main(java.lang.String[]);
+    descriptor: ([Ljava/lang/String;)V
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=2, locals=3, args_size=1
+         0: new           #2                  // class chp8/DynamicDispatch_8$Man
+         3: dup
+         4: invokespecial #3                  // Method chp8/DynamicDispatch_8$Man."<init>":()V
+         7: astore_1
+         8: new           #4                  // class chp8/DynamicDispatch_8$Woman
+        11: dup
+        12: invokespecial #5                  // Method chp8/DynamicDispatch_8$Woman."<init>":()V
+        15: astore_2
+        16: aload_1
+        17: invokevirtual #6                  // Method chp8/DynamicDispatch_8$Human.sayHello:()V
+        20: aload_2
+        21: invokevirtual #6                  // Method chp8/DynamicDispatch_8$Human.sayHello:()V
+        24: new           #4                  // class chp8/DynamicDispatch_8$Woman
+        27: dup
+        28: invokespecial #5                  // Method chp8/DynamicDispatch_8$Woman."<init>":()V
+        31: astore_1
+        32: aload_1
+        33: invokevirtual #6                  // Method chp8/DynamicDispatch_8$Human.sayHello:()V
+        36: return
+      LineNumberTable:
+        line 27: 0
+        line 28: 8
+        line 29: 16
+        line 30: 20
+        line 31: 24
+        line 32: 32
+        line 33: 36
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      37     0  args   [Ljava/lang/String;
+            8      29     1   man   Lchp8/DynamicDispatch_8$Human;
+           16      21     2 woman   Lchp8/DynamicDispatch_8$Human;
+}
+SourceFile: "DynamicDispatch_8.java"
+InnerClasses:
+     static #9= #4 of #7; //Woman=class chp8/DynamicDispatch_8$Woman of class chp8/DynamicDispatch_8
+     static #11= #2 of #7; //Man=class chp8/DynamicDispatch_8$Man of class chp8/DynamicDispatch_8
+     static abstract #13= #12 of #7; //Human=class chp8/DynamicDispatch_8$Human of class chp8/DynamicDispatch_8

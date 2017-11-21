@@ -1,6 +1,8 @@
 # JaryNote
 
-
+### Common
+   #### 1.jvm-book
+        《深入理解Java虚拟机》
 ### kafka
  ##### 2017.11.2
     添加了kafka model，kafka low level的producer,comsumer
@@ -15,4 +17,3 @@
 ### protobuf
  ##### 2017.10.20
     其实和XML差不多，也就是把某种数据结构的信息，以某种格式保存起来。主要用于数据存储、传输协议格式等场合
-
