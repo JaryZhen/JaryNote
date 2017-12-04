@@ -15,6 +15,7 @@
         <module>common</module>
         <module>protobuf</module>
         <module>kafka</module>
+        <module>netty</module>
     </modules>
 
     <properties>

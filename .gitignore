@@ -5,6 +5,7 @@ livy-demo/target/
 algorithm/target/
 *.iml
 *.log
+*.txt
 #### common ###
 common/target
 common/datastructrue/target/
@@ -18,7 +19,9 @@ spark/target/
 spark/akka/target
 protobuf/target
 
-
 ### kafka & zookeeper
 
 kafka/target/
+
+### NIO & Netty
+netty/target/
