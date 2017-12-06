@@ -26,7 +26,7 @@ public class Producer implements Runnable {
             while (isRunning) {
 
                 Thread.sleep(r.nextInt(SLeepTime));
-                data = new PCData(count.incrementAndGet()); //ÊûÑÈ?†Êï∞Êç?
+                data = new PCData(count.incrementAndGet()); //
                 System.out.println(data+ " is put into queue");
                 //queue.put(data);
                 if(!queue.offer(data,2,TimeUnit.SECONDS)){

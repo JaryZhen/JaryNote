@@ -61,11 +61,11 @@ public class LowLevelConsumer {
 
         String clientName = "Client_" + a_topic + "_" + a_partition;
         System.out.println(clientName);
-        System.out.println("查找到一个“活着”的Broker，并且找出每个Partition的Leader");
+        System.out.println("---Broker----Partition---Leader");
 
         SimpleConsumer consumer = new SimpleConsumer(leadBroker, a_port, 100000, 64 * 1024, clientName);
         long readOffset = getLastOffset(consumer, a_topic, a_partition, kafka.api.OffsetRequest.EarliestTime(), clientName);
-        System.out.println("根据topic 来得到该 partition的offerset 的初始位置："+readOffset);
+        System.out.println("---topic -- partition--offerset--"+readOffset);
 
         long a_maxReads = 10000L;
         int numErrors = 0;
@@ -99,7 +99,7 @@ public class LowLevelConsumer {
             numErrors = 0;
 
             long numRead = 0;
-            System.out.println("获取 topic 相应某一partion的数据");
+            System.out.println("- topic ---某一partion----");
             for (MessageAndOffset messageAndOffset : fetchResponse.messageSet(a_topic, a_partition)) {
                 long currentOffset = messageAndOffset.offset();
                 if (currentOffset < readOffset) {
@@ -179,7 +179,7 @@ public class LowLevelConsumer {
         throw new Exception("Unable to find new leader after Broker failure. Exiting");
     }
 
-    // 1、查找到一个“活着”的Broker，并且找出每个Partition的Leader
+    // -Broker-Partition---Leader
     private PartitionMetadata findLeader(List<String> hosts, int a_port, String a_topic, int a_partition) {
         PartitionMetadata returnMetaData = null;
         loop:

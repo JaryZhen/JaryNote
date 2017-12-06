@@ -3,13 +3,9 @@ package stack_queue;
 import java.util.Stack;
 
 /**
- * Created by Jary on 2017/9/7 0007.
+ * Created by Jary on 2017/12/6 0006.
  */
-public class S_rewers {
-
-    /**
-     * 返回并移除当前栈底元素（栈内元素<栈底>1�?2�?3<栈顶>变为2�?3<栈顶>�?.
-     */
+public class Rewers {
     private int getAndRemoveBottom(Stack<Integer> stack) {
         int result = stack.pop();
         if (stack.empty()) {
@@ -17,14 +13,14 @@ public class S_rewers {
         } else {
             int bottom = getAndRemoveBottom(stack);
             stack.push(result);
-            return bottom; // 第一轮时，返回栈底元�?1
+            return bottom; // 绗竴杞椂锛岃繑鍥炴爤搴曞厓绱?1
         }
     }
 
     /**
-     * 每层递归取出栈底的元素并缓存到变量中，直到栈空；
+     * 姣忓眰閫掑綊鍙栧嚭鏍堝簳鐨勫厓绱犲苟缂撳瓨鍒板彉閲忎腑锛岀洿鍒版爤绌猴紱
      * <p>
-     * 然后逆向将每层变量压入栈，最后实现原栈数据的逆序�?
+     * 鐒跺悗閫嗗悜灏嗘瘡灞傚彉閲忓帇鍏ユ爤锛屾渶鍚庡疄鐜板師鏍堟暟鎹殑閫嗗簭銆?
      *
      * @param stack
      */
@@ -32,18 +28,18 @@ public class S_rewers {
         if (stack.empty()) {
             return;
         }
-        int i = getAndRemoveBottom(stack); // 依次返回1�?2�?3
+        int i = getAndRemoveBottom(stack); // 渚濇杩斿洖1銆?2銆?3
         reverse(stack);
-        stack.push(i); // 依次压入3�?2�?1
+        stack.push(i); // 渚濇鍘嬪叆3銆?2銆?1
     }
 
-    ///////// 测试方法////////
+    ///////// 娴嬭瘯鏂规硶////////
     public static void main(String[] args) {
-        Stack stack = new Stack(); // Stack继承Vector，默认容量是10
+        Stack stack = new Stack(); // Stack缁ф壙Vector锛岄粯璁ゅ閲忔槸10
         stack.push(1);
         stack.push(2);
         stack.push(3);
-        S_rewers rStack = new S_rewers();
+        Rewers rStack = new Rewers();
         rStack.reverse(stack);
         while (!stack.empty()) {
             System.out.println(stack.pop());

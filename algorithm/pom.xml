@@ -11,5 +11,10 @@
 
     <artifactId>algorithm</artifactId>
 
+    <build>
+        <plugins>
+
+        </plugins>
+    </build>
 
 </project>

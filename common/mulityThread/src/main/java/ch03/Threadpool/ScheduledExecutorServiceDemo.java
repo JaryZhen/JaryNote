@@ -24,7 +24,7 @@ public class ScheduledExecutorServiceDemo {
 
         ScheduledExecutorService ses = Executors.newScheduledThreadPool(3);
         //ses.scheduleWithFixedDelay(t, 0, dely, TimeUnit.MILLISECONDS);//相加
-        ses.scheduleAtFixedRate(t,0,dely,TimeUnit.MILLISECONDS);//取最大�??
+        ses.scheduleAtFixedRate(t,0,dely,TimeUnit.MILLISECONDS);//
 
     }
 

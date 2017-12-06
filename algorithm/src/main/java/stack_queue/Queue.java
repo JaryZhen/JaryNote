@@ -3,17 +3,13 @@ package stack_queue;
 import java.util.Stack;
 
 /**
- * Created by Jary on 2017/9/4 0004.
+ * Created by Jary on 2017/12/6 0006.
  */
-
-/*
-    由两个栈组成的队�?
- */
-public class S_queue<K> {
+public class Queue<K> {
     private Stack<K> data;
     private Stack<K> re;
 
-    S_queue() {
+    Queue() {
         this.data = new Stack<K>();
         this.re = new Stack<K>();
     }
@@ -40,7 +36,7 @@ public class S_queue<K> {
     }
 
     public static void main(String[] args) {
-        S_queue<String> queue = new S_queue<String>();
+        Queue<String> queue = new Queue<String>();
         System.out.print("Push: ");
         char ch = 'a';
         for (int i = 0; i < 5; i++) {

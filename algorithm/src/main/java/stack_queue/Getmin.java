@@ -3,17 +3,13 @@ package stack_queue;
 import java.util.Stack;
 
 /**
- * Created by Jary on 2017/9/4 0004.
+ * Created by Jary on 2017/12/6 0006.
  */
-
-/*
-使用stack 设计实现�?个getMin功能
- */
-public class S_Getmin {
+public class Getmin {
     private Stack<Integer> stackA = null;
     private Stack<Integer> min = null;
 
-    S_Getmin() {
+    Getmin() {
         this.stackA = new Stack<Integer>();
         this.min = new Stack<Integer>();
     }
@@ -42,5 +38,4 @@ public class S_Getmin {
         if (this.min.empty()) throw new NullPointerException("");
         return this.min.peek();
     }
-
 }
