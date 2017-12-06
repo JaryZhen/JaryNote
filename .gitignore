@@ -6,6 +6,9 @@ algorithm/target/
 *.iml
 *.log
 *.txt
+
+#### test ###
+test/target/
 #### common ###
 common/target
 common/datastructrue/target/
