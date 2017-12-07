@@ -10,6 +10,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>netty</artifactId>
+    <properties>
+        <echo-server.hostname>localhost</echo-server.hostname>
+        <echo-server.port>8888</echo-server.port>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -25,4 +29,64 @@
             <artifactId>junit</artifactId>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>run-client</id>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>nia.chapter2.echoclient.EchoClient</mainClass>
+                    <arguments>
+                        <argument>${echo-server.hostname}</argument>
+                        <argument>${echo-server.port}</argument>
+                    </arguments>
+                </configuration>
+            </plugin>
+
+            <!--
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>run-server</id>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>nia.chapter2.echoserver.EchoServer</mainClass>
+                    <arguments>
+                        <argument>${echo-server.port}</argument>
+                    </arguments>
+                </configuration>
+            </plugin>
+
+            -->
+
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
