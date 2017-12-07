@@ -4,8 +4,8 @@ import java.awt.*;
 import java.awt.image.ColorModel;
 import java.net.URL;
 import java.net.MalformedURLException;
-import java.util.Hashtable;
-import java.util.Locale;
+import java.nio.util.Hashtable;
+import java.nio.util.Locale;
 
 public class Applet extends Panel {
     transient private AppletStub stub;
