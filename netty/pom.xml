@@ -14,7 +14,58 @@
         <echo-server.hostname>localhost</echo-server.hostname>
         <echo-server.port>8888</echo-server.port>
     </properties>
-
+  <!--  <profiles>
+        <profile>
+            &lt;!&ndash;dash;&gt;mvn -PChatServer clean package exec:exec&ndash;&gt;
+            <id>ChatServer</id>
+            <properties>
+                <mainClass>chapter12.ChatServer</mainClass>
+                <port>1888</port>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <configuration>
+                            <executable>java</executable>
+                            <arguments>
+                                <argument>-classpath</argument>
+                                <classpath/>
+                                <argument>${mainClass}</argument>
+                                <argument>${port}</argument>
+                            </arguments>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>SecureChatServer</id>
+            <properties>
+                <mainClass>chapter12.SecureChatServer</mainClass>
+                <port>1888</port>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <configuration>
+                            <executable>java</executable>
+                            <arguments>
+                                <argument>-classpath</argument>
+                                <classpath/>
+                                <argument>${mainClass}</argument>
+                                <argument>${port}</argument>
+                            </arguments>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+-->
     <dependencies>
         <dependency>
             <groupId>io.netty</groupId>
@@ -31,8 +82,9 @@
     </dependencies>
     <build>
         <finalName>echo</finalName>
-
         <plugins>
+
+<!--
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -65,6 +117,7 @@
                     </arguments>
                 </configuration>
             </plugin>
+-->
 
             <!--
             <plugin>
@@ -88,7 +141,7 @@
 
             -->
 
-            <plugin>
+       <!--     <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
             <plugin>
@@ -96,11 +149,11 @@
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-            </plugin>
-            <plugin>
+            </plugin>-->
+      <!--      <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 
