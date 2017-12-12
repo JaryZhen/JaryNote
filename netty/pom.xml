@@ -14,9 +14,9 @@
         <echo-server.hostname>localhost</echo-server.hostname>
         <echo-server.port>8888</echo-server.port>
     </properties>
-  <!--  <profiles>
+    <profiles>
         <profile>
-            &lt;!&ndash;dash;&gt;mvn -PChatServer clean package exec:exec&ndash;&gt;
+            <!-->mvn -PChatServer clean package exec:exec-->
             <id>ChatServer</id>
             <properties>
                 <mainClass>chapter12.ChatServer</mainClass>
@@ -65,7 +65,7 @@
             </build>
         </profile>
     </profiles>
--->
+
     <dependencies>
         <dependency>
             <groupId>io.netty</groupId>
@@ -140,20 +140,6 @@
             </plugin>
 
             -->
-
-       <!--     <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <artifactId>maven-failsafe-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-            </plugin>-->
-      <!--      <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-            </plugin>-->
         </plugins>
     </build>
 
