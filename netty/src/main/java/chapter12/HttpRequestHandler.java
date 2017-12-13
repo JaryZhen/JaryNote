@@ -27,6 +27,8 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
         try {
             String path = location.toURI() + "index.html";
             path = !path.contains("file:") ? path : path.substring(5);
+            System.out.println("path "+path);
+
             INDEX = new File(path);
         } catch (URISyntaxException e) {
             throw new IllegalStateException(
@@ -41,9 +43,14 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
     @Override
     public void channelRead0(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
         //(1) 如果请求了 WebSocket 协议升级，则增加引用计数（调用 retain()方法），并将它传递给下一 个 ChannelInboundHandler
+        System.out.println("wsurl "+wsUri);
+
         if (wsUri.equalsIgnoreCase(request.uri())) {
+            System.out.println("wsurl-ws "+wsUri);
+
             ctx.fireChannelRead(request.retain());
         } else {
+            System.out.println("处理 100 Continue   "+wsUri);
             //(2) 处理 100 Continue 请求以符合 HTTP 1.1 规范
             if (HttpUtil.is100ContinueExpected(request)) {
                 send100Continue(ctx);
@@ -83,6 +90,8 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
     }
 
     private static void send100Continue(ChannelHandlerContext ctx) {
+        System.out.println("send100Continue");
+
         FullHttpResponse response = new DefaultFullHttpResponse(
             HttpVersion.HTTP_1_1, HttpResponseStatus.CONTINUE);
         ctx.writeAndFlush(response);

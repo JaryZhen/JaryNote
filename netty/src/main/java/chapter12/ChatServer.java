@@ -10,6 +10,7 @@ import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.concurrent.ImmediateEventExecutor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetSocketAddress;
 
@@ -32,6 +33,8 @@ public class ChatServer {
              .channel(NioServerSocketChannel.class)
              .childHandler(createInitializer(channelGroup));
         ChannelFuture future = bootstrap.bind(address);
+        System.out.println("isdone: "+future.isDone() + "  "+ future.isVoid());
+
         future.syncUninterruptibly();
         channel = future.channel();
         return future;
@@ -40,6 +43,7 @@ public class ChatServer {
     //创建 ChatServerInitializer
     protected ChannelInitializer<Channel> createInitializer(
         ChannelGroup group) {
+        System.out.println("创建 ChatServerInitializer");
         return new ChatServerInitializer(group);
     }
 
@@ -67,6 +71,11 @@ public class ChatServer {
                 endpoint.destroy();
             }
         });
+        System.out.println("isdone: "+future.isDone() + "  "+ future.isVoid());
+
+        System.out.println(" started and listening for connections on " + future.channel().localAddress());
         future.channel().closeFuture().syncUninterruptibly();
+        System.out.println(" closeed and listening for connections on " + future.channel().localAddress());
+
     }
 }

@@ -24,6 +24,7 @@ public class TextWebSocketFrameHandler
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx,
         Object evt) throws Exception {
+        System.out.println("userEventTriggered");
         //如果该事件表示握手成功，则从该 ChannelPipeline 中移除HttpRequest-Handler，因为将不会接收到任何HTTP消息了
         if (evt == WebSocketServerProtocolHandler
              .ServerHandshakeStateEvent.HANDSHAKE_COMPLETE) {
@@ -42,6 +43,8 @@ public class TextWebSocketFrameHandler
     public void channelRead0(ChannelHandlerContext ctx,
         TextWebSocketFrame msg) throws Exception {
         //(3) 增加消息的引用计数，并将它写到 ChannelGroup 中所有已经连接的客户端
+        System.out.println("TextWebSocketFrameHandler    channelRead0");
+
         group.writeAndFlush(msg.retain());
     }
 }

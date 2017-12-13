@@ -8,6 +8,8 @@ import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 代码清单 12-3 初始化 ChannelPipeline
@@ -17,14 +19,16 @@ import io.netty.handler.stream.ChunkedWriteHandler;
 //扩展了 ChannelInitializer
 public class ChatServerInitializer extends ChannelInitializer<Channel> {
     private final ChannelGroup group;
-
     public ChatServerInitializer(ChannelGroup group) {
+        System.out.println("init ChatServerInitializer");
+
         this.group = group;
     }
 
     @Override
     //将所有需要的 ChannelHandler 添加到 ChannelPipeline 中
     protected void initChannel(Channel ch) throws Exception {
+        System.out.println("将所有需要的 ChannelHandler 添加到 ChannelPipeline 中"+this.getClass().getName());
         ChannelPipeline pipeline = ch.pipeline();
         pipeline.addLast(new HttpServerCodec());
         pipeline.addLast(new ChunkedWriteHandler());

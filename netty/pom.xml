@@ -20,7 +20,7 @@
             <id>ChatServer</id>
             <properties>
                 <mainClass>chapter12.ChatServer</mainClass>
-                <port>1888</port>
+                <port>8888</port>
             </properties>
             <build>
                 <plugins>
@@ -82,6 +82,14 @@
     </dependencies>
     <build>
         <finalName>echo</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+            </resource>
+            <resource>
+                <directory>src/main/resource</directory>
+            </resource>
+        </resources>
         <plugins>
 
 <!--
