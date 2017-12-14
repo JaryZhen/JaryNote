@@ -2,6 +2,7 @@ package chapter2.echoclient;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -31,18 +32,18 @@ public class EchoClientHandler
         //记录已接收消息的转储
         System.out.println(new Date().getTime()+" Client0 received: " + in.toString(CharsetUtil.UTF_8));
         in.retain();
-        ctx.writeAndFlush(in);
+        ctx.writeAndFlush(in).addListener(ChannelFutureListener.CLOSE);
     }
 
-    @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        //记录已接收消息的转储
-        ByteBuf in = (ByteBuf) msg;
-
-        System.out.println(new Date().getTime()+" Client received: " + in.toString(CharsetUtil.UTF_8));
-        in.retain();
-        ctx.writeAndFlush(in);
-    }
+    //@Override
+    //public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+    //    //记录已接收消息的转储
+    //    ByteBuf in = (ByteBuf) msg;
+    //
+    //    System.out.println(new Date().getTime()+" Client received: " + in.toString(CharsetUtil.UTF_8));
+    //    in.retain();
+    //    ctx.writeAndFlush(in);
+    //}
 
     @Override
     //在发生异常时，记录错误并关闭Channel

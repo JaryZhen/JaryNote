@@ -58,9 +58,7 @@ public class EchoServer {
 
                     @Override
                     public void initChannel(SocketChannel ch) throws Exception {
-                        System.out.println("Server once init :"+new Date());
-                        Thread.sleep(1000);
-                        System.out.println("after 5sec  ...."+new Date());
+                        System.out.println("Server initChanneled :"+new Date());
 
                         //EchoServerHandler 被标注为@Shareable，所以我们可以总是使用同样的实例
                         //这里对于所有的客户端连接来说，都会使用同一个 EchoServerHandler，因为其被标注为@Sharable，

@@ -5,6 +5,7 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.ByteProcessor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
@@ -48,11 +49,13 @@ import static chapter5.DummyChannelHandlerContext.DUMMY_INSTANCE;
  *
  * 代码清单 5-16 释放引用计数的对象
  */
+@Slf4j
 public class ByteBufExamples {
     private final static Random random = new Random();
     private static final ByteBuf BYTE_BUF_FROM_SOMEWHERE = Unpooled.buffer(1024);
     private static final Channel CHANNEL_FROM_SOMEWHERE = new NioSocketChannel();
     private static final ChannelHandlerContext CHANNEL_HANDLER_CONTEXT_FROM_SOMEWHERE = DUMMY_INSTANCE;
+
     /**
      * 代码清单 5-1 支撑数组
      */
@@ -64,13 +67,17 @@ public class ByteBufExamples {
             byte[] array = heapBuf.array();
             //计算第一个字节的偏移量
             int offset = heapBuf.arrayOffset() + heapBuf.readerIndex();
+
             //获得可读字节数
             int length = heapBuf.readableBytes();
+            log.info(""+length);
             //使用数组、偏移量和长度作为参数调用你的方法
             handleArray(array, offset, length);
         }
     }
-
+    public static void main(String[] args) {
+        heapBuffer();
+    }
     /**
      * 代码清单 5-2 访问直接缓冲区的数据
      */
@@ -208,9 +215,6 @@ public class ByteBufExamples {
 
     }
 
-    public static void main(String[] args) {
-        byteBufSlice();
-    }
     /**
      * 代码清单 5-11 复制一个 ByteBuf
      */
