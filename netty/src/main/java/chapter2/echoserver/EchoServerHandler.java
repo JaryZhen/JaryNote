@@ -21,12 +21,12 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("server: " + ctx.channel().remoteAddress() + " connected" + new Date());
+        System.out.println("server: " + ctx.channel().remoteAddress() + " connected " + new Date());
     }
 
     @Override
     public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("channelRegistered" + new Date());
+        System.out.println("channelRegistered " + new Date());
     }
 
     @Override
