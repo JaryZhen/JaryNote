@@ -11,6 +11,9 @@ public class KafkaProperties {
     public static final int BROKER_ID = 1;
 
     public static final String TOPIC = "test";
+    public static final String TOPIC_V11_S = "s1";
+
+
     public static final int KAFKA_SERVER_PORT = 9092;
     public static final String BOOTSTRAP_SERVERS=HOSTNAME+ ":" +KAFKA_SERVER_PORT;
     public static final String CLIENT_ID = "SimpleConsumerDemoClient";

@@ -1,4 +1,4 @@
-package note.kafka.v10;
+package note.kafka.v11;
 
 import note.kafka.KafkaProperties;
 import org.apache.kafka.clients.producer.Callback;
@@ -11,16 +11,16 @@ import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-public class Producer extends Thread {
+public class Producer11 extends Thread {
     private final KafkaProducer<Integer, String> producer;
     private final String topic;
     private final Boolean isAsync;
 
     public static void main(String[] args) {
-        new Producer(KafkaProperties.TOPIC, false).start();
+        new Producer11(KafkaProperties.TOPIC_V11_S, false).start();
     }
 
-    public Producer(String topic, Boolean isAsync) {
+    public Producer11(String topic, Boolean isAsync) {
         Properties props = new Properties();
         props.put("bootstrap.servers", KafkaProperties.BOOTSTRAP_SERVERS);
         props.put("client.id", "DemoProducer");
@@ -48,24 +48,22 @@ public class Producer extends Thread {
         while (true) {
 
             try {
-                Thread.sleep(2000);
+                Thread.sleep(4000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            String valeu = "temperature_" + ran1.nextInt(150);
+            String valeu = "temperature_ " + ran1.nextInt(150);
             long startTime = System.currentTimeMillis();
             //异步方式发送
             if (isAsync) { // Send asynchronously
-                System.out.println("Sent message: " + key + ": " + valeu + ")");
+                System.out.println("Sent message: " + key + ": " + valeu);
                 producer.send(new ProducerRecord<>(topic,
                         key,
                         valeu), new DemoCallBack(startTime, key, valeu));
             } else { // Send synchronously
                 try {
-                    //producer.send(new ProducerRecord<>(topic, key, valeu)).get();
                     int partition =key%2;
-                    System.out.println("Sent message: (" + key + ", " + valeu + ")");
-                    //Future<RecordMetadata> a = producer.send(new ProducerRecord<>(topic,partition,key, valeu));
+                    System.out.println("Sent message: " + key + ", " + valeu);
                     Future<RecordMetadata> a = producer.send(new ProducerRecord<>(topic,key, valeu));
 
                     Thread.sleep(50);
@@ -93,14 +91,11 @@ public class Producer extends Thread {
             long elapsedTime = System.currentTimeMillis() - startTime;
             if (metadata != null) {
                 System.out.println(
-                        "message(" + key + ", " + message + ") sent to partition(" + metadata.partition() +
-                                "), " +
-                                "offset(" + metadata.offset() + ") in " + elapsedTime + " ms");
+                        "message(" + key + ", " + message + ") sent to partition(" + metadata.partition() + "), " + "offset(" + metadata.offset() + ") in " + elapsedTime + " ms");
             } else {
                 exception.printStackTrace();
             }
         }
     }
 }
-
 

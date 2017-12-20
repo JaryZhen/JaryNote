@@ -34,7 +34,7 @@ public class Consumer {
         props.put("auto.commit.interval.ms", "1000");
         props.put("auto.offset.reset", "earliest");
         consumer = new KafkaConsumer<>(props);
-        consumer.subscribe(Collections.singletonList(KafkaProperties.TOPIC));
+        consumer.subscribe(Collections.singletonList(KafkaProperties.TOPIC_V11_S));
         System.out.println("" + consumer.listTopics().toString());
         while (true) {
             ConsumerRecords<Integer, String> records = consumer.poll(100);

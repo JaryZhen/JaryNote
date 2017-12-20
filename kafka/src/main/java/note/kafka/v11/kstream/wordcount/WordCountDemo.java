@@ -16,6 +16,7 @@
  */
 package note.kafka.v11.kstream.wordcount;
 
+import note.kafka.KafkaProperties;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
@@ -27,18 +28,6 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 
-/**
- * Demonstrates, using the high-level KStream DSL, how to implement the WordCount program
- * that computes a simple word occurrence histogram from an input text.
- *
- * In this example, the input stream reads from a topic named "streams-plaintext-input", where the values of messages
- * represent lines of text; and the histogram output is written to topic "streams-wordcount-output" where each record
- * is an updated count of a single word.
- *
- * Before running this example you must create the input topic and the output topic (e.g. via
- * bin/kafka-topics.sh --create ...), and write some data to the input topic (e.g. via
- * bin/kafka-console-producer.sh). Otherwise you won't see any data arriving in the output topic.
- */
 public class WordCountDemo {
 
     public static void main(String[] args) throws Exception {
@@ -49,19 +38,19 @@ public class WordCountDemo {
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
 
-        // setting offset reset to earliest so that we can re-run the demo code with the same pre-loaded data
-        // Note: To re-run the demo, you need to use the offset reset tool:
-        // https://cwiki.apache.org/confluence/display/KAFKA/Kafka+Streams+Application+Reset+Tool
+
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
         KStreamBuilder builder = new KStreamBuilder();
 
-        KStream<String, String> source = builder.stream("streams-plaintext-input");
+        KStream<String, String> source = builder.stream(KafkaProperties.TOPIC_V11_S);
+
 
         KTable<String, Long> counts = source
                 .flatMapValues(new ValueMapper<String, Iterable<String>>() {
                     @Override
                     public Iterable<String> apply(String value) {
+                        System.out.println(value);
                         return Arrays.asList(value.toLowerCase(Locale.getDefault()).split(" "));
                     }
                 })
@@ -72,6 +61,7 @@ public class WordCountDemo {
                     }
                 })
                 .count("Counts");
+
 
         // need to override value serde to Long type
         counts.to(Serdes.String(), Serdes.Long(), "streams-wordcount-output");
@@ -90,6 +80,7 @@ public class WordCountDemo {
 
         try {
             streams.start();
+            System.out.println("stream is started ...");
             latch.await();
         } catch (Throwable e) {
             System.exit(1);

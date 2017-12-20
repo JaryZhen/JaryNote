@@ -16,6 +16,7 @@
  */
 package note.kafka.v11.kstream.wordcount;
 
+import note.kafka.KafkaProperties;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
@@ -30,8 +31,10 @@ import org.apache.kafka.streams.state.KeyValueStore;
 import org.apache.kafka.streams.state.Stores;
 
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
+import java.util.stream.Stream;
 
 /**
  * Demonstrates, using the low-level Processor APIs, how to implement the WordCount program
@@ -65,38 +68,40 @@ public class WordCountProcessorDemo {
 
                 @Override
                 public void process(String dummy, String line) {
-                    String[] words = line.toLowerCase(Locale.getDefault()).split(" ");
-
-                    for (String word : words) {
-                        Integer oldValue = this.kvStore.get(word);
-
-                        if (oldValue == null) {
-                            this.kvStore.put(word, 1);
-                        } else {
-                            this.kvStore.put(word, oldValue + 1);
-                        }
-                    }
-
-                    context.commit();
+                    System.out.println("dummy: "+ dummy+" line: "+line);
+                    Stream.of(line.toLowerCase().split(" ")).forEach((String w) -> {
+                        Optional<Integer> counts = Optional.ofNullable(kvStore.get(w));
+                        int count = counts.map(wc -> wc+1).orElse(1);
+                        kvStore.put(w, count);
+                    });
                 }
 
                 @Override
                 public void punctuate(long timestamp) {
-                    try (KeyValueIterator<String, Integer> iter = this.kvStore.all()) {
+                    /*try (KeyValueIterator<String, Integer> iter = this.kvStore.all()) {
                         System.out.println("----------- " + timestamp + " ----------- ");
-
                         while (iter.hasNext()) {
                             KeyValue<String, Integer> entry = iter.next();
-
                             System.out.println("[" + entry.key + ", " + entry.value + "]");
-
                             context.forward(entry.key, entry.value.toString());
                         }
                     }
+                    context.commit();*/
+                    KeyValueIterator<String,Integer> iter = (KeyValueIterator<String, Integer>) this.kvStore.all();
+                    System.out.println("----------- " + timestamp + " ----------- ");
+
+                    iter.forEachRemaining(entry -> {
+                        context.forward(entry.key,entry.value);
+                        System.out.println("[" + entry.key + ", " + entry.value + "]");
+                        this.kvStore.delete(entry.key);
+                    });
+                    context.commit();
                 }
 
                 @Override
-                public void close() {}
+                public void close() {
+                    this.kvStore.close();
+                }
             };
         }
     }
@@ -114,7 +119,7 @@ public class WordCountProcessorDemo {
 
         TopologyBuilder builder = new TopologyBuilder();
 
-        builder.addSource("Source", "streams-plaintext-input");
+        builder.addSource("Source", KafkaProperties.TOPIC_V11_S);
 
         builder.addProcessor("Process", new MyProcessorSupplier(), "Source");
         builder.addStateStore(Stores.create("Counts").withStringKeys().withIntegerValues().inMemory().build(), "Process");
@@ -135,6 +140,7 @@ public class WordCountProcessorDemo {
 
         try {
             streams.start();
+            System.out.println("stream is started");
             latch.await();
         } catch (Throwable e) {
             System.exit(1);
