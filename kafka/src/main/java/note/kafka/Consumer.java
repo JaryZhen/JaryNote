@@ -1,4 +1,4 @@
-package note.kafka.v10;
+package note.kafka;
 
 import lombok.extern.slf4j.Slf4j;
 import note.kafka.KafkaProperties;
@@ -33,11 +33,14 @@ public class Consumer {
 
         props.put("auto.commit.interval.ms", "1000");
         props.put("auto.offset.reset", "earliest");
+        props.put("linger.ms", 1); // it will failed when set this to 10000.
+
+
         consumer = new KafkaConsumer<>(props);
         consumer.subscribe(Collections.singletonList(KafkaProperties.TOPIC_V11_S));
         System.out.println("" + consumer.listTopics().toString());
         while (true) {
-            ConsumerRecords<Integer, String> records = consumer.poll(100);
+            ConsumerRecords<Integer, String> records = consumer.poll(10);
             System.out.println(records.count());
             try {
                 Thread.sleep(500);

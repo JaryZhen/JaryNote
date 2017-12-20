@@ -30,13 +30,13 @@ public class Producer11 extends Thread {
         props.put("acks", "all");
         props.put("retries", 3);
         props.put("batch.size", 16384);
-       // props.put("linger.ms", 1); // it will failed when set this to 10000.
+        props.put("linger.ms", 1); // it will failed when set this to 10000.
         props.put("buffer.memory", 133333);
-        //props.put("advertised.host.name","172.24.4.184:9092");
-        //props.put("advertised.port","9092");
+        props.put("advertised.host.name","172.24.4.184");
+        props.put("advertised.port","9092");
 
         producer = new KafkaProducer<>(props);
-        System.out.println(producer.partitionsFor(KafkaProperties.TOPIC)
+        System.out.println(producer.partitionsFor(topic)
         +"\n"+ producer.metrics().toString());
         this.topic = topic;
         this.isAsync = isAsync;
@@ -48,7 +48,7 @@ public class Producer11 extends Thread {
         while (true) {
 
             try {
-                Thread.sleep(4000);
+                Thread.sleep(0);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
