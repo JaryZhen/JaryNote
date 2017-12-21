@@ -29,6 +29,7 @@ public class LocalKafka {
     }
 
     private static void startKafkaLocal() throws Exception {
+        System.setProperty("log4j.configuration", String.valueOf(new File("resources", "log4j.xml")));
         final File kafkaTmpLogsDir = File.createTempFile("zk_kafka", "2");
         if (kafkaTmpLogsDir.delete() && kafkaTmpLogsDir.mkdir()) {
             Properties props = new Properties();
