@@ -32,12 +32,12 @@ public class Producer11 extends Thread {
         props.put("batch.size", 16384);
         props.put("linger.ms", 1); // it will failed when set this to 10000.
         props.put("buffer.memory", 133333);
-        props.put("advertised.host.name","172.24.4.184");
-        props.put("advertised.port","9092");
+        props.put("advertised.host.name", "172.24.4.184");
+        props.put("advertised.port", "9092");
 
         producer = new KafkaProducer<>(props);
         System.out.println(producer.partitionsFor(topic)
-        +"\n"+ producer.metrics().toString());
+                + "\n" + producer.metrics().toString());
         this.topic = topic;
         this.isAsync = isAsync;
     }
@@ -48,33 +48,33 @@ public class Producer11 extends Thread {
         while (true) {
 
             try {
-                Thread.sleep(0);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            String valeu = "temperature_ " + ran1.nextInt(150);
-            long startTime = System.currentTimeMillis();
-            //异步方式发送
-            if (isAsync) { // Send asynchronously
-                System.out.println("Sent message: " + key + ": " + valeu);
-                producer.send(new ProducerRecord<>(topic,
-                        key,
-                        valeu), new DemoCallBack(startTime, key, valeu));
-            } else { // Send synchronously
-                try {
-                    int partition =key%2;
+                Thread.sleep(500);
+
+                String valeu = "pressure="+ran1.nextInt(60)+" pressure="+ran1.nextInt(60);
+                long startTime = System.currentTimeMillis();
+                //异步方式发送
+                if (isAsync) { // Send asynchronously
+                    System.out.println("Sent message: " + key + ": " + valeu);
+                    producer.send(new ProducerRecord<>(topic, key, valeu), new DemoCallBack(startTime, key, valeu));
+                } else { // Send synchronously
+
+                    int partition = key % 2;
                     System.out.println("Sent message: " + key + ", " + valeu);
-                    Future<RecordMetadata> a = producer.send(new ProducerRecord<>(topic,key, valeu));
+                    Future<RecordMetadata> a = producer.send(new ProducerRecord<>(topic, key, valeu));
 
                     Thread.sleep(50);
-                    System.out.println(a.isDone() + ", topic=" + a.get().topic()+" , partition="+a.get().partition()+", offset="+ a.get().offset());
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
+                    key++;
+                    System.out.println(a.isDone() + ", topic=" + a.get().topic() + " , partition=" + a.get().partition() + ", offset=" + a.get().offset());
                 }
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
             }
-            ++key;
         }
     }
+
     class DemoCallBack implements Callback {
 
         private final long startTime;

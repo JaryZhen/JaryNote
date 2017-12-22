@@ -16,6 +16,7 @@
  */
 package note.kafka.v11.kstream.wordcount;
 
+import lombok.extern.slf4j.Slf4j;
 import note.kafka.KafkaProperties;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serdes;
@@ -29,6 +30,7 @@ import org.apache.kafka.streams.processor.TopologyBuilder;
 import org.apache.kafka.streams.state.KeyValueIterator;
 import org.apache.kafka.streams.state.KeyValueStore;
 import org.apache.kafka.streams.state.Stores;
+import sun.rmi.runtime.Log;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -36,18 +38,7 @@ import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 import java.util.stream.Stream;
 
-/**
- * Demonstrates, using the low-level Processor APIs, how to implement the WordCount program
- * that computes a simple word occurrence histogram from an input text.
- *
- * In this example, the input stream reads from a topic named "streams-plaintext-input", where the values of messages
- * represent lines of text; and the histogram output is written to topic "streams-wordcount-processor-output" where each record
- * is an updated count of a single word.
- *
- * Before running this example you must create the input topic and the output topic (e.g. via
- * bin/kafka-topics.sh --create ...), and write some data to the input topic (e.g. via
- * bin/kafka-console-producer.sh). Otherwise you won't see any data arriving in the output topic.
- */
+@Slf4j
 public class WordCountProcessorDemo {
 
     private static class MyProcessorSupplier implements ProcessorSupplier<String, String> {
@@ -62,18 +53,28 @@ public class WordCountProcessorDemo {
                 @SuppressWarnings("unchecked")
                 public void init(ProcessorContext context) {
                     this.context = context;
-                    this.context.schedule(1000);
+                    this.context.schedule(2000);
                     this.kvStore = (KeyValueStore<String, Integer>) context.getStateStore("Counts");
                 }
 
                 @Override
-                public void process(String dummy, String line) {
-                    System.out.println("dummy: "+ dummy+" line: "+line);
-                    Stream.of(line.toLowerCase().split(" ")).forEach((String w) -> {
+                public void process(String key, String line) {
+                    System.out.println("key: "+ key+" line: "+line);
+                    String [] kv = line.split(" ");
+                    String k = kv[0];
+                    int v = Integer.parseInt(kv[1]);
+
+
+                    Optional<Integer> getCount = Optional.ofNullable(kvStore.get(k));
+                    int sum = getCount.map(kc -> kc).orElse(0);
+                    System.out.println("sum  "+sum+ " value " +v);
+                    kvStore.put(k,v+sum);
+                   /* Stream.of(line.toLowerCase().split(" ")).forEach((String w) -> {
+                        log.info("w= "+w);
                         Optional<Integer> counts = Optional.ofNullable(kvStore.get(w));
                         int count = counts.map(wc -> wc+1).orElse(1);
                         kvStore.put(w, count);
-                    });
+                    });*/
                 }
 
                 @Override
@@ -91,8 +92,8 @@ public class WordCountProcessorDemo {
                     System.out.println("----------- " + timestamp + " ----------- ");
 
                     iter.forEachRemaining(entry -> {
-                        context.forward(entry.key,entry.value);
-                        System.out.println("[" + entry.key + ", " + entry.value + "]");
+                        context.forward(entry.key,entry.value.toString());
+                        System.out.println("world:" + entry.key + " count: " + entry.value);
                         this.kvStore.delete(entry.key);
                     });
                     context.commit();
@@ -115,7 +116,7 @@ public class WordCountProcessorDemo {
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass());
 
         // setting offset reset to earliest so that we can re-run the demo code with the same pre-loaded data
-        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
 
         TopologyBuilder builder = new TopologyBuilder();
 
@@ -124,7 +125,8 @@ public class WordCountProcessorDemo {
         builder.addProcessor("Process", new MyProcessorSupplier(), "Source");
         builder.addStateStore(Stores.create("Counts").withStringKeys().withIntegerValues().inMemory().build(), "Process");
 
-        builder.addSink("Sink", "streams-wordcount-processor-output", "Process");
+
+        builder.addSink("Sink", KafkaProperties.TOPIC, "Process");
 
         final KafkaStreams streams = new KafkaStreams(builder, props);
         final CountDownLatch latch = new CountDownLatch(1);
