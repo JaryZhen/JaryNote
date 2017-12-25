@@ -50,7 +50,7 @@ public class Producer11 extends Thread {
             try {
                 Thread.sleep(500);
 
-                String valeu = "pressure="+ran1.nextInt(60)+" pressure="+ran1.nextInt(60);
+                String valeu = "pressure="+"8"+" pressure2="+"2";
                 long startTime = System.currentTimeMillis();
                 //异步方式发送
                 if (isAsync) { // Send asynchronously

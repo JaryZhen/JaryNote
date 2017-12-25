@@ -16,8 +16,13 @@
  */
 package note.kafka.v11.kstream.wordcount;
 
+import com.fasterxml.uuid.EthernetAddress;
+import com.fasterxml.uuid.Generators;
+import com.fasterxml.uuid.impl.TimeBasedGenerator;
 import lombok.extern.slf4j.Slf4j;
+import note.kafka.JSScript;
 import note.kafka.KafkaProperties;
+import note.kafka.NashornJsEvaluator;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
@@ -32,9 +37,8 @@ import org.apache.kafka.streams.state.KeyValueStore;
 import org.apache.kafka.streams.state.Stores;
 import sun.rmi.runtime.Log;
 
-import java.util.Locale;
-import java.util.Optional;
-import java.util.Properties;
+import javax.script.*;
+import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.stream.Stream;
 
@@ -47,61 +51,104 @@ public class WordCountProcessorDemo {
         public Processor<String, String> get() {
             return new Processor<String, String>() {
                 private ProcessorContext context;
-                private KeyValueStore<String, Integer> kvStore;
+                private KeyValueStore<String, String> kvStore;
+
+                TimeBasedGenerator gen;
+                String configuration_getFilter = " basisFuc("; //String sum = "sum(a,temperature) ";
+                NashornJsEvaluator jsexe;
+
+                String splitTM = " ";
+                String splitKV = "=";
 
                 @Override
                 @SuppressWarnings("unchecked")
                 public void init(ProcessorContext context) {
+                    gen = Generators.timeBasedGenerator(EthernetAddress.fromInterface());
                     this.context = context;
-                    this.context.schedule(2000);
-                    this.kvStore = (KeyValueStore<String, Integer>) context.getStateStore("Counts");
+                    this.context.schedule(1000);
+                    this.kvStore = (KeyValueStore<String, String>) context.getStateStore("Counts");
                 }
+
 
                 @Override
                 public void process(String key, String line) {
-                    System.out.println("key: "+ key+" line: "+line);
-                    String [] kv = line.split(" ");
-                    String k = kv[0];
-                    int v = Integer.parseInt(kv[1]);
-
-
-                    Optional<Integer> getCount = Optional.ofNullable(kvStore.get(k));
-                    int sum = getCount.map(kc -> kc).orElse(0);
-                    System.out.println("sum  "+sum+ " value " +v);
-                    kvStore.put(k,v+sum);
-                   /* Stream.of(line.toLowerCase().split(" ")).forEach((String w) -> {
-                        log.info("w= "+w);
-                        Optional<Integer> counts = Optional.ofNullable(kvStore.get(w));
-                        int count = counts.map(wc -> wc+1).orElse(1);
-                        kvStore.put(w, count);
-                    });*/
+                    UUID uuid = gen.generate();
+                    kvStore.put(uuid.toString().replaceAll("-", ""), line);
                 }
 
                 @Override
                 public void punctuate(long timestamp) {
-                    /*try (KeyValueIterator<String, Integer> iter = this.kvStore.all()) {
-                        System.out.println("----------- " + timestamp + " ----------- ");
-                        while (iter.hasNext()) {
-                            KeyValue<String, Integer> entry = iter.next();
-                            System.out.println("[" + entry.key + ", " + entry.value + "]");
-                            context.forward(entry.key, entry.value.toString());
-                        }
-                    }
-                    context.commit();*/
-                    KeyValueIterator<String,Integer> iter = (KeyValueIterator<String, Integer>) this.kvStore.all();
-                    System.out.println("----------- " + timestamp + " ----------- ");
+                    System.out.println("\n\n----------- " + timestamp + " ----------- ");
+
+                    Map<String, String> kvMap = new HashMap<>();//<pre:"Jadfasda=23 Jadfasda=22"> <pre2:"Jadfasda=90 Jadfasda=22">
+                    KeyValueIterator<String, String> iter = (KeyValueIterator<String, String>) this.kvStore.all();
 
                     iter.forEachRemaining(entry -> {
-                        context.forward(entry.key,entry.value.toString());
-                        System.out.println("world:" + entry.key + " count: " + entry.value);
+                        // System.out.println("key:" + entry.key + " msg: " + entry.value);
+                        String[] msg = entry.value.split(splitTM); //[0]pre=23 ; [1]pre2=90
+
+                        for (int i = 0; i < msg.length; i++) {
+                            String[] kv = msg[i].split(splitKV);//[0]pre=23
+                            String k = kv[0];//pre
+                            //System.out.println("k = " +k);
+                            int v = Integer.parseInt(kv[1]);//23
+                            String key = "J"+entry.key;
+                            String msg2 = kvMap.get(k);// "Jasdfadfe4rd=23"
+                            if (msg2 != null) {
+                                kvMap.put(k, msg2 + splitTM + key + splitKV + v);
+                            } else {
+                                kvMap.put(k, key + splitKV + v);
+                            }
+                        }
+                        context.forward(entry.key, entry.value);
                         this.kvStore.delete(entry.key);
                     });
+
+                    Iterator iterMap = kvMap.keySet().iterator();
+                    System.out.println("Telemetry siz:" + kvMap.size());
+
+                    iterMap.forEachRemaining(preK -> {
+
+                        //System.out.println("jaryzhen "+preK);
+                        String value = kvMap.get(preK);//Jadfasda=23 Jadfasda=22
+                        StringBuffer sb = new StringBuffer();
+
+                        Map<String, Integer> bindingMap = new HashMap<>();
+                        String[] msg = value.split(splitTM); //[0]Jadfasda=23 ; [1]Jadfasda=90
+                        for (int i = 0; i < msg.length; i++) {
+                            String[] kv = msg[i].split(splitKV);//[0]Jadfasda=23
+                            String k = kv[0];//Jadfasda
+                            Integer v = Integer.parseInt(kv[1]);
+                            bindingMap.put(k, v);
+                            sb.append(k + ",");
+                        }
+
+                        if (bindingMap.size() > 0) {
+                            String sum = configuration_getFilter + sb.toString().substring(0, sb.lastIndexOf(",")) + ")";
+                            System.out.println("JS Func= " + sum);
+                            System.out.println("Telemetry= " + preK);
+
+                            jsexe = new NashornJsEvaluator(JSScript.Variance + sum);
+                            try {
+                                jsexe.execute(NashornJsEvaluator.toBindings(bindingMap));
+                            } catch (ScriptException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                   // }
+
+                });
                     context.commit();
                 }
 
                 @Override
                 public void close() {
                     this.kvStore.close();
+                }
+
+                public void execute(String key, Integer value) {
+                    //log.info("executing ..{}={}.",key,value);
+
                 }
             };
         }
@@ -123,7 +170,7 @@ public class WordCountProcessorDemo {
         builder.addSource("Source", KafkaProperties.TOPIC_V11_S);
 
         builder.addProcessor("Process", new MyProcessorSupplier(), "Source");
-        builder.addStateStore(Stores.create("Counts").withStringKeys().withIntegerValues().inMemory().build(), "Process");
+        builder.addStateStore(Stores.create("Counts").withStringKeys().withStringValues().inMemory().build(), "Process");
 
 
         builder.addSink("Sink", KafkaProperties.TOPIC, "Process");
