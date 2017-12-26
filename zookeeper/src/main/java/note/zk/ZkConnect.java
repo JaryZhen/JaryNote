@@ -1,4 +1,4 @@
-package note.zookeeper;
+package note.zk;
 
 
 import org.apache.zookeeper.*;
@@ -9,27 +9,27 @@ import java.util.List;
 public class ZkConnect {
     public static void main (String args[]) throws Exception
     {
-        ZooKeeper zk = new ZooKeeper("192.168.1.55:2222", 3000, null);
-        //ZooKeeper zk = connector.connect("192.168.1.55");
+        ZooKeeper zk = new ZooKeeper("localhost:2222", 3000, null);
+        //ZooKeeper zk = connector.connect("192.168.1.55");    public static final String HOSTNAME = "localhost";
 
         System.out.println("=========创建节点===========");
-        if(zk.exists("/test", false) == null)
+        if(zk.exists("/ZkServer", false) == null)
         {
             System.out.println("chaungji");
-            zk.create("/test", "znode1".getBytes(), Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+            zk.create("/ZkServer", "znode1".getBytes(), Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
         }
         System.out.println("=============查看节点是否安装成功===============");
-        System.out.println(new String(zk.getData("/test", false, null)));
+        System.out.println(new String(zk.getData("/ZkServer", false, null)));
 
         System.out.println("=========修改节点的数据==========");
-        zk.setData("/test", "zNode2".getBytes(), -1);
+        zk.setData("/ZkServer", "zNode2".getBytes(), -1);
         System.out.println("========查看修改的节点是否成功=========");
-        System.out.println(new String(zk.getData("/test", false, null)));
+        System.out.println(new String(zk.getData("/ZkServer", false, null)));
 
         System.out.println("=======删除节点==========");
-        zk.delete("/test", -1);
+        zk.delete("/ZkServer", -1);
         System.out.println("==========查看节点是否被删除============");
-        System.out.println("节点状态：" + zk.exists("/test", false));
+        System.out.println("节点状态：" + zk.exists("/ZkServer", false));
         zk.getSaslClient();
         zk.close();
     }

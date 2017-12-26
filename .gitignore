@@ -22,9 +22,12 @@ spark/target/
 spark/akka/target
 protobuf/target
 
-### kafka & zookeeper
+### kafka
 
 kafka/target/
+
+### zookeeper
+zookeeper/target/
 
 ### NIO & Netty
 netty/target/
