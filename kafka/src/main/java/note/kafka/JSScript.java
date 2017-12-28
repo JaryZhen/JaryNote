@@ -30,6 +30,8 @@ public class JSScript {
                     " }" +
                     " return sqrsum;" +
                     "}";
+
+
     /**
      * 求给定双精度数组中值的 平均值
      */

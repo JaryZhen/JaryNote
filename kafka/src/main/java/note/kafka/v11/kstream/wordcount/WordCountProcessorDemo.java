@@ -76,7 +76,7 @@ public class WordCountProcessorDemo {
                     kvStore.put(uuid.toString().replaceAll("-", ""), line);
                 }
 
-                @Override
+              @Override
                 public void punctuate(long timestamp) {
                     System.out.println("\n\n----------- " + timestamp + " ----------- ");
 

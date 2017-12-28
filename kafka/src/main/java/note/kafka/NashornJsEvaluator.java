@@ -45,6 +45,7 @@ public class NashornJsEvaluator {
     private static CompiledScript compileScript(String script) {
         ScriptEngine engine = factory.getScriptEngine(new String[]{"--no-java"});
         Compilable compEngine = (Compilable) engine;
+
         try {
             return compEngine.compile(script);
         } catch (ScriptException e) {

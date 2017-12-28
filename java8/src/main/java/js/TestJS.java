@@ -1,5 +1,7 @@
 package js;
 
+import jdk.nashorn.api.scripting.NashornScriptEngine;
+
 import javax.script.*;
 
 /**
@@ -8,7 +10,7 @@ import javax.script.*;
 public class TestJS {
     public static void main(String[] args) {
         try {
-            ScriptEngine engine = new ScriptEngineManager().getEngineByName("javascript");
+            NashornScriptEngine engine = (NashornScriptEngine) new ScriptEngineManager().getEngineByName("javascript");
             Bindings bindings = engine.createBindings(); //Local级别的Binding
             bindings.put("temperature", 1);
             bindings.put("temperature", 111);
@@ -29,13 +31,14 @@ public class TestJS {
             Object result = JSFunction.eval(bindings);
             System.out.println(result); //调用缓存着的脚本函数对象，Bindings作为参数容器传入
 */
-            Compilable compilable = (Compilable) engine;
+            //Compilable compilable = (Compilable) engine;
 
             String script2 = "typeof temperature !== 'undefined' && temperature >= 100";
-            CompiledScript JSFunction2 = compilable.compile(script2); //解析编译脚本函数
+            //CompiledScript compiled = compilable.compile(script2); //解析编译脚本函数
+            CompiledScript  compiled = engine.compile(script2);
 
 
-            Object result2 = JSFunction2.eval(bindings);
+            Object result2 = compiled.eval(bindings);
             System.out.println(result2);
 
         } catch (ScriptException e) {

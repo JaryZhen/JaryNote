@@ -31,3 +31,6 @@ zookeeper/target/
 
 ### NIO & Netty
 netty/target/
+
+### Java8-tutorial
+java8/target

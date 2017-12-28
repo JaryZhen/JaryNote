@@ -11,7 +11,7 @@ public class KafkaProperties {
     public static final int BROKER_ID = 1;
 
     public static final String TOPIC = "test";
-    public static final String TOPIC_V11_S = "s1";
+    public static final String TOPIC_V11_S = "s2";
 
 
     public static final int KAFKA_SERVER_PORT = 9092;
