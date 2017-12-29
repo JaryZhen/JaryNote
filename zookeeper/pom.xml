@@ -36,4 +36,24 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>run-server</id>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <!--mvn exec:java-->
+                <configuration>
+                    <mainClass>ZkServer</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

@@ -1,4 +1,3 @@
-import org.apache.log4j.spi.ErrorHandler;
 import org.apache.zookeeper.server.ServerConfig;
 import org.apache.zookeeper.server.ZooKeeperServerMain;
 import org.apache.zookeeper.server.quorum.QuorumPeerConfig;
@@ -6,7 +5,6 @@ import org.apache.zookeeper.server.quorum.QuorumPeerConfig;
 import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
-import java.util.UUID;
 
 /**
  * Created by Jary on 2017/11/1 0001.
