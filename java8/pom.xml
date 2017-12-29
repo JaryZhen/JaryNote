@@ -11,5 +11,17 @@
 
     <artifactId>java8</artifactId>
 
-
+    <build>
+        <finalName>java8</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+        <plugins>
+        </plugins>
+    </build>
 </project>

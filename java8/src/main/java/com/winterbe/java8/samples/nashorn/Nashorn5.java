@@ -3,6 +3,7 @@ package com.winterbe.java8.samples.nashorn;
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
+import java.io.FileReader;
 
 /**
  * Bind java objects to custom javascript objects.
@@ -13,7 +14,7 @@ public class Nashorn5 {
 
     public static void main(String[] args) throws Exception {
         ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
-        engine.eval("load('res/nashorn5.js')");
+        engine.eval(new FileReader(Res.getJS("res/nashorn5.js")));
 
         Invocable invocable = (Invocable) engine;
 

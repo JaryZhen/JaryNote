@@ -33,7 +33,7 @@ public class Nashorn2 {
 
     public static void main(String[] args) throws Exception {
         ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
-        engine.eval(new FileReader("res/nashorn2.js"));
+        engine.eval(new FileReader(Res.getJS("res/nashorn2.js")));
     }
 
 }

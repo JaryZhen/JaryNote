@@ -4,6 +4,8 @@ import jdk.nashorn.api.scripting.NashornScriptEngine;
 
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -11,9 +13,9 @@ import java.util.concurrent.TimeUnit;
  */
 public class Nashorn9 {
 
-    public static void main(String[] args) throws ScriptException, NoSuchMethodException {
+    public static void main(String[] args) throws ScriptException, NoSuchMethodException, FileNotFoundException {
         NashornScriptEngine engine = (NashornScriptEngine) new ScriptEngineManager().getEngineByName("nashorn");
-        engine.eval("load('res/nashorn9.js')");
+        engine.eval(new FileReader(Res.getJS("res/nashorn9.js")));
 
         long t0 = System.nanoTime();
 
