@@ -24,7 +24,7 @@ public class Jstest {
         Bindings bi = defaultCtx.getBindings(ScriptContext.ENGINE_SCOPE);
         bi.put("q", 1);
         bi.put("b", 22);
-        Object result2 = engine.eval("(Sum(q)+Sum(b))>23", bi);
+        Object result2 = engine.eval("(Sum(p1)+Sum(p2)) > 23", bi);//Sum(p1,P2) > 23 Sum(p1+P2) > 5
         System.out.println(result2);
 
 

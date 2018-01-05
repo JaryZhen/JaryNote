@@ -1,4 +1,4 @@
-package note.zk;
+package note.zk.cpt05;
 
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.ZooDefs.Ids;
