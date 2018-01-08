@@ -2,6 +2,9 @@ package chp3;
 
 /**
  * Created by Jary on 2017/10/12 0012.
+ *
+ *
+ * HotSpot自动选择和调优引发的FullGC
  */
 public class FullGC {
     public static void main(String[] args) {
