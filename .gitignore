@@ -34,3 +34,6 @@ netty/target/
 
 ### Java8-tutorial
 java8/target
+
+### Thrift
+thrift/target

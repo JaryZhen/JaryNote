@@ -16,9 +16,10 @@
         <module>spark</module>
         <module>kafka</module>
         <module>common</module>
-        <module>protobuf</module>
+        <module>grpc</module>
         <module>zookeeper</module>
         <module>java8</module>
+        <module>thrift</module>
     </modules>
 
     <properties>
@@ -50,6 +51,7 @@
         <zkclient.version>0.10</zkclient.version>
         <curator.version>4.0.0</curator.version>
 
+        <thrift.version>0.9.3</thrift.version>
     </properties>
     <packaging>pom</packaging>
     <build>
@@ -448,6 +450,18 @@
                 <groupId>org.apache.curator</groupId>
                 <artifactId>curator-test</artifactId>
                 <version>${curator.version}</version>
+            </dependency>
+
+            <!-- thrift -->
+            <dependency>
+                <groupId>org.apache.thrift</groupId>
+                <artifactId>libfb303</artifactId>
+                <version>${thrift.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.thrift</groupId>
+                <artifactId>libthrift</artifactId>
+                <version>${thrift.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
