@@ -1,6 +1,6 @@
-####GC日志
+#### GC日志
        5.617（时间戳）: [GC（Young GC） 5.617（时间戳）: [ParNew（使用ParNew作为年轻代的垃圾回收期）: 43296K（年轻代垃圾回收前的大小）->7006K（年轻代垃圾回收以后的大小）(47808K)（年轻代的总大小）, 0.0136826 secs（回收时间）] 44992K（堆区垃圾回收前的大小）->8702K（堆区垃圾回收后的大小）(252608K)（堆区总大小）, 0.0137904 secs（回收时间）] [Times: user=0.03（Young GC用户耗时） sys=0.00（Young GC系统耗时）, real=0.02 secs（Young GC实际耗时）]
-####FullGC:
+#### FullGC:
     1.HotSpot自动选择和调优引发的FullGC( Ergonomics)
     2.元空间引发的FullGC (Metadata GC Threshold)
     
@@ -69,7 +69,7 @@
                 
    
                 
-#####垃圾回收器选择
+##### 垃圾回收器选择
                 
     JVM给出了3种选择：串行收集器、并行收集器、并发收集器。串行收集器只适用于小数据量的情况，所以生产环境的选择主要是并行收集器和并发收集器。
      设置串行收集器。
@@ -91,7 +91,7 @@
           
      注：如果使用 throughput collector 和 concurrent low pause collector 这两种垃圾收集器，需要适当的挺高内存大小，为多线程做准备。
                 
-#####其它
+##### 其它
      -XX:+ScavengeBeforeFullGC：新生代GC优先于Full GC执行。
      -XX:-DisableExplicitGC：禁止调用System.gc()，但JVM的gc仍然有效。
      -XX:+MaxFDLimit：最大化文件描述符的数量限制。
@@ -99,7 +99,7 @@
      -XX:SoftRefLRUPolicyMSPerMB=0：“软引用”的对象在最后一次被访问后能存活0毫秒（默认为1秒）。
      -XX:TargetSurvivorRatio=90：允许90%的Survivor空间被占用（默认为50%）。提高对于Survivor的使用率——超过就会尝试垃圾回收。
                 
-#####疑问解答
+##### 疑问解答
                 
     -Xmn，-XX:NewSize/-XX:MaxNewSize，-XX:NewRatio 3组参数都可以影响年轻代的大小，混合使用的情况下，优先级是什么？
     如下：
