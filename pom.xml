@@ -21,6 +21,7 @@
         <module>zookeeper</module>
         <module>java8</module>
         <module>thrift</module>
+        <module>hazelcast</module>
     </modules>
 
     <properties>
@@ -53,6 +54,9 @@
         <curator.version>4.0.0</curator.version>
 
         <thrift.version>0.9.3</thrift.version>
+        <hazelcast.version>3.6.6</hazelcast.version>
+        <hazelcast-zookeeper.version>3.6.3</hazelcast-zookeeper.version>
+
     </properties>
     <packaging>pom</packaging>
     <build>
@@ -289,7 +293,6 @@
     <dependencyManagement>
         <dependencies>
 
-            <!-- https://mvnrepository.com/artifact/com.google.inject/guice -->
             <dependency>
                 <groupId>com.google.inject</groupId>
                 <artifactId>guice</artifactId>
@@ -430,7 +433,6 @@
                 <artifactId>zookeeper</artifactId>
                 <version>${zookeeper.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.101tec/zkclient -->
             <dependency>
                 <groupId>com.101tec</groupId>
                 <artifactId>zkclient</artifactId>
@@ -452,6 +454,11 @@
                 <artifactId>curator-test</artifactId>
                 <version>${curator.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-x-discovery</artifactId>
+                <version>${curator.version}</version>
+            </dependency>
 
             <!-- thrift -->
             <dependency>
@@ -464,7 +471,52 @@
                 <artifactId>libthrift</artifactId>
                 <version>${thrift.version}</version>
             </dependency>
+
+            <!--hazelcast-->
+            <dependency>
+                <groupId>com.hazelcast</groupId>
+                <artifactId>hazelcast</artifactId>
+                <version>${hazelcast.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hazelcast</groupId>
+                <artifactId>hazelcast-client</artifactId>
+                <version>${hazelcast.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hazelcast</groupId>
+                <artifactId>hazelcast-spring</artifactId>
+                <version>${hazelcast.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hazelcast</groupId>
+                <artifactId>hazelcast-zookeeper</artifactId>
+                <version>${hazelcast-zookeeper.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
-
+   <!-- <distributionManagement>
+        <repository>
+            <id>nexus</id>
+            <name>nexus-releases</name>
+            <url>http://172.24.4.180:8081/repository/maven-releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus</id>
+            <name>nexus-snapshots</name>
+            <url>http://172.24.4.180:8081/repository/maven-snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>-->
+    <repositories>
+        <repository>
+            <id>nexus</id>
+            <url>http://172.24.4.180:8081/repository/maven-public/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 </project>

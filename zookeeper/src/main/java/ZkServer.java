@@ -23,7 +23,7 @@ public class ZkServer
             if (zkTmpDir.delete() && zkTmpDir.mkdir()) {
                 Properties zkProperties = new Properties();
                 zkProperties.setProperty("dataDir", zkTmpDir.getAbsolutePath());
-                zkProperties.setProperty("clientPort", String.valueOf(2222));
+                zkProperties.setProperty("clientPort", String.valueOf(2181));
                 zkProperties.setProperty("tickTime", "4000");
                 zkProperties.setProperty("initLimit", "10");
                 zkProperties.setProperty("syncLimit", "5");

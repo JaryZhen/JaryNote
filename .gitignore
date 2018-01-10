@@ -36,3 +36,6 @@ java8/target
 
 ### Thrift
 thrift/target
+
+### hazelcast
+hazelcast/target
