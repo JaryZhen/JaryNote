@@ -20,13 +20,11 @@ import com.fasterxml.uuid.EthernetAddress;
 import com.fasterxml.uuid.Generators;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
 import lombok.extern.slf4j.Slf4j;
-import note.kafka.JSScript;
 import note.kafka.KafkaProperties;
-import note.kafka.NashornJsEvaluator;
+import note.kafka.SingleJsEvaluator;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
-import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.processor.Processor;
 import org.apache.kafka.streams.processor.ProcessorContext;
@@ -35,12 +33,10 @@ import org.apache.kafka.streams.processor.TopologyBuilder;
 import org.apache.kafka.streams.state.KeyValueIterator;
 import org.apache.kafka.streams.state.KeyValueStore;
 import org.apache.kafka.streams.state.Stores;
-import sun.rmi.runtime.Log;
 
 import javax.script.*;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
-import java.util.stream.Stream;
 
 @Slf4j
 public class WordCountProcessorDemo {
@@ -55,7 +51,7 @@ public class WordCountProcessorDemo {
 
                 TimeBasedGenerator gen;
                 String configuration_getFilter = " basisFuc("; //String sum = "sum(a,temperature) ";
-                NashornJsEvaluator jsexe;
+                SingleJsEvaluator jsexe;
 
                 String splitTM = " ";
                 String splitKV = "=";
@@ -128,9 +124,9 @@ public class WordCountProcessorDemo {
                             System.out.println("JS Func= " + sum);
                             System.out.println("Telemetry= " + preK);
 
-                            jsexe = new NashornJsEvaluator(JSScript.Variance + sum);
+                            jsexe = new SingleJsEvaluator(sum);
                             try {
-                                jsexe.execute(NashornJsEvaluator.toBindings(bindingMap));
+                                jsexe.execute(SingleJsEvaluator.toBindings(bindingMap));
                             } catch (ScriptException e) {
                                 e.printStackTrace();
                             }

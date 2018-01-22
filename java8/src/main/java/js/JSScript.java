@@ -1,4 +1,4 @@
-package note.kafka;
+package js;
 
 /**
  * Created by Jary on 2017/12/22 0022.

@@ -17,7 +17,7 @@ public class Producer11 extends Thread {
     private final Boolean isAsync;
 
     public static void main(String[] args) {
-        new Producer11(KafkaProperties.TOPIC_V11_S, false).start();
+        new Producer11(KafkaProperties.TOPIC_a, false).start();
     }
 
     public Producer11(String topic, Boolean isAsync) {
@@ -48,9 +48,9 @@ public class Producer11 extends Thread {
         while (true) {
 
             try {
-                Thread.sleep(2000);
+                Thread.sleep(1000);
 
-                String valeu = "pressure="+ran1.nextInt(60)+" pressure2="+ran1.nextInt(60);
+                String valeu = "Suct_Pres_Status="+ran1.nextInt(100);//+" pressure2="+ran1.nextInt(60);
                 long startTime = System.currentTimeMillis();
                 //异步方式发送
                 if (isAsync) { // Send asynchronously

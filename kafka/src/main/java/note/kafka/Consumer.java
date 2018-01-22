@@ -37,7 +37,7 @@ public class Consumer {
 
 
         consumer = new KafkaConsumer<>(props);
-        consumer.subscribe(Collections.singletonList(KafkaProperties.TOPIC));
+        consumer.subscribe(Collections.singletonList(KafkaProperties.TOPIC_a));
         System.out.println("" + consumer.listTopics().toString());
         while (true) {
             ConsumerRecords<Integer, String> records = consumer.poll(10);
