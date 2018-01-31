@@ -14,7 +14,7 @@
     -XX:MaxMetaspaceSize=8m
                      
     -XX:+HeapDumpOnOutOfMemoryError
-    -XX:HeapDumpPath=data\gc\java_pidxxx.hprof
+    -XX:HeapDumpPath=data/gc/java_pidxxx.hprof
                     
     -XX:-PrintGC
     -XX:+PrintGCDetails
@@ -74,14 +74,14 @@
     JVM给出了3种选择：串行收集器、并行收集器、并发收集器。串行收集器只适用于小数据量的情况，所以生产环境的选择主要是并行收集器和并发收集器。
      设置串行收集器。
         -XX:+UseSerialGC：
-     并行收集器（吞吐量优先）
+     并行收集器（吞吐量优先,"指针碰撞"的方式分配内存）
         -XX:+UseParallelGC：设置为并行收集器。此配置仅对年轻代有效。即年轻代使用并行收集，而年老代仍使用串行收集。
         -XX:ParallelGCThreads=20：配置并行收集器的线程数，即：同时有多少个线程一起进行垃圾回收。此值建议配置与CPU数目相等。
         -XX:+UseParallelOldGC：配置年老代垃圾收集方式为并行收集。JDK6.0开始支持对年老代并行收集。
         -XX:MaxGCPauseMillis=100：设置每次年轻代垃圾回收的最长时间（单位
         -XX:+UseAdaptiveSizePolicy：设置此选项后，并行收集器会自动选择年轻代区大小和相应的Survivor区比例，以达到目标系统规定的最低响应时间或者收集频率等。
                 
-     并发收集器CMS(响应时间优先)
+     并发收集器CMS(响应时间优先，"空闲列表"的方式分配内存)
         -XX:+UseParNewGC：设置年轻代为并发收集。可与CMS收集同时使用。JDK5.0以上，JVM会根据系统配置自行设置，所以无需再设置此值。     
         -XX:+UseConcMarkSweepGC：设置年老代为并发收集。测试中配置这个以后，-XX:NewRatio=4的配置失效了。所以，此时年轻代大小最好用-Xmn设置。
         -XX:CMSFullGCsBeforeCompaction=：由于并发收集器不对内存空间进行压缩、整理，所以运行一段时间以后会产生“碎片”，使得运行效率降低。此参数设置运行次FullGC以后对内存空间进行压缩、整理。
@@ -98,6 +98,8 @@
      -XX:+UseThreadPriorities：启用本地线程优先级API，即使 java.lang.Thread.setPriority() 生效，反之无效。
      -XX:SoftRefLRUPolicyMSPerMB=0：“软引用”的对象在最后一次被访问后能存活0毫秒（默认为1秒）。
      -XX:TargetSurvivorRatio=90：允许90%的Survivor空间被占用（默认为50%）。提高对于Survivor的使用率——超过就会尝试垃圾回收。
+     -XX:+UseCompressedOops: 对于64位系统有指针膨胀和数据类型对齐的原因，这个参数可以用来对象指针压缩功能
+     -XX:+DoEscapeAnalysis：开启逃逸分析，优化前是在堆中，而优化后的是在栈中
                 
 ##### 疑问解答
                 

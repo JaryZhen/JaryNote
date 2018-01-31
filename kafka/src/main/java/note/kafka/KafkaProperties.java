@@ -12,7 +12,7 @@ public class KafkaProperties {
 
     public static final String TOPIC = "test";
     public static final String TOPIC_V11_S = "s2";
-    public static final String TOPIC_a ="aliyun-iot-YWYfetAm9Wh";
+    public static final String TOPIC_a ="Suct_Data";
 
 
     public static final int KAFKA_SERVER_PORT = 9092;

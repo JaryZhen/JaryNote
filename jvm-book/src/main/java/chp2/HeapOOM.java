@@ -8,10 +8,10 @@ import java.util.List;
  -Xms20m
  -Xmx20m
  -XX:+HeapDumpOnOutOfMemoryError
- -XX:HeapDumpPath=test\java_pidxxx.hprof
+ -XX:HeapDumpPath=data/jvm-book/java_pidxxx.hprof
  -Xmn10M
  -XX:+PrintGCDetails
- -Xloggc:test\log
+ -Xloggc:data/jvm-book/log
 
  * Created by Jary on 2017/10/11 0011.
  */
