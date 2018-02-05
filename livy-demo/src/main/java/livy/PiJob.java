@@ -52,7 +52,7 @@ public class PiJob implements Job<Double>, Function<Integer, Integer>,
         try {
 
             System.err.printf("Uploading %s to the Spark context...\n", "f");
-            client.uploadJar(new File("data/dsapp.jar")).get();
+            client.uploadJar(new File("livy-demo/target/jarynote.jar")).get();
 
             System.err.printf("Running PiJob with %d samples...\n", 1);
             double pi = client.submit(new PiJob(30)).get();

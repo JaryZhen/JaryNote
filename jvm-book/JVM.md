@@ -44,7 +44,7 @@
     -XX:MaxMetaspaceFreeRatio，在GC之后，最大的Metaspace剩余空间容量的百分比，减少为释放空间所导致的垃圾收集
     
     -XX:-PrintGC：                           每次GC时打印相关信息
-    -XX:+PrintGCApplicationStoppedTime      打印垃圾回收期间程序暂停的时间
+    -XX:+PrintGCApplicationStoppedTime      打印垃圾回收期间程序暂停的时间(不建议设置)
     -XX:+PrintGCDetails                    打印GC详细信息
     -XX:+PrintGCTimeStamps                 每次GC时输出GC的时间戳（以基准时间的形式）
     -Xloggc:D:/apache-tomcat-7.0.56/logs/gc.log  设置GC输入的文件地址

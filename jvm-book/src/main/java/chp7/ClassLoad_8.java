@@ -32,13 +32,12 @@ public class ClassLoad_8 {
         };
 
         Object obj =  cl.loadClass("chp7.test.Per").newInstance();
+        System.out.println(obj instanceof chp7.Hum);
 
         if (obj instanceof Hum){
             Hum per = (Hum) obj;
             per.say();
 
         }
-
-
     }
 }
