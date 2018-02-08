@@ -19,9 +19,9 @@ public class Test {
         list.forEach(System.out::println);
 
         /*
-        *   Math::maxµÈÐ§ÓÚ(a, b)->Math.max(a, b)
-            String::startWithµÈÐ§ÓÚ(s1, s2)->s1.startWith(s2)
-            s::isEmptyµÈÐ§ÓÚ()->s.isEmpty()
+        *   Math::maxç­‰æ•ˆäºŽ(a, b)->Math.max(a, b)
+            String::startWithç­‰æ•ˆäºŽ(s1, s2)->s1.startWith(s2)
+            s::isEmptyç­‰æ•ˆäºŽ()->s.isEmpty()
             */
 
 

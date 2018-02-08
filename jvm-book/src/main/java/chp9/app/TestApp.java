@@ -8,7 +8,7 @@ import java.io.InputStream;
  */
 public class TestApp {
     public static void main(String[] args) throws Exception {
-        InputStream is = new FileInputStream("common/jvm-book/target/classes/chp9/app/TestClass.class");
+        InputStream is = new FileInputStream("jvm-book/target/classes/chp9/app/TestClass.class");
         byte[] b = new byte[is.available()];
         is.read(b);
         is.close();
