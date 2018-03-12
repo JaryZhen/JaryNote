@@ -46,7 +46,7 @@
         <!--livy dome -->
         <livy-api>0.3.0</livy-api>
         <spark.version>1.6.0-cdh5.9.0</spark.version>
-
+        <spark.version2>2.2.1</spark.version2>
         <netty.version>4.1.11.Final</netty.version>
 
         <zookeeper.version>3.4.11</zookeeper.version>
@@ -493,7 +493,18 @@
                 <artifactId>hazelcast-zookeeper</artifactId>
                 <version>${hazelcast-zookeeper.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.spark</groupId>
+                <artifactId>spark-core_2.11</artifactId>
+                <version>${spark.version2}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.spark</groupId>
+                <artifactId>spark-sql_2.11</artifactId>
+                <version>${spark.version2}</version>
+            </dependency>
         </dependencies>
+
     </dependencyManagement>
    <!-- <distributionManagement>
         <repository>

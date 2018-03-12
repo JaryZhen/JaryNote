@@ -13,7 +13,9 @@
     <packaging>pom</packaging>
     <modules>
         <module>akka</module>
+        <module>sparkdemo</module>
     </modules>
+
 
 
 </project>

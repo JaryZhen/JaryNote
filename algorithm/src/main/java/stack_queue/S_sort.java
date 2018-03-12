@@ -34,7 +34,7 @@ public class S_sort {
         S_sort rStack = new S_sort();
         rStack.sort(stack);
         for (Integer a : stack) {
-            System.out.print(a + " ");
+            System.out.print(a + " sdfgs梵蒂冈的");
         }
     }
 }
