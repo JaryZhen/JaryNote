@@ -1,3 +1,5 @@
+import uuid.UuidTest;
+
 import java.util.Random;
 
 /**
@@ -5,20 +7,22 @@ import java.util.Random;
  */
 public class test {
     public static Object ins= null;
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
-        test a = new test();
-        test b = new test();
+        int a = 3 | 4;
+        System.out.println(""+  a);
+    }
 
-        a.ins = b;
-        b.ins = a;
-
-        a =null;
-        b= null;
-
-
-        System.gc();
-
-        System.out.println();
+    public static int count (int n ){
+        int com = 0;
+        while (n>0){
+            int y = n%2;
+            n = n/2;
+            if (y==1){
+                com++;
+            }
+        }
+        System.out.println(""+com);
+        return com;
     }
 }
