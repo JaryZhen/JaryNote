@@ -11,7 +11,6 @@
     <modules>
         <module>test</module>
         <module>netty</module>
-        <module>livy-demo</module>
         <module>algorithm</module>
         <module>spark</module>
         <module>kafka</module>
@@ -519,15 +518,19 @@
         </snapshotRepository>
     </distributionManagement>-->
     <repositories>
+        <!--<repository>-->
+            <!--<id>nexus</id>-->
+            <!--<url>http://172.24.4.180:8081/repository/maven-public/</url>-->
+            <!--<releases>-->
+                <!--<enabled>false</enabled>-->
+            <!--</releases>-->
+            <!--<snapshots>-->
+                <!--<enabled>true</enabled>-->
+            <!--</snapshots>-->
+        <!--</repository>-->
         <repository>
-            <id>nexus</id>
-            <url>http://172.24.4.180:8081/repository/maven-public/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
+            <id>growingio</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </repository>
     </repositories>
 </project>
