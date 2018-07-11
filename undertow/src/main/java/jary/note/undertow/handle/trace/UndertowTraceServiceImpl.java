@@ -1,6 +1,5 @@
 package jary.note.undertow.handle.trace;
 
-import brave.Span;
 import brave.Tracer;
 import brave.Tracing;
 import brave.http.HttpServerAdapter;
@@ -9,13 +8,10 @@ import brave.http.HttpTracing;
 import brave.propagation.CurrentTraceContext;
 import brave.propagation.Propagation;
 import brave.propagation.TraceContext;
-import brave.sampler.Sampler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.HeaderMap;
-import jary.note.undertow.handle.AbstractHandle;
 import zipkin2.Endpoint;
 import zipkin2.reporter.AsyncReporter;
-import zipkin2.reporter.Reporter;
 import zipkin2.reporter.Sender;
 import zipkin2.reporter.okhttp3.OkHttpSender;
 
