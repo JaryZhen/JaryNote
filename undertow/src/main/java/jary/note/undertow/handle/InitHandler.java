@@ -6,7 +6,7 @@ import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
 
 
-public class HelloHandler implements HttpHandler {
+public class InitHandler implements HttpHandler {
 
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {

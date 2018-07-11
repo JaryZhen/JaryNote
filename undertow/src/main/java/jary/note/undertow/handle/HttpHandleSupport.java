@@ -1,6 +1,5 @@
 package jary.note.undertow.handle;
 
-import brave.Tracer;
 import brave.Tracing;
 import brave.http.HttpServerAdapter;
 import brave.http.HttpServerHandler;
@@ -28,7 +27,7 @@ public class HttpHandleSupport implements HttpHandler {
     static HttpHandler next;
 
     public HttpHandleSupport(){
-        next = new HelloHandler();
+        next = new InitHandler();
     }
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
