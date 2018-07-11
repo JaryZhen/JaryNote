@@ -33,66 +33,59 @@ public class AbstractHandle implements HttpHandler {
 
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
-        if (!exchange.isComplete()) {
 
-            OkHttpSender sender = OkHttpSender.create("http://127.0.0.1:9411/api/v2/spans");
-            AsyncReporter<Span> spanReporter = AsyncReporter.create(sender);
+        OkHttpSender sender = OkHttpSender.create("http://127.0.0.1:9411/api/v2/spans");
+        AsyncReporter<Span> spanReporter = AsyncReporter.create(sender);
 
-            // Create a tracing component with the service name you want to see in Zipkin.
-            Tracing tracing = Tracing.newBuilder()
-                    .localServiceName("undertow-service")
-                    .spanReporter(spanReporter)
-                    .build();
+        // Create a tracing component with the service name you want to see in Zipkin.
+        Tracing tracing = Tracing.newBuilder()
+                .localServiceName("undertow-service").spanReporter(spanReporter).build();
 
-            Propagation.Getter<HeaderMap, String> GETTER = new Propagation.Getter<HeaderMap, String>() {
-                @Override
-                public String get(HeaderMap carrier, String key) {
-                    return carrier.getFirst(key);
-                }
+        Propagation.Getter<HeaderMap, String> GETTER = new Propagation.Getter<HeaderMap, String>() {
+            @Override
+            public String get(HeaderMap carrier, String key) {
+                return carrier.getFirst(key);
+            }
 
-                @Override
-                public String toString() {
-                    return "HttpServerRequest::getHeader";
-                }
-            };
+            @Override
+            public String toString() {
+                return "HttpServerRequest::getHeader";
+            }
+        };
 
-            HttpTracing httpTracing = HttpTracing.create(tracing);
+        HttpTracing httpTracing = HttpTracing.create(tracing);
 
-            extractor = httpTracing.tracing().propagation().extractor(GETTER);
-            serverHandler = HttpServerHandler.create(httpTracing, new Adapter());
-            currentTraceContext = httpTracing.tracing().currentTraceContext();
-            //extractor = httpTracing.tracing().propagation().extractor(Request::getHeader);
+        extractor = httpTracing.tracing().propagation().extractor(GETTER);
+        serverHandler = HttpServerHandler.create(httpTracing, new Adapter());
+        currentTraceContext = httpTracing.tracing().currentTraceContext();
+        //extractor = httpTracing.tracing().\propagation().extractor(Request::getHeader);
 
-            // Tracing exposes objects you might need, most importantly the tracer
+        brave.Span span = serverHandler.handleReceive(extractor, exchange.getRequestHeaders(), exchange);
 
-            Tracer tracer = httpTracing.tracing().tracer();
-
-            //Span span = serverHandler.handleReceive(extractor, exchange); // 1.
-
-
-            brave.Span span = serverHandler.handleReceive(extractor, exchange.getRequestHeaders(), exchange);
-            exchange.addExchangeCompleteListener((exch, nextListener) -> {
+       /*     exchange.addExchangeCompleteListener((exch, nextListener) -> {
                 try {
+                   System.out.println();
                     nextListener.proceed();
                 } finally {
                     serverHandler.handleSend(exch, exch.getAttachment(ExceptionHandler.THROWABLE), span);
-
-
                     tracing.close();
                     spanReporter.close();
                     sender.close();
                 }
-            });
-            try (CurrentTraceContext.Scope scope = currentTraceContext.newScope(span.context())) {
-                handle(exchange);
-                next.handleRequest(exchange);
-            } catch (Exception | Error e) { // move the error to where the complete listener can see it
-                exchange.putAttachment(ExceptionHandler.THROWABLE, e);
-                throw e;
-            }
-        } else {
+            });*/
+
+        try (CurrentTraceContext.Scope scope = currentTraceContext.newScope(span.context())) {
             next.handleRequest(exchange);
+        } catch (Exception | Error e) { // move the error to where the complete listener can see it
+            exchange.putAttachment(ExceptionHandler.THROWABLE, e);
+            throw e;
+        }finally {
+            handle(exchange);
+            tracing.close();
+            spanReporter.close();
+            sender.close();
         }
+
     }
 
     static final class Adapter extends HttpServerAdapter<HttpServerExchange, HttpServerExchange> {
