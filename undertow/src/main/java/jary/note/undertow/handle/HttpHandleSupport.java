@@ -12,7 +12,6 @@ import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.ExceptionHandler;
 import io.undertow.util.HeaderMap;
-import io.undertow.util.HeaderValues;
 import zipkin2.Endpoint;
 import zipkin2.Span;
 import zipkin2.reporter.AsyncReporter;
@@ -20,7 +19,7 @@ import zipkin2.reporter.okhttp3.OkHttpSender;
 
 import java.net.InetSocketAddress;
 
-public class AbstractHandle implements HttpHandler {
+public class HttpHandleSupport implements HttpHandler {
 
 
     static CurrentTraceContext currentTraceContext;
@@ -61,30 +60,24 @@ public class AbstractHandle implements HttpHandler {
             extractor = httpTracing.tracing().propagation().extractor(GETTER);
             serverHandler = HttpServerHandler.create(httpTracing, new Adapter());
             currentTraceContext = httpTracing.tracing().currentTraceContext();
-            //extractor = httpTracing.tracing().propagation().extractor(Request::getHeader);
-
-            // Tracing exposes objects you might need, most importantly the tracer
-
-            Tracer tracer = httpTracing.tracing().tracer();
-
-            //Span span = serverHandler.handleReceive(extractor, exchange); // 1.
+            //extractor = httpTracing.tracing().\propagation().extractor(Request::getHeader);
 
 
             brave.Span span = serverHandler.handleReceive(extractor, exchange.getRequestHeaders(), exchange);
             exchange.addExchangeCompleteListener((exch, nextListener) -> {
                 try {
+                    handle(exchange);
                     nextListener.proceed();
                 } finally {
                     serverHandler.handleSend(exch, exch.getAttachment(ExceptionHandler.THROWABLE), span);
-
 
                     tracing.close();
                     spanReporter.close();
                     sender.close();
                 }
             });
+
             try (CurrentTraceContext.Scope scope = currentTraceContext.newScope(span.context())) {
-                handle(exchange);
                 next.handleRequest(exchange);
             } catch (Exception | Error e) { // move the error to where the complete listener can see it
                 exchange.putAttachment(ExceptionHandler.THROWABLE, e);

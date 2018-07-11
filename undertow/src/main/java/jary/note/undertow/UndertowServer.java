@@ -5,7 +5,7 @@ import io.undertow.server.handlers.PathHandler;
 import jary.note.undertow.handle.HelloHandler;
 import jary.note.undertow.handle.TracingServletContextListener;
 
-public class HelloWorldServer {
+public class UndertowServer {
     public static void main(final String[] args) {
 
         PathHandler path = new PathHandler();
