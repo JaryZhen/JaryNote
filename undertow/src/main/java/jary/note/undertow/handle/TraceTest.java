@@ -1,26 +1,24 @@
 package jary.note.undertow.handle;
 
-import brave.Tracer;
-import jary.note.undertow.handle.trace.UndertowTrace;
+import jary.note.undertow.handle.trace.Trace;
 public class TraceTest {
-    Tracer tracer;
+    Trace tracer;
     public TraceTest() {
-        tracer = UndertowTrace.getInstance().tracer;
+        tracer = new Trace();
     }
 
     public void test() {
-        brave.Span span = tracer.newTrace().name("test").kind(brave.Span.Kind.SERVER);
-        span.start();
+        brave.Span span = tracer.startNew("test");
 
-        childTest(tracer, span);
-        span.finish();
+        childTest(span);
+        //...
+        tracer.end(span);
     }
 
-    public void childTest(Tracer tracer, brave.Span pspan) {
+    public void childTest(brave.Span pspan) {
 
-        brave.Span span = tracer.newChild(pspan.context()).name("childTest").kind(brave.Span.Kind.SERVER);
-        span.start();
-
-        span.finish();
+        brave.Span childSpan = tracer.startNewChild("childSpan",pspan);
+        //...
+        tracer.end(childSpan);
     }
 }

@@ -10,7 +10,7 @@ trait UndertowTraceServiceLike {
 
   type ServerSpan = Span
 
-  // used by a tracer report data to Zipkin
+  // used by a ZipkinTracer report data to Zipkin
   implicit val executionContext: ExecutionContext
   val tracing: Tracing
   //lazy val mapInjector = tracing.propagation().injector(ZipkinTraceServiceLike.mapSetter)
@@ -112,8 +112,8 @@ trait UndertowTraceServiceLike {
      val contextOrFlags = tracing.propagation().extractor((carrier: A, key: String) => getHeader(carrier, key).orNull).extract(headers)
 
      Option(contextOrFlags.context())
-       .map(tracer.newChild)
-       .getOrElse(tracer.newTrace(contextOrFlags.samplingFlags()))
+       .map(ZipkinTracer.newChild)
+       .getOrElse(ZipkinTracer.newTrace(contextOrFlags.samplingFlags()))
    }
   */
 
@@ -146,7 +146,7 @@ trait UndertowTraceServiceLike {
       (carrier: A, key: String) => getHeader(carrier, key).orNull
     ).extract(headers)
 
-    tracer.joinSpan(contextOrFlags.context())
+    ZipkinTracer.joinSpan(contextOrFlags.context())
   }
 */
 
