@@ -57,10 +57,11 @@ public class HttpHandleSupport2 implements HttpHandler {
             extractor = httpTracing.tracing().propagation().extractor(GETTER);
             serverHandler = HttpServerHandler.create(httpTracing, new Adapter());
             currentTraceContext = httpTracing.tracing().currentTraceContext();
+            System.out.println();
 
             //extractor = httpTracing.tracing().\propagation().extractor(Request::getHeader);
             brave.Span span = serverHandler.handleReceive(extractor, exchange.getRequestHeaders(), exchange);
-            trace("haha", tracer, span);
+            trace("haha", tracer, span,exchange);
             exchange.addExchangeCompleteListener((exch, nextListener) -> {
                 try {
                     //System.out.println();
@@ -71,7 +72,7 @@ public class HttpHandleSupport2 implements HttpHandler {
             });
 
             try (CurrentTraceContext.Scope scope = currentTraceContext.newScope(span.context())) {
-                next.handleRequest(exchange);
+                //next.handleRequest(exchange);
             } catch (Exception | Error e) { // move the error to where the complete listener can see it
                 exchange.putAttachment(ExceptionHandler.THROWABLE, e);
                 throw e;
@@ -83,11 +84,13 @@ public class HttpHandleSupport2 implements HttpHandler {
         }
     }
 
-    private void trace(String traceName, Tracer tracer, brave.Span span) throws InterruptedException {
+    private void trace(String traceName, Tracer tracer, brave.Span span,HttpServerExchange exchange) throws Exception {
         brave.Span childSpan = tracer.newChild(span.context()).name(traceName).kind(brave.Span.Kind.CLIENT);
         //tags.foreach { case (key, value) => childSpan.tag(key, value) }
+        System.out.println();
         childSpan.start();
         Thread.currentThread().sleep(1000);
+        //next.handleRequest(exchange);
         childSpan.tag("failed", "Finished with exception: ${t.getMessage}");
         childSpan.finish();
 
