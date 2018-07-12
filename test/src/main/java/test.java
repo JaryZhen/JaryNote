@@ -1,28 +1,27 @@
+import org.joda.time.DateTime;
 import uuid.UuidTest;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Random;
 
 /**
  * Created by Jary on 2017/11/8 0008.
  */
 public class test {
-    public static Object ins= null;
+
     public static void main(String[] args) throws InterruptedException {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2000, Calendar.JANUARY, 1, 0, 0, 0);
+        SimpleDateFormat sdf =
+                new SimpleDateFormat("E MM/dd/yyyy HH:mm:ss.SSS");
+        calendar.add(Calendar.DAY_OF_MONTH, 90);
+        System.out.println(sdf.format(calendar.getTime()));
 
-        int a = 3 | 4;
-        System.out.println(""+  a);
+
+        DateTime dateTime = new DateTime(2000, 1, 1, 0, 0, 0, 0);
+        System.out.println(dateTime.plusDays(90).toString("E MM/dd/yyyy HH:mm:ss.SSS"));
+
     }
 
-    public static int count (int n ){
-        int com = 0;
-        while (n>0){
-            int y = n%2;
-            n = n/2;
-            if (y==1){
-                com++;
-            }
-        }
-        System.out.println(""+com);
-        return com;
-    }
 }

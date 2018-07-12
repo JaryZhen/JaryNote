@@ -560,6 +560,14 @@
                 <artifactId>zipkin</artifactId>
                 <version>${zipkin2.version}</version>
             </dependency>
+
+            <!-- com.typesafe.akka/akka-actor -->
+            <dependency>
+                <groupId>com.typesafe.akka</groupId>
+                <artifactId>akka-actor_2.11</artifactId>
+                <version>2.5.11</version>
+            </dependency>
+
         </dependencies>
 
     </dependencyManagement>

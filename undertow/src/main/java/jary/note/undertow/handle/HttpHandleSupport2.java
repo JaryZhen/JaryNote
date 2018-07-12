@@ -12,6 +12,7 @@ import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.ExceptionHandler;
 import io.undertow.util.HeaderMap;
+import jary.note.undertow.handle.trace.UndertowTrace;
 import zipkin2.Endpoint;
 import zipkin2.Span;
 import zipkin2.reporter.AsyncReporter;
@@ -27,18 +28,11 @@ public class HttpHandleSupport2 implements HttpHandler {
     static HttpServerHandler<HttpServerExchange, HttpServerExchange> serverHandler;
     static TraceContext.Extractor<HeaderMap> extractor;
     static HttpHandler next;
-    OkHttpSender sender;
-    AsyncReporter<Span> spanReporter;
     Tracing tracing;
 
     public HttpHandleSupport2() {
-        sender = OkHttpSender.create("http://127.0.0.1:9411/api/v2/spans");
-        spanReporter = AsyncReporter.create(sender);
         next = new InitHandler();
-        tracing = Tracing.newBuilder()
-                .localServiceName("undertow-service")
-                .spanReporter(spanReporter)
-                .build();
+        tracing = UndertowTrace.getInstance().tracing;
     }
 
     @Override
@@ -89,11 +83,8 @@ public class HttpHandleSupport2 implements HttpHandler {
         }
     }
 
-
     private void trace(String traceName, Tracer tracer, brave.Span span) throws InterruptedException {
-        TraceContext parent = tracer.newTrace().context();
-
-        brave.Span childSpan = tracer.newChild(parent).name(traceName).kind(brave.Span.Kind.CLIENT);
+        brave.Span childSpan = tracer.newChild(span.context()).name(traceName).kind(brave.Span.Kind.CLIENT);
         //tags.foreach { case (key, value) => childSpan.tag(key, value) }
         childSpan.start();
         Thread.currentThread().sleep(1000);
@@ -102,11 +93,6 @@ public class HttpHandleSupport2 implements HttpHandler {
 
     }
 
-    public void close() {
-        tracing.close();
-        spanReporter.close();
-        sender.close();
-    }
 
     static final class Adapter extends HttpServerAdapter<HttpServerExchange, HttpServerExchange> {
         @Override

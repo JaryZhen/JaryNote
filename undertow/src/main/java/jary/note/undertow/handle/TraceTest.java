@@ -1,32 +1,35 @@
 package jary.note.undertow.handle;
 
 import brave.Tracer;
-import brave.Tracing;
-import io.undertow.server.HttpHandler;
-import zipkin2.Span;
-import zipkin2.reporter.AsyncReporter;
-import zipkin2.reporter.okhttp3.OkHttpSender;
-
+import jary.note.undertow.handle.trace.UndertowTrace;
 public class TraceTest {
-    HttpHandler next;
-    OkHttpSender sender;
-    AsyncReporter<Span> spanReporter;
-    Tracing tracing;
-
+    Tracer tracer;
     public TraceTest() {
-        sender = OkHttpSender.create("http://127.0.0.1:9411/api/v2/spans");
-        spanReporter = AsyncReporter.create(sender);
-        next = new InitHandler();
-        tracing = Tracing.newBuilder()
-                .localServiceName("undertow-service")
-                .spanReporter(spanReporter)
-                .build();
+        tracer = UndertowTrace.getInstance().tracer;
     }
 
-
     public void test() throws InterruptedException {
-        Tracer tracer = tracing.tracer();
         brave.Span span = tracer.newTrace().name("test").kind(brave.Span.Kind.SERVER);
+        span.start();
+        nextTest(tracer, span);
+        Thread.currentThread().sleep(1000);
+
+        span.finish();
+    }
+
+    public void nextTest(Tracer tracer, brave.Span pspan) throws InterruptedException {
+        brave.Span span = tracer.newChild(pspan.context()).name("nextTest").kind(brave.Span.Kind.SERVER);
+        span.start();
+
+        childTest(tracer,span);
+        Thread.currentThread().sleep(1000);
+
+        span.finish();
+    }
+
+    public void childTest(Tracer tracer, brave.Span pspan) throws InterruptedException {
+
+        brave.Span span = tracer.newChild(pspan.context()).name("childTest").kind(brave.Span.Kind.SERVER);
 
         span.start();
         Thread.currentThread().sleep(1000);
