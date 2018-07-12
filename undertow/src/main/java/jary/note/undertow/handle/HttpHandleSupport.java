@@ -12,6 +12,7 @@ import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.ExceptionHandler;
 import io.undertow.util.HeaderMap;
+import jary.note.undertow.handle.trace.UndertowHttpTrace;
 import jary.note.undertow.handle.trace.UndertowTrace;
 import zipkin2.Endpoint;
 
@@ -19,44 +20,35 @@ import java.net.InetSocketAddress;
 
 public class HttpHandleSupport implements HttpHandler {
 
+    CurrentTraceContext currentTraceContext;
+    HttpServerHandler<HttpServerExchange, HttpServerExchange> serverHandler;
+    TraceContext.Extractor<HeaderMap> extractor;
+    HttpHandler next;
 
-    static CurrentTraceContext currentTraceContext;
-    static HttpServerHandler<HttpServerExchange, HttpServerExchange> serverHandler;
-    static TraceContext.Extractor<HeaderMap> extractor;
-    static HttpHandler next;
-    Tracing tracing;
+    UndertowHttpTrace undertowHttpTrace;
+    HttpTracing httpTracing;
 
     public HttpHandleSupport() {
         next = new InitHandler();
-        tracing = UndertowTrace.getInstance().tracing;
+        undertowHttpTrace = UndertowHttpTrace.getInstance();
+
+        httpTracing = undertowHttpTrace.httpTracing;
+        extractor = undertowHttpTrace.extractor;
+
+        currentTraceContext = httpTracing.tracing().currentTraceContext();
     }
 
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         if (!exchange.isComplete()) {
 
-            Propagation.Getter<HeaderMap, String> GETTER = new Propagation.Getter<HeaderMap, String>() {
-                @Override
-                public String get(HeaderMap carrier, String key) {
-                    return carrier.getFirst(key);
-                }
-
-                @Override
-                public String toString() {
-                    return "HttpServerRequest::getHeader";
-                }
-            };
-
-            HttpTracing httpTracing = HttpTracing.create(tracing);
             Tracer tracer = httpTracing.tracing().tracer();
 
-            extractor = httpTracing.tracing().propagation().extractor(GETTER);
-            serverHandler = HttpServerHandler.create(httpTracing, new Adapter());
-            currentTraceContext = httpTracing.tracing().currentTraceContext();
-
             //extractor = httpTracing.tracing().\propagation().extractor(Request::getHeader);
+            serverHandler = HttpServerHandler.create(httpTracing, new Adapter());
             brave.Span span = serverHandler.handleReceive(extractor, exchange.getRequestHeaders(), exchange);
             trace("haha", tracer, span);
+
             exchange.addExchangeCompleteListener((exch, nextListener) -> {
                 try {
                     //System.out.println();
@@ -83,12 +75,11 @@ public class HttpHandleSupport implements HttpHandler {
         brave.Span childSpan = tracer.newChild(span.context()).name(traceName).kind(brave.Span.Kind.CLIENT);
         //tags.foreach { case (key, value) => childSpan.tag(key, value) }
         childSpan.start();
-        Thread.currentThread().sleep(1000);
+        //Thread.currentThread().sleep(1000);
         childSpan.tag("failed", "Finished with exception: ${t.getMessage}");
         childSpan.finish();
 
     }
-
 
     static final class Adapter extends HttpServerAdapter<HttpServerExchange, HttpServerExchange> {
         @Override

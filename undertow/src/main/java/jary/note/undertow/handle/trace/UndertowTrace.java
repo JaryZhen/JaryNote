@@ -9,7 +9,6 @@ import zipkin2.reporter.okhttp3.OkHttpSender;
 
 public class UndertowTrace {
 
-
     static String ZIPKIN_URL = "http://127.0.0.1:9411/api/v2/spans";
     static String TRACE_SERVER = "undertow-service";
 
