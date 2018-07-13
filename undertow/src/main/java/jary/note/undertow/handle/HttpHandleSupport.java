@@ -1,21 +1,9 @@
 package jary.note.undertow.handle;
 
-import brave.Span;
-import brave.Tracer;
-import brave.Tracing;
 import brave.http.HttpServerAdapter;
-import brave.http.HttpServerHandler;
-import brave.http.HttpTracing;
-import brave.propagation.CurrentTraceContext;
-import brave.propagation.Propagation;
-import brave.propagation.TraceContext;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
-import io.undertow.server.handlers.ExceptionHandler;
-import io.undertow.util.HeaderMap;
 import jary.note.undertow.handle.trace.HttpTrace;
-import jary.note.undertow.handle.trace.UndertowHttpTrace;
-import jary.note.undertow.handle.trace.UndertowTrace;
 import zipkin2.Endpoint;
 
 import java.net.InetSocketAddress;
@@ -44,8 +32,6 @@ public class HttpHandleSupport implements HttpHandler {
                     tracer.end(exch, span);
                 }
             });
-            next.handleRequest(exchange);
-        } else {
             next.handleRequest(exchange);
         }
     }
