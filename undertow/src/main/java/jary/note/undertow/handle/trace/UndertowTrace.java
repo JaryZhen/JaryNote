@@ -2,6 +2,7 @@ package jary.note.undertow.handle.trace;
 
 import brave.Tracer;
 import brave.Tracing;
+import brave.propagation.StrictCurrentTraceContext;
 import zipkin2.Span;
 import zipkin2.reporter.AsyncReporter;
 import zipkin2.reporter.okhttp3.OkHttpSender;
@@ -30,6 +31,7 @@ public class UndertowTrace {
         spanReporter = AsyncReporter.create(sender);
         tracing = Tracing.newBuilder()
                 .localServiceName(TRACE_SERVER)
+                //.currentTraceContext(new StrictCurrentTraceContext())
                 .spanReporter(spanReporter)
                 .build();
         zipkinTracer = tracing.tracer();

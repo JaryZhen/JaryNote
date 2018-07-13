@@ -25,7 +25,7 @@ public class InitHandler implements HttpHandler {
             //'''
             exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/plain");
             exchange.getResponseSender().send("Hello World");
-            //new TraceTest().test();
+            new TraceTest(span);
             tracer.end(exchange,span);
         } else {
         }

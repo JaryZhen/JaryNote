@@ -1,17 +1,21 @@
 package jary.note.undertow.handle;
 
+import brave.propagation.TraceContext;
 import jary.note.undertow.handle.trace.Trace;
 import jary.note.undertow.handle.trace.TraceData;
 
 public class TraceTest {
     Trace tracer;
-    public TraceTest() {
+    brave.Span parentSpan;
+    public TraceTest(brave.Span span) {
         tracer = new Trace();
+        parentSpan = span;
+        test();
     }
 
 
     public void test() {
-        brave.Span span = tracer.startNew("test");
+        brave.Span span = tracer.startNewChild("test",parentSpan);
 
         childTest(span);
         //...
