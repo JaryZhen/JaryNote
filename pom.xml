@@ -9,7 +9,6 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
-        <module>test</module>
         <module>netty</module>
         <module>algorithm</module>
         <module>spark</module>
@@ -22,6 +21,8 @@
         <module>thrift</module>
         <module>hazelcast</module>
         <module>undertow</module>
+
+        <module>test</module>
     </modules>
 
     <properties>
@@ -59,6 +60,9 @@
 
         <brave.version>4.18.2</brave.version>
         <zipkin2.version>2.8.5-SNAPSHOT</zipkin2.version>
+
+        <jmh.version>1.14.1</jmh.version>
+
     </properties>
     <packaging>pom</packaging>
     <build>
@@ -568,6 +572,18 @@
                 <version>2.5.11</version>
             </dependency>
 
+            <!--JHM-->
+            <dependency>
+                <groupId>org.openjdk.jmh</groupId>
+                <artifactId>jmh-core</artifactId>
+                <version>${jmh.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openjdk.jmh</groupId>
+                <artifactId>jmh-generator-annprocess</artifactId>
+                <version>${jmh.version}</version>
+                <scope>provided</scope>
+            </dependency>
         </dependencies>
 
     </dependencyManagement>

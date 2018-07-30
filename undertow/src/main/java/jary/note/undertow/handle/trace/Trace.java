@@ -1,11 +1,9 @@
 package jary.note.undertow.handle.trace;
 
 import brave.Tracer;
-import note.jary.undertow.trace.TraceData;
 
 public class Trace {
     Tracer zipkinTracer;
-    TraceData data;
     public Trace(){
         zipkinTracer = UndertowTrace.getInstance().zipkinTracer;
     }
