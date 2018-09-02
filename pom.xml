@@ -22,7 +22,7 @@
         <module>hazelcast</module>
         <module>undertow</module>
 
-        <module>test</module>
+        <module>Test</module>
     </modules>
 
     <properties>
@@ -196,8 +196,8 @@
                             </goals>
                         </execution>
                         <execution>
-                            <id>scala-test-compile-first</id>
-                            <phase>process-test-resources</phase>
+                            <id>scala-Test-compile-first</id>
+                            <phase>process-Test-resources</phase>
                             <goals>
                                 <goal>testCompile</goal>
                             </goals>
@@ -227,7 +227,7 @@
                             <goals>
                                 <goal>compile</goal>
                                 <goal>compile-custom</goal>
-                                <goal>test-compile</goal>
+                                <goal>Test-compile</goal>
                             </goals>
                         </execution>
                     </executions>
@@ -467,7 +467,7 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.curator</groupId>
-                <artifactId>curator-test</artifactId>
+                <artifactId>curator-Test</artifactId>
                 <version>${curator.version}</version>
             </dependency>
             <dependency>

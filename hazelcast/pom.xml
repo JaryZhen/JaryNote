@@ -31,7 +31,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.curator</groupId>
-            <artifactId>curator-test</artifactId>
+            <artifactId>curator-Test</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.curator</groupId>
