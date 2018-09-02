@@ -1,27 +1,23 @@
-import org.joda.time.DateTime;
-import uuid.UuidTest;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Random;
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import org.apache.commons.codec.binary.Hex;
 
 /**
  * Created by Jary on 2017/11/8 0008.
  */
-public class test {
+public class Test {
 
-    public static void main(String[] args) throws InterruptedException {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2000, Calendar.JANUARY, 1, 0, 0, 0);
-        SimpleDateFormat sdf =
-                new SimpleDateFormat("E MM/dd/yyyy HH:mm:ss.SSS");
-        calendar.add(Calendar.DAY_OF_MONTH, 90);
-        System.out.println(sdf.format(calendar.getTime()));
+    public static void main(String[] args) throws Exception {
 
-
-        DateTime dateTime = new DateTime(2000, 1, 1, 0, 0, 0, 0);
-        System.out.println(dateTime.plusDays(90).toString("E MM/dd/yyyy HH:mm:ss.SSS"));
-
+        Test a = new Test(); //9dahxn76jr9ghlrfequiua8cflnlwlxfy8krtl3s
+        String code = a.authToken("9dahxn76jr9ghlrfequiua8cflnlwlxfy8krtl3s", "nxog09md", "0a1b4118dd954ec3bcc69da5138bdb96", System.currentTimeMillis());
+        System.out.print(code);
     }
-
-}
+    public String authToken(String secret, String project, String ai, Long tm) throws Exception {
+        System.out.println(tm);
+        String message = "POST\n/auth/token\nproject=" + project + "&ai=" + ai + "&tm=" + tm;
+        Mac hmac = Mac.getInstance("HmacSHA256");
+        hmac.init(new SecretKeySpec(secret.getBytes("UTF-8"), "HmacSHA256"));
+        byte[] signature = hmac.doFinal(message.getBytes("UTF-8"));
+        return Hex.encodeHexString(signature);
+    }}

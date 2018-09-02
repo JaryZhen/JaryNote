@@ -24,7 +24,7 @@ public class TransferToClient {
         sc.connect(sad);
         sc.configureBlocking(true);
 
-        String fname = "data/test/zerocopy/gclog.txt";
+        String fname = "data/Test/zerocopy/gclog.txt";
         FileChannel fc = new FileInputStream(fname).getChannel();
         long start = System.nanoTime();
         long nsent = 0, curnset = 0;
