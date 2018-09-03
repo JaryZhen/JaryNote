@@ -23,6 +23,7 @@
         <module>undertow</module>
 
         <module>Test</module>
+        <module>scala</module>
     </modules>
 
     <properties>
