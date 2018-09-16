@@ -1,4 +1,4 @@
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{SQLContext, SparkSession}
 
 ;
 
@@ -13,10 +13,15 @@ object Demo {
    .getOrCreate()
 
     val sc = spark.sparkContext
+    val ssc = new SQLContext(sc)
+
+    ssc.sparkSession.
+
     val data = Array(1, 2, 3, 4, 5)
     val distData = sc.parallelize(data)
 
     val counts = distData.map(word => (word, 1))
+      counts.
       .reduceByKey(_ + _).foreach(print(_))
   }
 }
