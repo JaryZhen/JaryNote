@@ -3,7 +3,8 @@
 ### Common
    #### 1.jvm-book
         《深入理解Java虚拟机》2017.9.28 - 2017.11.30
-        ![JVM 逻辑导向图](JaryNote/master/jvm-book/JvmWorkFlow_jdk7.jpg)
+        
+   ![JVM 逻辑导向图](JaryNote/master/jvm-book/JvmWorkFlow_jdk7.jpg)
 ### GRPC
  ###### 2017.10.27
     通过 RPC ，客户端的应用程序可以方便地调用另外一台机器上的服务端程序
