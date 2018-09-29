@@ -9,11 +9,11 @@ public class Sort {
 
     public static void main(String[] args) {
         int[] array = {6, 5, 2, 7, 4, 8, 9, 1};
-
+        System.out.println(Arrays.toString(array));
         //bubbleSort(array);
-        //quickSort(array);
+        quickSort(array);
         //selectionSort(array);
-        insertionSort(array);
+        //insertionSort(array);
     }
 
     public static int[] bubbleSort(int[] arr) {
@@ -37,23 +37,27 @@ public class Sort {
     }
 
     private static void quickSort(int[] arr, int begin, int end) {
-        if (begin < end) {
+        if (begin < end) { //从左到右
 
             int i = begin, j = end;
-            int vot = arr[i];
+            int vot = arr[i];//选序列的第一个元素为基准值
 
-            while (i != j) {
-                while (i < j && vot <= arr[j])
-                    j--;
-                if (i < j)
-                    arr[i++] = arr[j];
-                while (i < j && arr[i] <= vot)
+            while (i != j) {//当不重合时 一直循环
+                while (i < j && vot <= arr[j]) //下标左边比右边小，且基准值小于等于最右边的数（从后面选最大的）
+                    j--;//下标后移
+                if (i < j)//基准值大于右边（从后面找到了第一个较小值）
+                {
+                    arr[i++] = arr[j];//元素交换，且让左边的下标前移
+                    System.out.println(Arrays.toString(arr)+" 基准值"+vot+"大于右边");
+                }
+                while (i < j && vot >= arr[i])//下标左边比右边小, 且基准值大于最左边的数（从前面选最小值）
                     i++;
-                if (i < j)
+                if (i < j) {
                     arr[j--] = arr[i];
+                }
             }
-            System.out.println(Arrays.toString(arr));
             arr[i] = vot;
+            System.out.println(Arrays.toString(arr));
             quickSort(arr, begin, i- 1);
             quickSort(arr, j + 1, end);
         }
