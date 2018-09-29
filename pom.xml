@@ -364,11 +364,6 @@
 
             <!-- livy demo -->
             <dependency>
-                <groupId>org.apache.spark</groupId>
-                <artifactId>spark-core_2.10</artifactId>
-                <version>${spark.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.cloudera.livy</groupId>
                 <artifactId>livy-client-http</artifactId>
                 <version>${livy-api}</version>
@@ -510,6 +505,13 @@
                 <artifactId>hazelcast-zookeeper</artifactId>
                 <version>${hazelcast-zookeeper.version}</version>
             </dependency>
+
+            <!--spark -->
+            <dependency>
+                <groupId>org.apache.spark</groupId>
+                <artifactId>spark-core_2.10</artifactId>
+                <version>${spark.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.apache.spark</groupId>
                 <artifactId>spark-core_2.11</artifactId>
@@ -520,6 +522,12 @@
                 <artifactId>spark-sql_2.11</artifactId>
                 <version>${spark.version2}</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.spark</groupId>
+                <artifactId>spark-streaming_2.11</artifactId>
+                <version>${spark.version2}</version>
+            </dependency>
+
 
             <!-- Joda -->
             <dependency>

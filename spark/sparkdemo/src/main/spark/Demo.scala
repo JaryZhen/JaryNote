@@ -1,7 +1,5 @@
 import org.apache.spark.sql.{SQLContext, SparkSession}
 
-;
-
 /**
   * Created by Jary on 2018/3/12 0012.
   */
