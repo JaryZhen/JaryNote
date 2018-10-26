@@ -53,14 +53,14 @@
 
         <zookeeper.version>3.4.11</zookeeper.version>
         <zkclient.version>0.10</zkclient.version>
-        <curator.version>4.0.0</curator.version>
+        <curator.version>4.0.1</curator.version>
 
         <thrift.version>0.9.3</thrift.version>
         <hazelcast.version>3.6.6</hazelcast.version>
         <hazelcast-zookeeper.version>3.6.3</hazelcast-zookeeper.version>
 
         <brave.version>4.18.2</brave.version>
-        <zipkin2.version>2.8.5-SNAPSHOT</zipkin2.version>
+        <zipkin2.version>2.8.4</zipkin2.version>
 
         <jmh.version>1.20</jmh.version>
 
@@ -197,7 +197,7 @@
                             </goals>
                         </execution>
                         <execution>
-                            <id>scala-Test-compile-first</id>
+                            <id>scala-test-compile-first</id>
                             <phase>process-Test-resources</phase>
                             <goals>
                                 <goal>testCompile</goal>
@@ -228,7 +228,7 @@
                             <goals>
                                 <goal>compile</goal>
                                 <goal>compile-custom</goal>
-                                <goal>Test-compile</goal>
+                                <goal>test-compile</goal>
                             </goals>
                         </execution>
                     </executions>
@@ -463,7 +463,7 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.curator</groupId>
-                <artifactId>curator-Test</artifactId>
+                <artifactId>curator-test</artifactId>
                 <version>${curator.version}</version>
             </dependency>
             <dependency>
@@ -619,9 +619,9 @@
                 <!--<enabled>true</enabled>-->
             <!--</snapshots>-->
         <!--</repository>-->
-        <repository>
+       <!-- <repository>
             <id>growingio</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </repository>
+        </repository>-->
     </repositories>
 </project>
