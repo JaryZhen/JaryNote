@@ -16,6 +16,11 @@ object Demo {
     ssc.sparkSession.
 
     val data = Array(1, 2, 3, 4, 5)
+    data.foldLeft(0)(f)
+
+    def f (a： Int, b: Int) ={
+      a+b
+    }
     val distData = sc.parallelize(data)
 
     val counts = distData.map(word => (word, 1))
