@@ -39,8 +39,8 @@ import java.util.Properties;
  * in Kafka Streams.
  *
  * In this example, we join a stream of pageviews (aka clickstreams) that reads from  a topic named "streams-pageview-input"
- * with a user profile table that reads from a topic named "streams-userprofile-input", where the data format
- * is JSON string representing a record in the stream or table, to compute the number of pageviews per user region.
+ * with a user profile com.github.jarynote.flink.table that reads from a topic named "streams-userprofile-input", where the data format
+ * is JSON string representing a record in the stream or com.github.jarynote.flink.table, to compute the number of pageviews per user region.
  *
  * Before running this example you must create the input topics and the output topic (e.g. via
  * bin/kafka-topics.sh --create ...), and write some data to the input topics (e.g. via

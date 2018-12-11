@@ -33,7 +33,7 @@
 
         <scala.minor.version>2.11</scala.minor.version>
         <scala.binary.full.version>${scala.minor.version}.6</scala.binary.full.version>
-        <junit.version>4.11</junit.version>
+        <junit.version>4.12</junit.version>
 
         <dubbo.version>2.5.3</dubbo.version>
 
@@ -296,11 +296,11 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.21</version>
         </dependency>
-       <!-- <dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
-        </dependency>-->
+        </dependency>
         <!-- Joda -->
         <dependency>
             <groupId>joda-time</groupId>
@@ -547,20 +547,6 @@
                 <artifactId>spark-streaming_2.11</artifactId>
                 <version>${spark.version2}</version>
             </dependency>
-            <!--Flink-->
-            <dependency>
-                <groupId>org.apache.flink</groupId>
-                <artifactId>flink-java</artifactId>
-                <version>${flink.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.flink</groupId>
-                <artifactId>flink-streaming-java_${scala.minor.version}</artifactId>
-                <version>${flink.version}</version>
-                <scope>provided</scope>
-            </dependency>
-
 
             <!-- Joda -->
             <dependency>
