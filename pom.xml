@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.jaryzhen</groupId>
+    <groupId>jary.note</groupId>
     <artifactId>note</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -24,7 +24,6 @@
 
         <module>Test</module>
         <module>scala</module>
-        <module>flink</module>
     </modules>
 
     <properties>
@@ -38,8 +37,7 @@
         <dubbo.version>2.5.3</dubbo.version>
 
         <!--0.11.0.1 0.10.2.1-->
-        <kafka.version>0.10.2.2</kafka.version>
-        <kafka.version2>0.11.0.2</kafka.version2>
+        <kafka.version>0.11.0.2</kafka.version>
         <lombok.version>1.16.10</lombok.version>
         <log4j.version>1.2.17</log4j.version>
 
@@ -51,9 +49,6 @@
         <livy-api>0.3.0</livy-api>
         <spark.version>1.6.0-cdh5.9.0</spark.version>
         <spark.version2>2.2.1</spark.version2>
-
-        <flink.version>1.6.2</flink.version>
-
         <netty.version>4.1.11.Final</netty.version>
 
         <zookeeper.version>3.4.11</zookeeper.version>
@@ -203,7 +198,7 @@
                         </execution>
                         <execution>
                             <id>scala-test-compile-first</id>
-                            <phase>process-test-resources</phase>
+                            <phase>process-Test-resources</phase>
                             <goals>
                                 <goal>testCompile</goal>
                             </goals>
@@ -338,6 +333,7 @@
             </dependency>
             <!--//https://mvnrepository.com/artifact/org.apache.kafka/kafka_2.11-->
 
+
             <dependency>
                 <groupId>org.rocksdb</groupId>
                 <artifactId>rocksdbjni</artifactId>
@@ -413,38 +409,22 @@
                 <version>${grpc.version}</version>
             </dependency>
 
-            <!--kafka10 -->
-          <!--  <dependency>
-                <groupId>org.apache.kafka</groupId>
-                <artifactId>kafka_2.11</artifactId>
-                <version>${kafka.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.kafka</groupId>
-                <artifactId>kafka-clients</artifactId>
-                <version>${kafka.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.kafka</groupId>
-                <artifactId>kafka-streams</artifactId>
-                <version>${kafka.version}</version>
-            </dependency>-->
-            <!--kafka11 -->
+            <!--kafka -->
             <dependency>
                 <groupId>org.apache.kafka</groupId>
                 <artifactId>kafka_2.11</artifactId>
-                <version>${kafka.version2}</version>
+                <version>${kafka.version}</version>
             </dependency><!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients -->
             <dependency>
                 <groupId>org.apache.kafka</groupId>
                 <artifactId>kafka-clients</artifactId>
-                <version>${kafka.version2}</version>
+                <version>${kafka.version}</version>
             </dependency>
             <!--//https://mvnrepository.com/artifact/org.apache.kafka/kafka-streams-->
             <dependency>
                 <groupId>org.apache.kafka</groupId>
                 <artifactId>kafka-streams</artifactId>
-                <version>${kafka.version2}</version>
+                <version>${kafka.version}</version>
             </dependency>
 
             <!--netty -->
@@ -547,6 +527,10 @@
                 <artifactId>spark-streaming_2.11</artifactId>
                 <version>${spark.version2}</version>
             </dependency>
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 4a03788... Change to com.github,jaryzhen
 
             <!-- Joda -->
             <dependency>

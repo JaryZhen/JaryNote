@@ -2,12 +2,15 @@ package note.kafka;
 
 import kafka.server.KafkaConfig;
 import kafka.server.KafkaServerStartable;
+import note.kafka.KafkaProperties;
+import org.apache.zookeeper.*;
 import org.apache.zookeeper.server.ServerConfig;
 import org.apache.zookeeper.server.ZooKeeperServerMain;
 import org.apache.zookeeper.server.quorum.QuorumPeerConfig;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 
 
@@ -31,12 +34,12 @@ public class LocalKafka {
         if (kafkaTmpLogsDir.delete() && kafkaTmpLogsDir.mkdir()) {
             Properties props = new Properties();
             props.setProperty("host.name", KafkaProperties.HOSTNAME);
-            props.setProperty("port", String.valueOf(KafkaProperties.PORT));
+            props.setProperty("port", String.valueOf(KafkaProperties.KAFKA_SERVER_PORT));
             props.setProperty("broker.id", String.valueOf(KafkaProperties.BROKER_ID));
             props.setProperty("zookeeper.connect", KafkaProperties.ZOOKEEPER_CONNECT);
             props.setProperty("log.dirs", kafkaTmpLogsDir.getAbsolutePath());
 
-            props.setProperty("num.partitions", "4");
+            props.setProperty("num.partitions", "1");
            // With kafka 0.11, if you set num.partitions to 1 you also need to set the following 3 settings:
             props.setProperty("offsets.topic.replication.factor","1");
             props.setProperty("transaction.state.log.replication.factor","1");

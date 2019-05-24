@@ -68,9 +68,9 @@ public class LowProducer {
 	        try {
 	            //producer.send(new ProducerRecord<>(topic,partition,key, value));
 				System.out.println("Sent message: (" + key + ", " + value + ")");
-				Future<RecordMetadata> a = producer.send(new ProducerRecord<>(topic,partition,key, value));
+				//Future<RecordMetadata> a = producer.send(new ProducerRecord<>(topic,partition,key, value));
 
-				//Future<RecordMetadata> a = producer.send(new ProducerRecord<>(topic,key, value)); // overwrite partitioner
+				Future<RecordMetadata> a = producer.send(new ProducerRecord<>(topic,key, value)); // overwrite partitioner
 				Thread.sleep(500);
 				System.out.println(a.isDone() + ", topic=" + a.get().topic()+" , partition="+a.get().partition()+", offset="+ a.get().offset());
 	        } catch (Exception e) {

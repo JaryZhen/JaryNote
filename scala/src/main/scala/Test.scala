@@ -1,30 +1,21 @@
+import scala.concurrent.{Await, Future}
+import scala.util.Random
 
+object Test extends App {
+  import scala.concurrent.ExecutionContext.Implicits.global
+  val random = Random
+  val listOfFuture = List.fill(10)(Future{random.nextInt(100)})
+  val futureList1 = Future.sequence(listOfFuture)
+  val sum1 = futureList1.map(_.sum)
 
+  import scala.concurrent.ExecutionContext.Implicits.global
+  val futureList = Future.traverse((1 to 100).toList)(n => Future(n * n))
+  val sum2 = futureList.map(_.sum)
+  println(sum2)
 
-abstract class Animal(name: String)
+  val futures = (1 to 100).map(n => Future(n * n))
+  val sum = Future.reduceLeft(futures)(_ + _)
 
-case class Dog(val name: String, wang: String) extends Animal(name)
+  println(sum)
 
-case class Cat(val name: String, miao: String) extends Animal(name)
-
-class Peple[Animal]() {
-
-}
-
-class Zoo[T <: Animal](implicit m: Manifest[T]) {
-
-  def getNew(): Animal = {
-    m.runtimeClass.getSimpleName match {
-      case "Dog" => Dog("hung1", "wwww")
-      case "Cat" => Cat("mimi", "miao ~~~")
-    }
-  }
-
-}
-
-object Test {
-  def main(args: Array[String]): Unit = {
-    val a = Dog("a", "s")
-
-  }
 }
