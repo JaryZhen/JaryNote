@@ -527,11 +527,6 @@
                 <artifactId>spark-streaming_2.11</artifactId>
                 <version>${spark.version2}</version>
             </dependency>
-<<<<<<< HEAD
-=======
-
->>>>>>> parent of 4a03788... Change to com.github,jaryzhen
-
             <!-- Joda -->
             <dependency>
                 <groupId>joda-time</groupId>
