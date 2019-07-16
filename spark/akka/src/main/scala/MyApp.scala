@@ -34,7 +34,7 @@ object MyApp extends App {
 
 
 
-  val remoteActor = actorSystem2.actorFor("akka://actorSystem1@localhost:2209/user/simplisticActor")
+  val remoteActor = actorSystem2.actorSelection("akka://actorSystem1@localhost:2209/user/simplisticActor")
 
   remoteActor ! "TEST 1"
   remoteActor ! "TEST 2"
@@ -43,6 +43,6 @@ object MyApp extends App {
 
   Thread.sleep(1000)
 
-  actorSystem1.shutdown()
-  actorSystem2.shutdown()
+  //actorSystem1.stop(se)
+  //actorSystem2.shutdown()
 }
