@@ -1,11 +1,18 @@
 package note.kafka.v10;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import note.kafka.KafkaProperties;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Properties;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
@@ -36,7 +43,7 @@ public class Producer extends Thread {
         //props.put("advertised.port","9092");
 
         producer = new KafkaProducer<>(props);
-        System.out.println(producer.partitionsFor(KafkaProperties.TOPIC)
+        System.out.println(producer.partitionsFor(topic)
         +"\n"+ producer.metrics().toString());
         this.topic = topic;
         this.isAsync = isAsync;
@@ -45,14 +52,21 @@ public class Producer extends Thread {
     public void run() {
         Random ran1 = new Random();
         int key = 1;
-        while (true) {
+        String data = FileUtil.readFileToString("data/data");
+        JSONArray dataArray = JSON.parseArray(data);
+
+
+        //while (true) {
+        for (int i = 0; i < dataArray.size(); i++) {
 
             try {
-                Thread.sleep(2000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            String valeu = "temperature_" + ran1.nextInt(150);
+            JSONObject jsonObject = (JSONObject) dataArray.get(i);
+            String valeu = jsonObject.getJSONObject("_source").toJSONString();
+
             long startTime = System.currentTimeMillis();
             //异步方式发送
             if (isAsync) { // Send asynchronously
@@ -68,7 +82,7 @@ public class Producer extends Thread {
                     //Future<RecordMetadata> a = producer.send(new ProducerRecord<>(topic,partition,key, valeu));
                     Future<RecordMetadata> a = producer.send(new ProducerRecord<>(topic,key, valeu));
 
-                    Thread.sleep(50);
+                    Thread.sleep(0);
                     System.out.println(a.isDone() + ", topic=" + a.get().topic()+" , partition="+a.get().partition()+", offset="+ a.get().offset());
                 } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
@@ -99,6 +113,29 @@ public class Producer extends Thread {
             } else {
                 exception.printStackTrace();
             }
+        }
+    }
+
+    static class FileUtil{
+
+        public static String readFileToString(String path) {
+            StringBuffer sb = null;
+            try {
+
+                File file = new File(path);    //给定一个目录
+                InputStreamReader isr = new InputStreamReader(new FileInputStream(file), "UTF-8");//读取文件,同时指定编码
+                sb = new StringBuffer();
+                char[] ch = new char[128];  //一次读取128个字符
+                int len = 0;
+                while ((len = isr.read(ch, 0, ch.length)) != -1) {
+                    sb.append(ch, 0, len);
+                }
+                isr.close();
+                //System.out.println(sb.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return sb.toString();
         }
     }
 }
