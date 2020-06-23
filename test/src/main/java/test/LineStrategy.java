@@ -1,12 +1,9 @@
 package test;
 
-import com.sun.istack.internal.NotNull;
-
 import java.util.List;
 
 public class LineStrategy {
 
-    @NotNull
     private Header header;
     private Integer defaultLine;
     private List<Strategy> strategy;

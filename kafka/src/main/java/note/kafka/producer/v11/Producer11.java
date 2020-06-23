@@ -23,7 +23,7 @@ public class Producer11 extends Thread {
 
     public Producer11(String topic, Boolean isAsync) {
         Properties props = new Properties();
-        props.put("bootstrap.servers", KafkaProperties.BOOTSTRAP_SERVERS_vktest);
+        props.put("bootstrap.servers", KafkaProperties.BOOTSTRAP_SERVERS);
         props.put("client.id", "DemoProducer");
         props.put("key.serializer", "org.apache.kafka.common.serialization.IntegerSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
