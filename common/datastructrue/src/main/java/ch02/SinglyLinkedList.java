@@ -107,7 +107,7 @@ public class SinglyLinkedList<T> implements LList<T> {
 
     @Override
     public void removeAll() {
-        this.head.next=null;                               //Java将自动收回各结点所占用的内存空间
+        this.head.next = null;                               //Java将自动收回各结点所占用的内存空间
     }
 
     @Override

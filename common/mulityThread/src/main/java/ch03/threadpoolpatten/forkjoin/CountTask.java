@@ -36,13 +36,13 @@ public class CountTask extends RecursiveTask<Long> implements Runnable {
             long step = (start + end) / 100;
             ArrayList<CountTask> subTasks = new ArrayList<CountTask>();
             long pos = start;
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 100; i++) {// 划分子任务
                 long lastOne = pos + step;
                 if (lastOne > end) lastOne = end;
                 CountTask subtask = new CountTask(pos, lastOne);
                 pos += step + 1;
                 subTasks.add(subtask);
-                subtask.fork();
+                subtask.fork();// fork 新线程执行子任务
             }
             for (CountTask t : subTasks) {
                 sum += t.join();

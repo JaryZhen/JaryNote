@@ -58,7 +58,7 @@ public class InterRruptLock implements Runnable {
         Thread thread2 = new Thread(intLock2, "线程2");
         thread1.start();
         thread2.start();
-        Thread.sleep(90000);
+        Thread.sleep(9000);
         thread2.interrupt(); // 中断线程2
     }
 }

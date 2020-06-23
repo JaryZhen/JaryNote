@@ -23,27 +23,29 @@ public class DeadLock extends Thread {
         if(tool ==fork1){
             synchronized (fork1){
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                synchronized (fork2){
+                    System.out.println("");
+                }
             }
-            synchronized (fork2){
-                System.out.println("");
-            }
+
         }
         if(tool ==fork2){
             synchronized (fork2){
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                     System.out.print("");
                 }
+                synchronized (fork1){
+                    System.out.println("");
+                }
             }
-            synchronized (fork1){
-                System.out.println("");
-            }
+
         }
     }
 

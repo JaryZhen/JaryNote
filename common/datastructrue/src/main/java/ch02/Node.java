@@ -12,8 +12,8 @@ public class Node<T> {
         this.data = data;
         this.next = next;
     }
-    public Node()
-    {
+
+    public Node() {
         this(null, null);
     }
 
@@ -22,8 +22,9 @@ public class Node<T> {
     {
         return this.data.toString();
     }
+
     public boolean equals(Object obj)            //比较两个结点值是否相等，覆盖Object类的equals(obj)方法
     {
-        return obj==this || obj instanceof Node && this.data.equals(((Node<T>)obj).data);
+        return obj == this || obj instanceof Node && this.data.equals(((Node<T>) obj).data);
     }
 }

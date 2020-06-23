@@ -21,9 +21,9 @@ public class CyclicBarrierDemo {
         @Override
         public void run() {
             try {
-                cyclic.await();
+                cyclic.await();//等待所有集结完毕
                 doWork(); //
-                cyclic.await();//
+                cyclic.await();//等待所有执行完毕
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (BrokenBarrierException e) {

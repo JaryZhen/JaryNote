@@ -26,7 +26,7 @@ public class SemaphoreDemo  implements Runnable{
     public static void main(String[] args) throws InterruptedException {
         ExecutorService exec = Executors.newFixedThreadPool(20);
         final  SemaphoreDemo sd = new SemaphoreDemo();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 5; i++) {
             exec.submit(sd);
         }
     }
