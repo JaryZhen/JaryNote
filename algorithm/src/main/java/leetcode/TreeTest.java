@@ -36,7 +36,7 @@ public class TreeTest {
         // bfsTree(nodeQueue);
         //bfsTree2(nodeQueue);
 
-        System.out.println(levelOrder(root_6));
+        System.out.println(maxDepth2(root_6));
     }
 
     /**
@@ -98,6 +98,7 @@ public class TreeTest {
         while (!nodeQueue2.isEmpty()) {
             System.out.println("level " + level);
             int si = nodeQueue2.size();
+            // 打印当前这一层所有元素
             for (int i = 0; i < si; i++) {
                 TreeNode curr = nodeQueue2.poll();
                 if (curr.left != null) {
@@ -160,4 +161,53 @@ public class TreeTest {
     }
 
 
+    /**
+     * 104. 给定一个二叉树，找出其最大深度。
+     * <p>
+     * 二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。
+     * <p>
+     * 说明: 叶子节点是指没有子节点的节点。
+     * <p>
+     * 示例：
+     * 给定二叉树 [3,9,20,null,null,15,7]，
+     * <p>
+     * 3
+     * / \
+     * 9  20
+     * /  \
+     * 15   7
+     * 返回它的最大深度 3 。
+     *
+     * @param root
+     * @return
+     */
+    public int maxDepth(TreeNode root) {
+        if (root == null) return 0;
+
+        int left = maxDepth(root.left) + 1;
+        int right = maxDepth(root.right) + 1;
+
+        return left > right ? left : right;
+
+    }
+
+    public int maxDepth2(TreeNode root) {
+        Queue<TreeNode> nodeQueue = new ArrayDeque();
+        nodeQueue.add(root);
+        int level = 0;
+        while (!nodeQueue.isEmpty()) {
+            int si = nodeQueue.size();
+            level++;
+            for (int i = 0; i < si; i++) {
+                TreeNode curr = nodeQueue.poll();
+                if (curr.left != null) {
+                    nodeQueue.add(curr.left);
+                }
+                if (curr.right != null) {
+                    nodeQueue.add(curr.right);
+                }
+            }
+        }
+        return level;
+    }
 }
