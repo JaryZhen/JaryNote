@@ -1,9 +1,6 @@
-package common;
+package leetcode;
 
-import tree.TreeNode;
-
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author: Jary
@@ -12,25 +9,25 @@ import java.util.Map;
 public class Leetcode {
     public static void main(String[] args) {
         Leetcode lee = new Leetcode();
-        lee.testlowestCommonAncestor();
+        //lee.testlowestCommonAncestor();
         //testTwoSum();
         //isAnagram();
     }
 
-
     public void testlowestCommonAncestor() {
-        TreeNode t_3 = new TreeNode(null, null, "3");
-        TreeNode t_5 = new TreeNode(null, null, "5");
+        TreeNode t_3 = new TreeNode(null, null, 3);
+        TreeNode t_5 = new TreeNode(null, null, 5);
 
-        TreeNode t_7 = new TreeNode(null, null, "7");
-        TreeNode t_9 = new TreeNode(null, null, "9");
+        TreeNode t_7 = new TreeNode(null, null, 7);
+        TreeNode t_9 = new TreeNode(null, null, 9);
 
-        TreeNode t_0 = new TreeNode(null, null, "0");
-        TreeNode t_4 = new TreeNode(t_3, t_5, "4");
-        TreeNode t_2 = new TreeNode(t_0, t_4, "2");
-        TreeNode t_8 = new TreeNode(t_7, t_9, "8");
-        TreeNode root_6 = new TreeNode(t_2, t_8, "6");
-        System.out.println(lowestCommonAncestor(root_6, t_3, t_5, "root").data);
+        TreeNode t_0 = new TreeNode(null, null, 0);
+        TreeNode t_4 = new TreeNode(t_3, t_5, 4);
+        TreeNode t_2 = new TreeNode(t_0, t_4, 2);
+        TreeNode t_8 = new TreeNode(t_7, t_9, 8);
+        TreeNode root_6 = new TreeNode(t_2, t_8, 6);
+
+        System.out.println(lowestCommonAncestor(root_6, t_3, t_5, "root").val);
 
 
         StackTraceElement stack[] = Thread.currentThread().getStackTrace();
@@ -60,13 +57,13 @@ public class Leetcode {
      */
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q, String di) {
 
-        if (root == null || root.data == p.data || root.data == q.data) {
+        if (root == null || root.val == p.val || root.val == q.val) {
             if (root == null) {
-                System.out.println(di + " data: " + " null");
-            } else System.out.println(di + " data: " + root.data);
+                System.out.println(di + " val: " + " null");
+            } else System.out.println(di + " val: " + root.val);
             return root;
         }
-        System.out.println(di + " data: " + root.data);
+        System.out.println(di + " val: " + root.val);
         TreeNode left = lowestCommonAncestor(root.left, p, q, "left");
         TreeNode right = lowestCommonAncestor(root.right, p, q, "right");
         //return left == null ? right : right == null ? left : root;

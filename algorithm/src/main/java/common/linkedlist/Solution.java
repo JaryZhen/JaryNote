@@ -11,7 +11,7 @@ public class Solution {
       /*  ListNode self = swapPairs(getNode());
 
         while (self != null) {
-            System.out.println(self.data);
+            System.out.println(self.val);
             self = self.next;
         }*/
 
