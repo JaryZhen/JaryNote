@@ -14,7 +14,7 @@
     <properties>
         <undertow.version>1.4.25.Final</undertow.version>
         <jacksonVersion>2.10.0</jacksonVersion>
-        <log4jVersion>2.8.1</log4jVersion>
+        <log4jVersion>2.13.3</log4jVersion>
         <metricsVersion>3.2.0</metricsVersion>
         <guiceVersion>4.1.0</guiceVersion>
     </properties>
