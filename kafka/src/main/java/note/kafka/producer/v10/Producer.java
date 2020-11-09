@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import note.kafka.KafkaProperties;
+import note.kafka.KafkaUtils;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -13,7 +14,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Properties;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -28,23 +28,9 @@ public class Producer extends Thread {
     }
 
     public Producer(String topic, Boolean isAsync) {
-        Properties props = new Properties();
-        props.put("bootstrap.servers", KafkaProperties.BOOTSTRAP_SERVERS);
-        props.put("client.id", "DemoProducer");
-        props.put("key.serializer", "org.apache.kafka.common.serialization.IntegerSerializer");
-        props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
-        props.put("acks", "all");
-        props.put("retries", 3);
-        props.put("batch.size", 16384);
-       // props.put("linger.ms", 1); // it will failed when set this to 10000.
-        props.put("buffer.memory", 133333);
-        //props.put("advertised.host.name","172.24.4.184:9092");
-        //props.put("advertised.port","9092");
-
-        producer = new KafkaProducer<>(props);
-        System.out.println(producer.partitionsFor(topic)
-        +"\n"+ producer.metrics().toString());
+        producer = KafkaUtils.createProducer(KafkaProperties.BOOTSTRAP_SERVERS);
+        System.out.println(producer.partitionsFor(topic) + "\n" + producer.metrics().toString());
         this.topic = topic;
         this.isAsync = isAsync;
     }
@@ -55,18 +41,17 @@ public class Producer extends Thread {
         String data = FileUtil.readFileToString("data/data");
         JSONArray dataArray = JSON.parseArray(data);
 
-
         //while (true) {
         for (int i = 0; i < dataArray.size(); i++) {
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             JSONObject jsonObject = (JSONObject) dataArray.get(i);
-            String valeu = jsonObject.getJSONObject("_source").toJSONString();
-
+            //String valeu = jsonObject.getJSONObject("_source").toJSONString();
+            String valeu = "---" + i;
             long startTime = System.currentTimeMillis();
             //异步方式发送
             if (isAsync) { // Send asynchronously
@@ -77,13 +62,13 @@ public class Producer extends Thread {
             } else { // Send synchronously
                 try {
                     //producer.send(new ProducerRecord<>(topic, key, valeu)).get();
-                    int partition =key%2;
+                    int partition = key % 2;
                     System.out.println("Sent message: (" + key + ", " + valeu + ")");
                     //Future<RecordMetadata> a = producer.send(new ProducerRecord<>(topic,partition,key, valeu));
-                    Future<RecordMetadata> a = producer.send(new ProducerRecord<>(topic,key, valeu));
+                    Future<RecordMetadata> a = producer.send(new ProducerRecord<>(topic, key, valeu));
 
-                    Thread.sleep(0);
-                    System.out.println(a.isDone() + ", topic=" + a.get().topic()+" , partition="+a.get().partition()+", offset="+ a.get().offset());
+                    Thread.sleep(10);
+                    System.out.println(a.isDone() + ", topic=" + a.get().topic() + " , partition=" + a.get().partition() + ", offset=" + a.get().offset());
                 } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
                 }
@@ -91,6 +76,7 @@ public class Producer extends Thread {
             ++key;
         }
     }
+
     class DemoCallBack implements Callback {
 
         private final long startTime;
@@ -116,7 +102,7 @@ public class Producer extends Thread {
         }
     }
 
-    static class FileUtil{
+    static class FileUtil {
 
         public static String readFileToString(String path) {
             StringBuffer sb = null;

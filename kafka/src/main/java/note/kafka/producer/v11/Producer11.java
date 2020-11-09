@@ -53,11 +53,23 @@ public class Producer11 extends Thread {
         while (true) {
 
             try {
-                Thread.sleep(0);
+                Thread.sleep(2000);
                 long startTime = System.currentTimeMillis();
-                String data = "{\"role\":\"TEACHER\",\"user_type\":1,\"local_ping\":46,\"line\":\"Video\",\"server_rtt\":170,\"classroom\":\"jz7b72b624a3384a43b28b29662d95caa2\",\"full_ping\":216,\"timestamp\":1572839989492}";
+                String data = String.format("" +
+                        "{\"role\":\"TEACHER\"," +
+                        "\"user_type\":1," +
+                        "\"local_ping\":46," +
+                        "\"line\":\"Video\"," +
+                        "\"server_rtt\":170," +
+                        "\"classroom\":\"jz7b72b624a3384a43b28b29662d95caa2\"," +
+                        "\"full_ping\":216," +
+                        "\"timestamp\":1572839989492}");
 
-                String valeu = data;///"Suct_Pres_Status="+key;//ran1.nextInt(100);
+                String valeu = String.format(
+                        "{\"colName\":\"" + format.format(startTime) + "\"," +
+                        "\"tm\":" + startTime + "}");
+
+                //data;///"Suct_Pres_Status="+key;//ran1.nextInt(100);
                 //+" pressure2="+ran1.nextInt(60);
                 //异步方式发送
                 if (isAsync) {
