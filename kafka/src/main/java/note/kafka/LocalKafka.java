@@ -39,7 +39,7 @@ public class LocalKafka {
             props.setProperty("zookeeper.connect", KafkaProperties.ZOOKEEPER_CONNECT);
             props.setProperty("log.dirs", kafkaTmpLogsDir.getAbsolutePath());
 
-            props.setProperty("num.partitions", "6");
+            props.setProperty("num.partitions", "3");
            // With kafka 0.11, if you set num.partitions to 1 you also need to set the following 3 settings:
             props.setProperty("offsets.topic.replication.factor","1");
             props.setProperty("transaction.state.log.replication.factor","1");
@@ -56,7 +56,7 @@ public class LocalKafka {
 
             KafkaServerStartable kafka = new KafkaServerStartable(kafkaConfig);
             kafka.startup();
-            System.out.println("start kafka ok " + kafka.serverConfig().numPartitions());
+            System.out.println("start kafka ok numPartion: " + kafka.serverConfig().numPartitions());
         }
     }
 

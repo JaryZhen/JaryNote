@@ -35,13 +35,13 @@ public class Consumer {
 
 
         consumer = new KafkaConsumer<>(props);
-        consumer.subscribe(Collections.singletonList(KafkaProperties.TOPIC_a));
+        consumer.subscribe(Collections.singletonList(KafkaProperties.TOPIC));
         System.out.println("" + consumer.listTopics().toString());
         while (true) {
             ConsumerRecords<Integer, String> records = consumer.poll(10);
             System.out.println(records.count());
             try {
-                Thread.sleep(1000);
+                Thread.sleep(2000);
                 System.out.println("Received message:");
                 for (ConsumerRecord<Integer, String> record : records) {
                     System.out.println("Received message: (" + record.partition() + " : " + record.value() + ") at offset " + record.offset());
