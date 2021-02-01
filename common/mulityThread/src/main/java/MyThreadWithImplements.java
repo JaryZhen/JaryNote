@@ -15,7 +15,6 @@ public class MyThreadWithImplements implements Runnable {
         }
     }
 
-
     public static void main(String[] args) {
         MyThreadWithImplements myRunnable = new MyThreadWithImplements();
         Thread thread1 = new Thread(myRunnable, "窗口一");

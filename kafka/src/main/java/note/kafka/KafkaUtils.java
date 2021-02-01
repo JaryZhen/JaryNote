@@ -22,11 +22,14 @@ public class KafkaUtils {
 
         conProps.put(ConsumerConfig.GROUP_ID_CONFIG, group);
         conProps.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
-        conProps.put("max.poll.records", "50000");
-        conProps.put("max.poll.interval.ms", "500");
-        conProps.put("fetch.max.bytes", "52428800");
+        conProps.put("max.poll.records", "300000");
+        conProps.put("max.poll.interval.ms", "3000");
 
-        conProps.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "1000");
+        conProps.put("fetch.max.bytes", "152428800");
+        conProps.put("fetch.max.wait.ms", "2000");
+        conProps.put("max.partition.fetch.bytes", "552428800");
+
+        conProps.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "3000");
         conProps.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, "30000");
         conProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
         conProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
