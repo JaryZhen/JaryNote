@@ -12,7 +12,7 @@
     <artifactId>undertow</artifactId>
 
     <properties>
-        <undertow.version>1.4.25.Final</undertow.version>
+        <undertow.version>2.1.6.Final</undertow.version>
         <jacksonVersion>2.10.0</jacksonVersion>
         <log4jVersion>2.8.1</log4jVersion>
         <metricsVersion>3.2.0</metricsVersion>
