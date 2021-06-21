@@ -1,4 +1,4 @@
-package common.linkedlist;
+package basc;
 
 /**
  * Created by Jary on 2017/8/28 0028.

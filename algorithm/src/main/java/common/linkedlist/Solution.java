@@ -1,5 +1,7 @@
 package common.linkedlist;
 
+import basc.ListNode;
+
 /**
  * @Author: Jary
  * @Date: 2020/5/15 9:46 AM
