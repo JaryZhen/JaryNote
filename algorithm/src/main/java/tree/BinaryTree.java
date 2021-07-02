@@ -1,6 +1,6 @@
-package basc;
+package tree;
 
-import leetcode.TreeNode;
+import basc.TreeNode;
 
 import java.util.LinkedList;
 

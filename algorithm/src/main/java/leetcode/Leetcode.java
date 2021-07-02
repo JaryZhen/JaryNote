@@ -1,5 +1,7 @@
 package leetcode;
 
+import basc.TreeNode;
+
 import java.util.*;
 
 /**

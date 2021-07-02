@@ -1,4 +1,4 @@
-package leetcode;
+package basc;
 
 /**
  * @Author: Jary
