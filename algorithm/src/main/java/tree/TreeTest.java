@@ -97,20 +97,11 @@ public class TreeTest {
     }
 
 
-    /**
+    /*
      * 102. 给一个二叉树，请你返回其按 层序遍历 得到的节点值。 （即逐层地，从左到右访问所有节点）。
-     * 3
-     * / \
-     * 9  20
-     * /  \
-     * 15   7
-     * <p>
-     * [
-     * [3],
-     * [9,20],
-     * [15,7]
-     * ]
-     *
+     */
+
+    /**
      * @param root
      * @return
      */
@@ -143,23 +134,14 @@ public class TreeTest {
     }
 
 
+    /*
+       104. 给定一个二叉树，找出其最大深度。
+       <p>
+       二叉树的深度为根节点到最远叶子节点的最长路径上的节点数
+      返回它的最大深度 3 。
+     */
+
     /**
-     * 104. 给定一个二叉树，找出其最大深度。
-     * <p>
-     * 二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。
-     * <p>
-     * 说明: 叶子节点是指没有子节点的节点。
-     * <p>
-     * 示例：
-     * 给定二叉树 [3,9,20,null,null,15,7]，
-     * <p>
-     * 3
-     * / \
-     * 9  20
-     * /  \
-     * 15   7
-     * 返回它的最大深度 3 。
-     *
      * @param root
      * @return
      */
@@ -193,7 +175,7 @@ public class TreeTest {
         return level;
     }
 
-    public void testDfsTree() {
+    public static void main(String[] args) {
         TreeNode left_left = new TreeNode(null, null, 3);
         TreeNode left_right = new TreeNode(null, null, 5);
         TreeNode right_left = new TreeNode(null, null, 6);
@@ -201,7 +183,6 @@ public class TreeTest {
         TreeNode left = new TreeNode(left_left, left_right, 4);
         TreeNode right = new TreeNode(right_left, right_right, 12);
         TreeNode head = new TreeNode(left, right, 8);
-
         /*
               8
             /   \
@@ -209,6 +190,8 @@ public class TreeTest {
           / \    / \
          3   5  6  13
          */
+
+
         //dfsTree(root_6);
         //bfsTree(root_6);
 
@@ -217,8 +200,8 @@ public class TreeTest {
         // bfsTree(nodeQueue);
         //bfsTree2(nodeQueue);
 
-        System.out.println(maxDepth2(head));
+        TreeTest test = new TreeTest();
+        test.bfsTreeMid(head);
     }
-
 
 }
