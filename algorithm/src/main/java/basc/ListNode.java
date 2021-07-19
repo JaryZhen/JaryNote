@@ -5,12 +5,12 @@ package basc;
  */
 public class ListNode<T> {
     public T data;
-    public ListNode<T> pre;
+    public ListNode<T> last;
     public ListNode<T> next;
 
-    public ListNode(T data, ListNode<T> pre, ListNode<T> next) {
+    public ListNode(T data, ListNode<T> last, ListNode<T> next) {
         this.data = data;
-        this.pre = pre;
+        this.last = last;
         this.next = next;
     }
 

@@ -1,15 +1,15 @@
-Classfile /D:/IdeaProjects/jarynote/algorithm/src/main/java/stack_queue/S_String.class
+Classfile /D:/IdeaProjects/jarynote/algorithm/src/main/java/stack_queue_list/S_String.class
   Last modified 2017-9-13; size 404 bytes
   MD5 checksum 3d070db97b5ba2c99d4af8de8bec336b
   Compiled from "S_String.java"
-public class stack_queue.S_String
+public class stack_queue_list.S_String
   minor version: 0
   major version: 52
   flags: ACC_PUBLIC, ACC_SUPER
 Constant pool:
    #1 = Methodref          #4.#18         // java/lang/Object."<init>":()V
-   #2 = Fieldref           #3.#19         // stack_queue/S_String.i:I
-   #3 = Class              #20            // stack_queue/S_String
+   #2 = Fieldref           #3.#19         // stack_queue_list/S_String.i:I
+   #3 = Class              #20            // stack_queue_list/S_String
    #4 = Class              #21            // java/lang/Object
    #5 = Utf8               i
    #6 = Utf8               I
@@ -19,14 +19,14 @@ Constant pool:
   #10 = Utf8               LineNumberTable
   #11 = Utf8               S_String
   #12 = Utf8               StackMapTable
-  #13 = Class              #20            // stack_queue/S_String
+  #13 = Class              #20            // stack_queue_list/S_String
   #14 = Class              #21            // java/lang/Object
   #15 = Class              #22            // java/lang/Throwable
   #16 = Utf8               SourceFile
   #17 = Utf8               S_String.java
   #18 = NameAndType        #7:#8          // "<init>":()V
   #19 = NameAndType        #5:#6          // i:I
-  #20 = Utf8               stack_queue/S_String
+  #20 = Utf8               stack_queue_list/S_String
   #21 = Utf8               java/lang/Object
   #22 = Utf8               java/lang/Throwable
 {
@@ -34,7 +34,7 @@ Constant pool:
     descriptor: I
     flags: ACC_PUBLIC
 
-  public stack_queue.S_String();
+  public stack_queue_list.S_String();
     descriptor: ()V
     flags: ACC_PUBLIC
     Code:
@@ -81,7 +81,7 @@ Constant pool:
       StackMapTable: number_of_entries = 2
         frame_type = 255 /* full_frame */
           offset_delta = 19
-          locals = [ class stack_queue/S_String, class java/lang/Object ]
+          locals = [ class stack_queue_list/S_String, class java/lang/Object ]
           stack = [ class java/lang/Throwable ]
         frame_type = 250 /* chop */
           offset_delta = 4

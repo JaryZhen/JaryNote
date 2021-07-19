@@ -4,6 +4,7 @@ import basc.TreeNode;
 
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.Stack;
 
 /**
  * @Author: Jary
@@ -60,27 +61,27 @@ public class ValidBST {
         return isValidBST(node.left, lower, node.val) && isValidBST(node.right, node.val, upper);
     }
 
-    public boolean isValidBST2(TreeNode root) {
-        Deque<TreeNode> stack = new LinkedList<TreeNode>();
-        double inorder = -Double.MAX_VALUE;
+    Stack<TreeNode> stack = new Stack<>();
 
-        while (!stack.isEmpty() || root != null) {
-            while (root != null) {
-                stack.push(root);
-                root = root.left;
-            }
-            root = stack.pop();
-            // 如果中序遍历得到的节点的值小于等于前一个 inorder，说明不是二叉搜索树
-            if (root.val <= inorder) {
-                return false;
-            }
-            inorder = root.val;
-            root = root.right;
+    /*
+     中根遍历验证
+     */
+    public boolean bfsTreeMid(TreeNode head) {
+        if (head == null) return true;
+        Boolean isM = true;
+        boolean l = bfsTreeMid(head.left);
+        System.out.println(head.val);
+        if (stack.isEmpty()) {
+            stack.add(head);
+        } else {
+            isM = stack.pop().val < head.val;
+            stack.add(head);
         }
-        return true;
+        boolean r = bfsTreeMid(head.right);
+        return isM && l && r;
     }
 
-    public void testIsValidBst() {
+    public static void main(String[] args) {
         TreeNode left_left = new TreeNode(null, null, 3);
         TreeNode left_right = new TreeNode(null, null, 5);
 
@@ -91,12 +92,17 @@ public class ValidBST {
         TreeNode right = new TreeNode(right_left, right_right, 12);
 
         TreeNode head = new TreeNode(left, right, 8);
-        System.out.println(isValidBST2(head));
-    }
+        /*
+              8
+            /   \
+           4     12
+          / \    / \
+         3   5  6  13
 
-    public static void main(String[] args) {
+        */
+
         ValidBST test = new ValidBST();
         //test.testDfsTree();
-        test.testIsValidBst();
+        System.out.println(test.bfsTreeMid(head));
     }
 }

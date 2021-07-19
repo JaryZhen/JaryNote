@@ -1,4 +1,4 @@
-package common.linkedlist;
+package stack_queue_list;
 
 import basc.ListNode;
 

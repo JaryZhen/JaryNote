@@ -175,6 +175,67 @@ public class TreeTest {
         return level;
     }
 
+    public TreeNode maxComParent(TreeNode head, TreeNode p, TreeNode b) {
+        if (head == null) return head;
+        if (p.val > b.val) {
+            TreeNode temp = b;
+            b = p;
+            p = temp;
+        }
+        Stack<TreeNode> stack = new Stack();
+        stack.push(head);
+        TreeNode yes = null;
+        while (!stack.isEmpty()) {
+            TreeNode curr = stack.pop();
+            Boolean isP = p.val > curr.val;
+            Boolean isB = b.val > curr.val;
+            if (isB && isP)
+                stack.push(head.right);
+            else if (!isB && !isP)
+                stack.push(head.left);
+            else {
+                yes = head;
+                break;
+            }
+        }
+        return yes;
+    }
+
+    public TreeNode findAllparent(TreeNode head, TreeNode p, TreeNode q) {
+        if (head == null || p == head || q == head) return head;
+        TreeNode left = findAllparent(head.left, p, q);
+        TreeNode right = findAllparent(head.right, p, q);
+        TreeNode res;
+        if (left == null) {
+            res = right;
+        } else if (right == null) {
+            res = left;
+        } else
+            res = head;
+        return res;
+    }
+
+
+    /*
+    find parent path
+     */
+    List<TreeNode> list = new ArrayList<>();
+    public TreeNode findAllparentPath(TreeNode head, TreeNode p) {
+        if (head == null || p == head ) return head;
+        TreeNode left = findAllparentPath(head.left, p);
+        TreeNode right = findAllparentPath(head.right, p);
+
+        TreeNode res = null;
+        if (left != null ) {
+            list.add(head);
+            res = left;
+        } else if (right != null) {
+            list.add(head);
+            res = right;
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
         TreeNode left_left = new TreeNode(null, null, 3);
         TreeNode left_right = new TreeNode(null, null, 5);
@@ -189,19 +250,19 @@ public class TreeTest {
            4     12
           / \    / \
          3   5  6  13
-         */
+
+        */
 
 
         //dfsTree(root_6);
         //bfsTree(root_6);
 
-        Queue<TreeNode> nodeQueue = new ArrayDeque();
-        nodeQueue.add(head);
         // bfsTree(nodeQueue);
         //bfsTree2(nodeQueue);
 
         TreeTest test = new TreeTest();
-        test.bfsTreeMid(head);
+        System.out.println(test.findAllparentPath(head, left_left));
+        System.out.println(test.list);
     }
 
 }
