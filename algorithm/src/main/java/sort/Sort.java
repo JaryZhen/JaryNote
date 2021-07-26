@@ -174,7 +174,6 @@ public class Sort {
         }
     }
 
-
     public static int pop(int[] arr) {
         int size = arr[0];
         swop(arr, 0, --heapSize);
@@ -218,18 +217,6 @@ public class Sort {
         */
         //quickSort(array);
         // heapSor(array);
-
-        PriorityQueue<Integer> a = new PriorityQueue<Integer>(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return (o2 - o1);
-            }
-        });
-        a.add(5);
-        a.add(7);
-        while (!a.isEmpty()) {
-            System.out.println(a.poll());
-        }
         System.out.println(Arrays.toString(array));
 
     }
