@@ -1,6 +1,8 @@
 package sort;
 
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 /**
  * Created by Jary on 2018/3/8 0008.
@@ -57,7 +59,7 @@ public class Sort {
     n^2
      */
     public static void insertionSort(int[] arr) {
-        for (int i = 0; i < arr.length - 1; i++) {
+        for (int i = 0; i <= arr.length - 1; i++) {
             for (int j = i + 1; j > 0; j--) {
                 if (arr[j - 1] <= arr[j])
                     break;
@@ -145,31 +147,7 @@ public class Sort {
      * @param arr
      */
     public static void quickSort(int[] arr) {
-        //quickSort(arr, 0, arr.length - 1);
         processQuick2(arr, 0, arr.length - 1);
-    }
-
-    private static void quickSort(int[] arr, int begin, int end) {
-        if (begin < end) { //从左到右
-            int i = begin, j = end;
-            int vot = arr[i];//选序列的第一个元素为基准值
-            while (i != j) {//当不重合时 一直循环
-                while (i < j && vot <= arr[j]) //下标左边比右边小，且基准值小于等于最右边的数（从后面选最大的）
-                    j--;//下标后移
-                if (i < j) {//基准值大于右边（从后面找到了第一个较小值）
-                    arr[i++] = arr[j];//元素交换，且让左边的下标前移
-                    System.out.println(Arrays.toString(arr) + " 基准值" + vot + "大于右边");
-                }
-                while (i < j && vot >= arr[i])//下标左边比右边小, 且基准值大于最左边的数（从前面选最小值）
-                    i++;
-                if (i < j)
-                    arr[j--] = arr[i];
-            }
-            arr[i] = vot;
-            System.out.println(Arrays.toString(arr));
-            quickSort(arr, begin, i - 1);
-            quickSort(arr, j + 1, end);
-        }
     }
 
     public static void processQuick2(int[] arr, int L, int R) {
@@ -179,19 +157,79 @@ public class Sort {
         processQuick2(arr, middle[1] + 1, R);
     }
 
+    static int heapSize = 0;
+
+    /**
+     * 堆排序
+     *
+     * @param
+     */
+    public static void heapSor(int[] arr) {
+        for (int i = 0; i <= arr.length - 1; i++) {
+            heapSize++;
+            heapInsert(arr, i);
+        }
+        for (int i = 0; i <= arr.length - 1; i++) {
+            pop(arr);
+        }
+    }
+
+
+    public static int pop(int[] arr) {
+        int size = arr[0];
+        swop(arr, 0, --heapSize);
+        heapfy(arr, 0);
+        return size;
+    }
+
+    private static void heapInsert(int[] heap, int i) {
+        int par = (i - 1) / 2;
+        if (heap[i] > heap[par]) {
+            swop(heap, i, par);
+            heapInsert(heap, par);
+        }
+    }
+
+    private static void heapfy(int[] heap, int i) {
+        int lef = 2 * i + 1;
+        int right = 2 * i + 2;
+        if (lef < heapSize) {
+            int max = right < heapSize ? heap[lef] > heap[right] ? lef : right : lef;//考虑只有左孩子
+            if (heap[i] < heap[max]) {
+                swop(heap, i, max);
+                heapfy(heap, max);
+            }
+        }
+    }
+
     public static void main(String[] args) {
         int[] array = {6, 3, 1, 5, 2, 7, 4, 8, 9, 4};
+        //int[] array = new int[]{1, 2, 3, 4, 5, 6, 7, 0};
         System.out.println(Arrays.toString(array));
         //bubbleSort(array);
         //quickSort(array);
         //selectionSort(array);
         //insertionSort(array);
         //mergeSort(array);
-       /* System.out.println("newzland: ");
+        /*
+        System.out.println("newzland: ");
         Arrays.stream(newzLand(array, 0, array.length - 1)).forEach(System.out::println);
         System.out.println("after newzland:\n" + Arrays.toString(array));
-*/
-        quickSort(array);
+        */
+        //quickSort(array);
+        // heapSor(array);
+
+        PriorityQueue<Integer> a = new PriorityQueue<Integer>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return (o2 - o1);
+            }
+        });
+        a.add(5);
+        a.add(7);
+        while (!a.isEmpty()) {
+            System.out.println(a.poll());
+        }
         System.out.println(Arrays.toString(array));
 
     }
