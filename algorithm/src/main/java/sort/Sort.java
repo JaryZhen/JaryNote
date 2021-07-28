@@ -90,7 +90,8 @@ public class Sort {
     }
 
     /**
-     * 归并排序——将两段排序好的数组结合成一个排序数组
+     * 归并排序—— 二分的意思
+     * 将两段排序好的数组结合成一个排序数组
      *
      * @param left
      * @param right
@@ -217,6 +218,7 @@ public class Sort {
         */
         //quickSort(array);
         // heapSor(array);
+        Arrays.sort(array);
         System.out.println(Arrays.toString(array));
 
     }
