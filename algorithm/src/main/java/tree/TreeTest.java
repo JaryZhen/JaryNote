@@ -16,7 +16,7 @@ public class TreeTest {
      *
      * @param root
      */
-    public void dfsTree(TreeNode root) {
+    public static void dfsTree(TreeNode root) {
         if (root == null || root.left == null || root.right == null) return;
         System.out.println(root.left.val);//先序
         dfsTree(root.left);
@@ -31,17 +31,18 @@ public class TreeTest {
      * @param node
      */
     public static void dfsTreeNonRecursiveFirs(TreeNode node) {
-        Queue<TreeNode> queue = new ArrayDeque<>();
+        System.out.println("firs:");
+        Stack<TreeNode> stack = new Stack<>();
         if (node == null)
             return;
-        queue.add(node);
-        while (!queue.isEmpty()) {
-            TreeNode curr = queue.poll();
-            System.out.println(curr.val);
-            if (curr.left != null)
-                queue.add(curr.left);
+        stack.add(node);
+        while (!stack.isEmpty()) {
+            TreeNode curr = stack.pop();
+            System.out.print(curr.val + " ");
             if (curr.right != null)
-                queue.add(curr.right);
+                stack.add(curr.right);
+            if (curr.left != null)
+                stack.add(curr.left);
         }
     }
 
@@ -51,7 +52,19 @@ public class TreeTest {
      * @param node
      */
     public static void dfsTreeNonRecursiveMid(TreeNode node) {
-
+        if (node == null)
+            return;
+        Stack<TreeNode> stack = new Stack<>();
+        while (!stack.isEmpty() || node != null) {
+            if (node != null) {// 不空 压入节点 处理左节点
+                stack.add(node);
+                node = node.left;
+            } else { //为空 弹出节点 再处理右节点
+                node = stack.pop();
+                System.out.print(node.val + " ");
+                node = node.right;
+            }
+        }
     }
 
     /**
@@ -60,7 +73,23 @@ public class TreeTest {
      * @param node
      */
     public static void dfsTreeNonRecursiveLast(TreeNode node) {
-
+        if (node == null)
+            return;
+        System.out.println("\nlast: ");
+        Stack<TreeNode> stack = new Stack<>();
+        Stack<TreeNode> restack = new Stack<>();
+        stack.add(node);
+        while (!stack.isEmpty()) {
+            TreeNode curr = stack.pop();
+            restack.add(curr);
+            if (curr.left != null)
+                stack.add(curr.left);
+            if (curr.right != null)
+                stack.add(curr.right);
+        }
+        while (!restack.isEmpty()) {
+            System.out.print(restack.pop().val + " ");
+        }
     }
 
     /**
@@ -241,10 +270,10 @@ public class TreeTest {
 
 
         //dfsTree(head);
-        //bfsTree(head);
+        //dfsTreeNonRecursiveFirs(head);
+        //dfsTreeNonRecursiveMid(head);
+        //dfsTreeNonRecursiveLast(head);
 
-        // bfsTree(nodeQueue);
-        dfsTreeNonRecursiveFirs(head);
         //bfsTree2(head);
         //System.out.println(findAllparentPath(head, left_left));
         //System.out.println(list);
