@@ -18,10 +18,11 @@ public class TreeTest {
      */
     public void dfsTree(TreeNode root) {
         if (root == null || root.left == null || root.right == null) return;
+        System.out.println(root.left.val);//先序
         dfsTree(root.left);
-        System.out.println(root.left.val);
+        System.out.println(root.left.val);//中序
         dfsTree(root.right);
-        System.out.println(root.right.val);
+        System.out.println(root.right.val);//后序
     }
 
     Queue<TreeNode> nodeQueue = new ArrayDeque();
@@ -43,33 +44,6 @@ public class TreeTest {
         }
         //System.out.println();
         bfsTree(nodeQueue.poll());
-    }
-
-    /**
-     * 循环的广度优先遍历
-     */
-    public void bfsTree(Queue<TreeNode> nodeQueue2) {
-        while (!nodeQueue2.isEmpty()) {
-            TreeNode curr = nodeQueue2.poll();
-            if (curr.left != null) {
-                System.out.println(curr.left.val + "\t");
-                nodeQueue2.add(curr.left);
-            }
-            if (curr.right != null) {
-                System.out.println(curr.right.val);
-                nodeQueue2.add(curr.right);
-            }
-        }
-    }
-
-    /**
-     * 循环的广度优先遍历-中根遍历
-     */
-    public void bfsTreeMid(TreeNode head) {
-        if (head == null) return;
-        bfsTreeMid(head.left);
-        System.out.println(head.val);
-        bfsTreeMid(head.right);
     }
 
     /**
@@ -96,12 +70,9 @@ public class TreeTest {
         }
     }
 
-
-    /*
-     * 102. 给一个二叉树，请你返回其按 层序遍历 得到的节点值。 （即逐层地，从左到右访问所有节点）。
-     */
-
     /**
+     * 102. 给一个二叉树，请你返回其按 层序遍历 得到的节点值。 （即逐层地，从左到右访问所有节点）。
+     *
      * @param root
      * @return
      */
@@ -134,25 +105,20 @@ public class TreeTest {
     }
 
 
-    /*
-       104. 给定一个二叉树，找出其最大深度。
-       <p>
-       二叉树的深度为根节点到最远叶子节点的最长路径上的节点数
-      返回它的最大深度 3 。
-     */
-
     /**
+     * 104. 给定一个二叉树，找出其最大深度。
+     * <p>
+     * 二叉树的深度为根节点到最远叶子节点的最长路径上的节点数
+     * 返回它的最大深度 3 。
+     *
      * @param root
      * @return
      */
     public int maxDepth(TreeNode root) {
         if (root == null) return 0;
-
         int left = maxDepth(root.left) + 1;
         int right = maxDepth(root.right) + 1;
-
         return left > right ? left : right;
-
     }
 
     public int maxDepth2(TreeNode root) {
@@ -220,13 +186,14 @@ public class TreeTest {
     find parent path
      */
     List<TreeNode> list = new ArrayList<>();
+
     public TreeNode findAllparentPath(TreeNode head, TreeNode p) {
-        if (head == null || p == head ) return head;
+        if (head == null || p == head) return head;
         TreeNode left = findAllparentPath(head.left, p);
         TreeNode right = findAllparentPath(head.right, p);
 
         TreeNode res = null;
-        if (left != null ) {
+        if (left != null) {
             list.add(head);
             res = left;
         } else if (right != null) {
