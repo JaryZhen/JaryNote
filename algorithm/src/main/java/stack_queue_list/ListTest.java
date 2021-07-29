@@ -88,6 +88,30 @@ public class ListTest {
         return moreHead;
     }
 
+    /**
+     * 1. 证明 节点是不是有环 --> 快慢指针 isLoopNode()
+     * 2. 如果有环，请找出环相交点 getLoopNode()
+     * ....a。快慢指针
+     * ....b。让快指针从头开始
+     */
+    public ListNode getLoopNode(ListNode head) {
+        if (head == null || head.next == null || head.next.next == null)
+            return null;
+        ListNode slow = head.next;
+        ListNode fast = head.next.next;
+        while (slow != fast) {
+            if (fast == null || head.next == null)
+                return null;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        fast = head;
+        while (slow != fast) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+        return fast;
+    }
 
     /**
      * @param args
@@ -119,11 +143,13 @@ public class ListTest {
              */
             //System.out.println("中点： " + test.midNode(head));
 
-            ListNode re = test.split(head, 1);
+           /* ListNode re = test.split(head, 1);
             while (re != null) {
                 System.out.println("re: " + re.data);
                 re = re.next;
-            }
+            }*/
+
+
         }
     }
 }
