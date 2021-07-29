@@ -25,45 +25,50 @@ public class TreeTest {
         System.out.println(root.right.val);//后序
     }
 
-    Queue<TreeNode> nodeQueue = new ArrayDeque();
+    /**
+     * 非递归的 深度优先遍历 1. 先
+     * @param node
+     */
+    public static void dfsTreeNonRecursiveFirs(TreeNode node){
+
+    }
 
     /**
-     * 递归的广度优先遍历
-     *
-     * @param root
+     * 非递归的 深度优先遍历 2. 中
+     * @param node
      */
-    public void bfsTree(TreeNode root) {
-        if (root == null) return;
-        if (root.left != null) {
-            System.out.println(root.left.val + "\t");
-            nodeQueue.add(root.left);
-        }
-        if (root.right != null) {
-            System.out.println(root.right.val);
-            nodeQueue.add(root.right);
-        }
-        //System.out.println();
-        bfsTree(nodeQueue.poll());
+    public static void dfsTreeNonRecursiveMid(TreeNode node){
+
+    }
+
+    /**
+     * 非递归的 深度优先遍历 3. 后
+     * @param node
+     */
+    public static void dfsTreeNonRecursiveLast(TreeNode node){
+
     }
 
     /**
      * 循环的广度优先遍历,按层打印
      */
-    public void bfsTree2(Queue<TreeNode> nodeQueue2) {
+    public static void bfsTree2(TreeNode node) {
+        Queue<TreeNode> queue = new ArrayDeque();
         int level = 0;
-        while (!nodeQueue2.isEmpty()) {
+        queue.add(node);
+        while (!queue.isEmpty()) {
             System.out.println("level " + level);
-            int si = nodeQueue2.size();
+            int si = queue.size();
             // 打印当前这一层所有元素
             for (int i = 0; i < si; i++) {
-                TreeNode curr = nodeQueue2.poll();
+                TreeNode curr = queue.poll();
                 if (curr.left != null) {
                     System.out.print(curr.left.val + "\t");
-                    nodeQueue2.add(curr.left);
+                    queue.add(curr.left);
                 }
                 if (curr.right != null) {
                     System.out.print(curr.right.val + "\t");
-                    nodeQueue2.add(curr.right);
+                    queue.add(curr.right);
                 }
             }
             level++;
@@ -185,9 +190,9 @@ public class TreeTest {
     /*
     find parent path
      */
-    List<TreeNode> list = new ArrayList<>();
+    static List<TreeNode> list = new ArrayList<>();
 
-    public TreeNode findAllparentPath(TreeNode head, TreeNode p) {
+    public static TreeNode findAllparentPath(TreeNode head, TreeNode p) {
         if (head == null || p == head) return head;
         TreeNode left = findAllparentPath(head.left, p);
         TreeNode right = findAllparentPath(head.right, p);
@@ -208,9 +213,9 @@ public class TreeTest {
         TreeNode left_right = new TreeNode(null, null, 5);
         TreeNode right_left = new TreeNode(null, null, 6);
         TreeNode right_right = new TreeNode(null, null, 13);
-        TreeNode left = new TreeNode(left_left, left_right, 4);
-        TreeNode right = new TreeNode(right_left, right_right, 12);
-        TreeNode head = new TreeNode(left, right, 8);
+        TreeNode left_2 = new TreeNode(left_left, left_right, 4);
+        TreeNode right_2 = new TreeNode(right_left, right_right, 12);
+        TreeNode head = new TreeNode(left_2, right_2, 8);
         /*
               8
             /   \
@@ -221,15 +226,13 @@ public class TreeTest {
         */
 
 
-        //dfsTree(root_6);
-        //bfsTree(root_6);
+        //dfsTree(head);
+        //bfsTree(head);
 
         // bfsTree(nodeQueue);
-        //bfsTree2(nodeQueue);
-
-        TreeTest test = new TreeTest();
-        System.out.println(test.findAllparentPath(head, left_left));
-        System.out.println(test.list);
+        bfsTree2(head);
+        //System.out.println(findAllparentPath(head, left_left));
+        //System.out.println(list);
     }
 
 }
