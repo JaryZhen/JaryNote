@@ -12,7 +12,7 @@ import java.util.*;
 public class TreeTest {
 
     /**
-     * 递归的 深度优先遍历
+     * 深度优先遍历 - 递归的
      *
      * @param root
      */
@@ -26,26 +26,40 @@ public class TreeTest {
     }
 
     /**
-     * 非递归的 深度优先遍历 1. 先
+     * 深度优先遍历 - 非递归的  1. 先
+     *
      * @param node
      */
-    public static void dfsTreeNonRecursiveFirs(TreeNode node){
+    public static void dfsTreeNonRecursiveFirs(TreeNode node) {
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        if (node == null)
+            return;
+        queue.add(node);
+        while (!queue.isEmpty()) {
+            TreeNode curr = queue.poll();
+            System.out.println(curr.val);
+            if (curr.left != null)
+                queue.add(curr.left);
+            if (curr.right != null)
+                queue.add(curr.right);
+        }
+    }
+
+    /**
+     * 深度优先遍历 - 非递归的  2. 中
+     *
+     * @param node
+     */
+    public static void dfsTreeNonRecursiveMid(TreeNode node) {
 
     }
 
     /**
-     * 非递归的 深度优先遍历 2. 中
+     * 深度优先遍历 - 非递归的 3. 后
+     *
      * @param node
      */
-    public static void dfsTreeNonRecursiveMid(TreeNode node){
-
-    }
-
-    /**
-     * 非递归的 深度优先遍历 3. 后
-     * @param node
-     */
-    public static void dfsTreeNonRecursiveLast(TreeNode node){
+    public static void dfsTreeNonRecursiveLast(TreeNode node) {
 
     }
 
@@ -230,7 +244,8 @@ public class TreeTest {
         //bfsTree(head);
 
         // bfsTree(nodeQueue);
-        bfsTree2(head);
+        dfsTreeNonRecursiveFirs(head);
+        //bfsTree2(head);
         //System.out.println(findAllparentPath(head, left_left));
         //System.out.println(list);
     }
