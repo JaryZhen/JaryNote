@@ -93,27 +93,30 @@ public class TreeTest {
     }
 
     /**
-     * 循环的广度优先遍历,按层打印
+     * 按层打印(广度优先)
+     * 可以解决
+     * 。。。1. 按层打印
+     * 。。。2. 最大（小）宽度，以及对应的层数
      */
-    public static void bfsTree2(TreeNode node) {
+    public static void bfsTreePrint(TreeNode node) {
         Queue<TreeNode> queue = new ArrayDeque();
-        int level = 0;
+        int level = 1;
         queue.add(node);
         while (!queue.isEmpty()) {
-            System.out.println("level " + level);
             int si = queue.size();
+            System.out.print("level=" + level + ", size=" + si + " :");
             // 打印当前这一层所有元素
             for (int i = 0; i < si; i++) {
                 TreeNode curr = queue.poll();
+                System.out.print(curr.val + "\t");
                 if (curr.left != null) {
-                    System.out.print(curr.left.val + "\t");
                     queue.add(curr.left);
                 }
                 if (curr.right != null) {
-                    System.out.print(curr.right.val + "\t");
                     queue.add(curr.right);
                 }
             }
+            System.out.println();
             level++;
         }
     }
@@ -252,9 +255,10 @@ public class TreeTest {
     }
 
     public static void main(String[] args) {
+        TreeNode la = new TreeNode(null, null, 88);
         TreeNode left_left = new TreeNode(null, null, 3);
         TreeNode left_right = new TreeNode(null, null, 5);
-        TreeNode right_left = new TreeNode(null, null, 6);
+        TreeNode right_left = new TreeNode(null, la, 6);
         TreeNode right_right = new TreeNode(null, null, 13);
         TreeNode left_2 = new TreeNode(left_left, left_right, 4);
         TreeNode right_2 = new TreeNode(right_left, right_right, 12);
@@ -274,7 +278,7 @@ public class TreeTest {
         //dfsTreeNonRecursiveMid(head);
         //dfsTreeNonRecursiveLast(head);
 
-        //bfsTree2(head);
+        bfsTreePrint(head);
         //System.out.println(findAllparentPath(head, left_left));
         //System.out.println(list);
     }
