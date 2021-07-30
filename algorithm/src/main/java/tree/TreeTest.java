@@ -290,7 +290,7 @@ public class TreeTest {
         TreeNode la = new TreeNode(null, las, 88);
         TreeNode left_left = new TreeNode(3);
         TreeNode left_right = new TreeNode(5);
-        TreeNode right_left = new TreeNode(null, la, 6);
+        TreeNode right_left = new TreeNode(6);
         TreeNode right_right = new TreeNode(13);
         TreeNode left_2 = new TreeNode(left_left, left_right, 4);
         TreeNode right_2 = new TreeNode(right_left, right_right, 12);
@@ -308,6 +308,7 @@ public class TreeTest {
 
         */
 
+        bfsTreePrint(head);
 
         //dfsTree(head);
         //dfsTreeNonRecursiveFirs(head);
@@ -315,10 +316,11 @@ public class TreeTest {
         //dfsTreeNonRecursiveLast(head);
 
         // TreeNode node = desTree(serTreePre(head));
+
         TheBigTree bigTree = new TheBigTree();
         System.out.println(bigTree.ifFull(head));
-
-        //bfsTreePrint(node);
+        System.out.println(bigTree.maxDistens(head));
+        System.out.println(bigTree.maxBST(head));
 
         //System.out.println(findAllparentPath(head, left_left));
         //System.out.println(list);

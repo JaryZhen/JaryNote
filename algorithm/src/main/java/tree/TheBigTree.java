@@ -1,6 +1,7 @@
 package tree;
 
 import basc.TreeNode;
+import lombok.val;
 
 /**
  * @Author: Jary
@@ -9,6 +10,7 @@ import basc.TreeNode;
 public class TheBigTree {
     /**
      * 二叉树的终极武器:
+     * 。。。0。确定是否跟头节点有关
      * 。。。1.处理左孩子信息
      * 。。。2.处理右孩子信息
      * 。。。3.处理叶子结点和头结点信息信息
@@ -20,7 +22,7 @@ public class TheBigTree {
      * 。。。2. 左右子树是否平衡
      */
 
-    class Info {
+    private class Info {
         Boolean isBalence;
         Integer height;
 
@@ -35,7 +37,7 @@ public class TheBigTree {
         return info.isBalence;
     }
 
-    public Info isFullTree(TreeNode head) {
+    private Info isFullTree(TreeNode head) {
         if (head == null) {
             return new Info(true, 0);
         }
@@ -58,34 +60,89 @@ public class TheBigTree {
      * 。。。1. 与X 无关 -> max（左子树最大距离 或 柚子树最大距离）
      * 。。。1. 与X 有关 左子树高度加柚子树高度
      */
-    class InfoH {
+    private class InfoDistence {
         Integer distence;//左、右最大距离
         Integer hight; // 高度
 
-        public InfoH(Integer distence, Integer hight) {
+        public InfoDistence(Integer distence, Integer hight) {
             this.hight = hight;
             this.distence = distence;
         }
     }
 
     public Integer maxDistens(TreeNode node) {
-        InfoH h = maxDistensR(node);
+        InfoDistence h = maxDistensR(node);
         return h.distence;
     }
 
-    public InfoH maxDistensR(TreeNode node) {
+    private InfoDistence maxDistensR(TreeNode node) {
         if (node == null)
-            return new InfoH(1, 0);
-        InfoH left = maxDistensR(node.left);
-        InfoH right = maxDistensR(node.right);
+            return new InfoDistence(0, 0);
+        InfoDistence left = maxDistensR(node.left);
+        InfoDistence right = maxDistensR(node.right);
 
-        int dis = Math.max(left.distence + 1, right.distence + 1);
-        int he = left.hight + 1 + right.hight + 1 + 1;
+        int he = Math.max(left.hight, right.hight) + 1;
+        int dis = Math.max(left.hight + right.hight + 1, Math.max(left.distence, right.distence));
+        return new InfoDistence(dis, he);
+    }
 
-        if (he < dis) { //无关： 左边最大距离或右边最大距离
-            return new InfoH(dis, he);
-        } else {//有关 ：左右高度之和
-            return new InfoH(he, Math.max(left.hight, right.hight) + 1);
+    /**
+     * 3.1 返回 最大二叉搜索树的节点数量
+     * 。。。1. 与X无关
+     * 。。。。。。。在左边或右边
+     * 。。。2. 与X有关
+     * 。。。。。。。左右都是搜索二叉树且左边小于X 右边大于X
+     * <p>
+     * 3.2 返回 最大二叉搜索树的节点数量节点
+     */
+
+    private class InfoBst {
+        int size;//最大搜索子树个数
+        boolean isBst;//是否为搜索树
+        int max;//子树最大值
+        int min;//子树最小值
+
+        public InfoBst(int size, boolean isBst, int max, int min) {
+            this.size = size;
+            this.isBst = isBst;
+            this.max = max;
+            this.min = min;
         }
+    }
+
+    public int maxBST(TreeNode head) {
+        InfoBst bst = maxBSTR(head);
+        return bst.size;
+    }
+
+    private InfoBst maxBSTR(TreeNode node) {
+        if (node == null)
+            return null;// new InfoBst(0, true, -1, -1);// 空节点 是否是最大搜索子树
+        InfoBst left = maxBSTR(node.left);
+        InfoBst right = maxBSTR(node.right);
+
+        int max = node.val;
+        int min = node.val;
+        int size = 0;
+        if (left != null) {
+            min = min > left.min ? min : left.min;
+            max = max > left.max ? max : left.max;
+            size = left.size;
+        }
+        if (right != null) {
+            min = min > right.min ? min : right.min;
+            max = max > right.max ? max : right.max;
+            size = Math.max(size, right.size);
+        }
+
+        boolean isb = false;
+        if (left == null ? true : left.isBst
+                && right == null ? true : right.isBst
+                && left == null ? true : left.max < node.val
+                && right == null ? true : node.val < right.min) {
+            size = (left == null ? 0 : left.size) + (right == null ? 0 : right.size) + 1;
+            isb = true;
+        }
+        return new InfoBst(size, isb, max, min);
     }
 }
