@@ -1,5 +1,6 @@
 #!/bin/zsh
 
+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
 git remote set-url origin https://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@github.com/JaryZhen/JaryNote.git
 
 git add .
