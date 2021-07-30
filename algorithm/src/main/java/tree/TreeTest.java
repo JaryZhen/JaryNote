@@ -2,6 +2,7 @@ package tree;
 
 import basc.TreeNode;
 import com.sun.jmx.remote.internal.ArrayQueue;
+import sun.security.timestamp.TSRequest;
 
 import java.util.*;
 
@@ -285,11 +286,12 @@ public class TreeTest {
     }
 
     public static void main(String[] args) {
-        TreeNode la = new TreeNode(null, null, 88);
-        TreeNode left_left = new TreeNode(null, null, 3);
-        TreeNode left_right = new TreeNode(null, null, 5);
+        TreeNode las = new TreeNode(99);
+        TreeNode la = new TreeNode(null, las, 88);
+        TreeNode left_left = new TreeNode(3);
+        TreeNode left_right = new TreeNode(5);
         TreeNode right_left = new TreeNode(null, la, 6);
-        TreeNode right_right = new TreeNode(null, null, 13);
+        TreeNode right_right = new TreeNode(13);
         TreeNode left_2 = new TreeNode(left_left, left_right, 4);
         TreeNode right_2 = new TreeNode(right_left, right_right, 12);
         TreeNode head = new TreeNode(left_2, right_2, 8);
@@ -299,6 +301,10 @@ public class TreeTest {
            4     12
           / \    / \
          3   5  6  13
+                 \
+                 88
+                   \
+                    99
 
         */
 
@@ -308,8 +314,12 @@ public class TreeTest {
         //dfsTreeNonRecursiveMid(head);
         //dfsTreeNonRecursiveLast(head);
 
-        TreeNode node = desTree(serTreePre(head));
-        bfsTreePrint(node);
+        // TreeNode node = desTree(serTreePre(head));
+        TheBigTree bigTree = new TheBigTree();
+        System.out.println(bigTree.ifFull(head));
+
+        //bfsTreePrint(node);
+
         //System.out.println(findAllparentPath(head, left_left));
         //System.out.println(list);
     }
