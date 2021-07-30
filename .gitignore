@@ -7,7 +7,7 @@ algorithm/target/
 *.iml
 *.log
 *.txt
-
+exe.sh
 #### Test ###
 Test/target/
 #### common ###
