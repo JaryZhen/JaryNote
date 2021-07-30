@@ -9,6 +9,12 @@ public class TreeNode {
     public TreeNode right;
     public int val;
 
+    public TreeNode(int data) {
+        this.left = null;
+        this.right = null;
+        this.val = data;
+    }
+
     public TreeNode(TreeNode left, TreeNode right, int data) {
         this.left = left;
         this.right = right;
@@ -17,6 +23,6 @@ public class TreeNode {
 
     @Override
     public String toString() {
-        return "val:"+ val;
+        return "val:" + val;
     }
 }

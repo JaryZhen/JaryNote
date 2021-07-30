@@ -122,6 +122,36 @@ public class TreeTest {
     }
 
     /**
+     * 序列化
+     */
+
+    public static Queue serTreePre(TreeNode node) {
+        Queue<Integer> queue = new ArrayDeque<>();
+        serTreePre(node, queue);
+        return queue;
+    }
+
+    public static void serTreePre(TreeNode hea, Queue<Integer> queue) {
+        if (hea == null)
+            queue.add(-1);
+        else {
+            queue.add(hea.val);
+            serTreePre(hea.left, queue);
+            serTreePre(hea.right, queue);
+        }
+    }
+
+    public static TreeNode desTree(Queue<Integer> queue) {
+        Integer curr = queue.poll();
+        if (curr == -1)
+            return null;
+        TreeNode node = new TreeNode(curr);
+        node.left = desTree(queue);
+        node.right = desTree(queue);
+        return node;
+    }
+
+    /**
      * 102. 给一个二叉树，请你返回其按 层序遍历 得到的节点值。 （即逐层地，从左到右访问所有节点）。
      *
      * @param root
@@ -278,7 +308,8 @@ public class TreeTest {
         //dfsTreeNonRecursiveMid(head);
         //dfsTreeNonRecursiveLast(head);
 
-        bfsTreePrint(head);
+        TreeNode node = desTree(serTreePre(head));
+        bfsTreePrint(node);
         //System.out.println(findAllparentPath(head, left_left));
         //System.out.println(list);
     }
