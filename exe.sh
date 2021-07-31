@@ -7,7 +7,7 @@ git add .
 
 git status
 
-git commit -m "add tree 终极武器"
+git commit -m "add 并查集"
 
 git status
 
