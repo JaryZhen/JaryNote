@@ -5,9 +5,8 @@ git add .
 
 git status
 
-git commit -m "add "
+git commit -m "add 动态规划模型"
 
 git status
-
 
 git push
