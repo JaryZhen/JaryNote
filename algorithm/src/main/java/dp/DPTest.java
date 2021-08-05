@@ -10,8 +10,7 @@ import java.util.Queue;
  * @Author: Jary
  * @Date: 2021/7/6 4:35 下午
  */
-public class Test {
-
+public class DPTest {
 
     public int climbStairs(int n) {
         if (n <= 2) {
@@ -27,12 +26,12 @@ public class Test {
         return i2;
     }
 
-    /*
-    给你一个整数数组 nums ，找到其中最长严格递增子序列的长度。
-    子序列是由数组派生而来的序列，删除（或不删除）数组中的元素而不改变其余元素的顺序。例如，[3,6,2,7] 是数组 [0,3,1,6,2,2,7] 的子序列。
-    输入：nums = [10,9,2,5,3,7,101,18]
-    输出：4
-    解释：最长递增子序列是 [2,3,7,101]，因此长度为 4 。
+    /**
+     * 给你一个整数数组 nums ，找到其中最长严格递增子序列的长度。
+     * 子序列是由数组派生而来的序列，删除（或不删除）数组中的元素而不改变其余元素的顺序。例如，[3,6,2,7] 是数组 [0,3,1,6,2,2,7] 的子序列。
+     * 输入：nums = [10,9,2,5,3,7,101,18]
+     * 输出：4
+     * 解释：最长递增子序列是 [2,3,7,101]，因此长度为 4 。
      */
     public int lengthOfLIS(int[] nums) {
         int len = nums.length;
@@ -58,31 +57,32 @@ public class Test {
         }
         return res;
     }
-    /*
-    322. 零钱兑换
-    给定不同面额的硬币 coins 和一个总金额 amount。编写一个函数来计算可以凑成总金额所需的最少的硬币个数。如果没有任何一种硬币组合能组成总金额，返回 -1
-    你可以认为每种硬币的数量是无限的。
-    示例 1：
 
-    输入：coins = [1, 2, 5], amount = 11
-    输出：3
-    解释：11 = 5 + 5 + 1
-    示例 2：
-
-    输入：coins = [2], amount = 3
-    输出：-1
-    示例 3：
-
-    输入：coins = [1], amount = 0
-    输出：0
-    示例 4：
-
-    输入：coins = [1], amount = 1
-    输出：1
-    示例 5：
-
-    输入：coins = [1], amount = 2
-    输出：2
+    /**
+     * 322. 零钱兑换
+     * 给定不同面额的硬币 coins 和一个总金额 amount。编写一个函数来计算可以凑成总金额所需的最少的硬币个数。如果没有任何一种硬币组合能组成总金额，返回 -1
+     * 你可以认为每种硬币的数量是无限的。
+     * 示例 1：
+     * <p>
+     * 输入：coins = [1, 2, 5], amount = 11
+     * 输出：3
+     * 解释：11 = 5 + 5 + 1
+     * 示例 2：
+     * <p>
+     * 输入：coins = [2], amount = 3
+     * 输出：-1
+     * 示例 3：
+     * <p>
+     * 输入：coins = [1], amount = 0
+     * 输出：0
+     * 示例 4：
+     * <p>
+     * 输入：coins = [1], amount = 1
+     * 输出：1
+     * 示例 5：
+     * <p>
+     * 输入：coins = [1], amount = 2
+     * 输出：2
      */
 
     public int coinChange(int[] coins, int amount) {
@@ -99,8 +99,6 @@ public class Test {
         }
         return dp[amount] > amount ? -1 : dp[amount];
     }
-
-    ;
 
     public int minDistance(String word1, String word2) {
         char[] w1 = word1.toCharArray();
@@ -123,10 +121,9 @@ public class Test {
         return dp[w1.length][w2.length];
     }
 
-    /*
-    200 岛屿问题
+    /**
+     * 200 岛屿问题
      */
-
     public int numIslands(char[][] grid) {
         if (grid == null || grid.length == 0) {
             return 0;
@@ -157,6 +154,7 @@ public class Test {
         dfsMumLands(grid, i, j - 1, l);
         dfsMumLands(grid, i, j + 1, l);
     }
+
     public boolean isLand(char[][] grid, int i, int j) {
         return i >= 0 && i < grid.length && j >= 0 && j < grid[0].length;
     }
@@ -165,7 +163,6 @@ public class Test {
         if (grid == null || grid.length == 0) {
             return 0;
         }
-
         int nr = grid.length;
         int nc = grid[0].length;
         int num_islands = 0;
@@ -181,21 +178,21 @@ public class Test {
                         int id = neighbors.remove();
                         int row = id / nc;
                         int col = id % nc;
-                        if (row - 1 >= 0 && grid[row-1][col] == '1') {
-                            neighbors.add((row-1) * nc + col);
-                            grid[row-1][col] = '0';
+                        if (row - 1 >= 0 && grid[row - 1][col] == '1') {
+                            neighbors.add((row - 1) * nc + col);
+                            grid[row - 1][col] = '0';
                         }
-                        if (row + 1 < nr && grid[row+1][col] == '1') {
-                            neighbors.add((row+1) * nc + col);
-                            grid[row+1][col] = '0';
+                        if (row + 1 < nr && grid[row + 1][col] == '1') {
+                            neighbors.add((row + 1) * nc + col);
+                            grid[row + 1][col] = '0';
                         }
-                        if (col - 1 >= 0 && grid[row][col-1] == '1') {
-                            neighbors.add(row * nc + col-1);
-                            grid[row][col-1] = '0';
+                        if (col - 1 >= 0 && grid[row][col - 1] == '1') {
+                            neighbors.add(row * nc + col - 1);
+                            grid[row][col - 1] = '0';
                         }
-                        if (col + 1 < nc && grid[row][col+1] == '1') {
-                            neighbors.add(row * nc + col+1);
-                            grid[row][col+1] = '0';
+                        if (col + 1 < nc && grid[row][col + 1] == '1') {
+                            neighbors.add(row * nc + col + 1);
+                            grid[row][col + 1] = '0';
                         }
                     }
                 }
@@ -205,8 +202,26 @@ public class Test {
         return num_islands;
     }
 
+    /**
+     * 汉诺塔问题
+     */
+    public static void hanoi2(int n) {
+        if (n > 0)
+            hanoFunc(n, "left", "right", "mid");
+    }
+    public static void hanoFunc(int n, String from, String to, String o) {//第二部：最大的一个 从左边移动到右边
+        if (n == 1) {
+            System.out.println("move 1 from " + from + " 1 to " + to);
+            return;
+        }
+        hanoFunc(n - 1, from, o, to);// 第一步： n-1 左边移动到中间
+        System.out.println("move " + n + " form " + from + " to " + to);
+        hanoFunc(n - 1, o, to, from);// 第三步：剩下的n-1 从中间移动到右边
+    }
+
+
     public static void main(String[] args) {
-        Test dp = new Test();
+        DPTest dp = new DPTest();
         //System.out.println(dp.climbStairs(3));
         //int[] nums = new int[]{10, 9, 2, 5, 3, 7, 101, 18};
         //System.out.println(dp.lengthOfLIS(nums));
@@ -240,7 +255,9 @@ public class Test {
         System.out.println("3 "+dp.numIslands(grid2));
         System.out.println("3 "+dp.numIslands(grid3));
 */
+        hanoi2(4);
         BitMap m = new BitMap(100000000);
 
     }
 }
+

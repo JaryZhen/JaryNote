@@ -1,8 +1,6 @@
 package stack_queue_list;
 
-import basc.ListNode;
-
-import java.util.Arrays;
+import java.util.Stack;
 
 
 /**
@@ -11,9 +9,22 @@ import java.util.Arrays;
  */
 public class StackQueueTest {
 
+    public static void re(Stack<Integer> stack) {
+        if (!stack.isEmpty()) {
+            int a = stack.pop();
+            re(stack);
+            stack.add(a);
+        }
+        //stack.push(stack.pop());
+    }
 
     public static void main(String[] args) {
 
+        Stack<Integer> stack = new Stack<>();
+        stack.add(3);
+        stack.add(2);
+        stack.add(1);
+        re(stack);
     }
 }
 
