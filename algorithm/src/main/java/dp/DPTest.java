@@ -209,6 +209,7 @@ public class DPTest {
         if (n > 0)
             hanoFunc(n, "left", "right", "mid");
     }
+
     public static void hanoFunc(int n, String from, String to, String o) {//第二部：最大的一个 从左边移动到右边
         if (n == 1) {
             System.out.println("move 1 from " + from + " 1 to " + to);
@@ -219,6 +220,34 @@ public class DPTest {
         hanoFunc(n - 1, o, to, from);// 第三步：剩下的n-1 从中间移动到右边
     }
 
+    /**
+     * 背包问题-货物总价值最大
+     * 暴力递归方式
+     *
+     * @param weight
+     * @param value
+     * @param bag
+     * @return
+     */
+    public static int maxValue(int[] weight, int[] value, int bag) {
+        //从开头开始
+        return processMaxValue(weight, value, 0, 0, bag, 0);
+    }
+
+    private static int processMaxValue(int[] weight, int[] value, int index, int currentBag, int bag, int maxValue) {
+        if (currentBag >= bag) {
+            return maxValue;
+        }
+        if (index > value.length)
+            return maxValue;
+
+        int cb = currentBag+ weight[index+1];
+
+       // int res1 = processMaxValue(weight, value, index + 1, currentBag+, bag);
+       // int res2 = processMaxValue(weight, value, index + 1, currentBag + weight[index + 1], bag);
+
+        return 0; //Math.max(res1, res2);
+    }
 
     public static void main(String[] args) {
         DPTest dp = new DPTest();
