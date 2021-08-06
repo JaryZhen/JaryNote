@@ -222,7 +222,7 @@ public class DPTest {
 
     /**
      * 背包问题-货物总价值最大
-     * 暴力递归方式
+     * 暴力递归方式 从左到右模型
      *
      * @param weight
      * @param value
@@ -241,18 +241,48 @@ public class DPTest {
         if (index > value.length)
             return maxValue;
 
-        int cb = currentBag+ weight[index+1];
+        int cb = currentBag + weight[index + 1];
 
-       // int res1 = processMaxValue(weight, value, index + 1, currentBag+, bag);
-       // int res2 = processMaxValue(weight, value, index + 1, currentBag + weight[index + 1], bag);
+        // int res1 = processMaxValue(weight, value, index + 1, currentBag+, bag);
+        // int res2 = processMaxValue(weight, value, index + 1, currentBag + weight[index + 1], bag);
 
         return 0; //Math.max(res1, res2);
+    }
+
+    /**
+     * 给定一组牌 ，能从左右两头挑选
+     * A，B人，最大值
+     *
+     * @param card
+     * @return
+     */
+    public int winner(int[] card) {
+        return Math.max(
+                winnerProcess_first(card, 0, card.length - 1),
+                winnerProcess_second(card, 0, card.length - 1));
+    }
+
+    public int winnerProcess_first(int[] card, int left, int right) {
+        if (left == right) {
+            return card[left];
+        }
+        return Math.max(
+                card[left] + winnerProcess_second(card, left + 1, right),
+                card[right] + winnerProcess_second(card, left, right - 1));
+    }
+
+    public int winnerProcess_second(int[] card, int left, int right) {
+        if (left == right)
+            return 0;
+        return Math.min(
+                winnerProcess_first(card, left + 1, right),
+                winnerProcess_first(card, left, right - 1));
     }
 
     public static void main(String[] args) {
         DPTest dp = new DPTest();
         //System.out.println(dp.climbStairs(3));
-        //int[] nums = new int[]{10, 9, 2, 5, 3, 7, 101, 18};
+        int[] nums = new int[]{1,101, 18};
         //System.out.println(dp.lengthOfLIS(nums));
         /*
         int[] nums_c = new int[]{1,3, 5};'
@@ -284,7 +314,8 @@ public class DPTest {
         System.out.println("3 "+dp.numIslands(grid2));
         System.out.println("3 "+dp.numIslands(grid3));
 */
-        hanoi2(4);
+        //hanoi2(4);
+        System.out.println(dp.winner(nums));
         BitMap m = new BitMap(100000000);
 
     }
