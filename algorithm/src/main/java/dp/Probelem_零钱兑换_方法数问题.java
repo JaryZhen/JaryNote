@@ -36,22 +36,19 @@ public class Probelem_零钱兑换_方法数问题 {
     /**
      * 货币问题  arr： 货币种类； aim：目标总面值
      * 求 搞定aim的方法数
+     * 暴力方法
      * @return
      */
     public int coinMeoth(int[] arr, int aim) {
-        if (arr == null || arr.length == 0 || aim < 0) {
-            return 0;
-        }
+        if (arr == null || arr.length == 0 || aim < 0) return 0;
         return coinMeothProcess(arr, 0, aim);
     }
 
-    //任意
     private int coinMeothProcess(int[] arr, int index, int rest) {
         if (rest < 0) return 0;
 
         if (index == arr.length) //no coins can select
             return rest == 0 ? 1 : 0;
-
         int ways = 0;
         for (int zhang = 0; zhang * arr[index] <= rest; zhang++) {
             ways += coinMeothProcess(arr, index + 1, rest - zhang * arr[index]);
@@ -59,23 +56,50 @@ public class Probelem_零钱兑换_方法数问题 {
         return ways;
     }
 
-    //任意
-    private int coinMeothProcessDP(int[] arr, int index, int rest) {
-        if (rest < 0) return 0;
+    //缓存法
+    public int coinMeoth2(int[] arr, int aim) {
+        if (arr == null || arr.length == 0 || aim < 0) return 0;
+        int[][] dp = new int[arr.length + 1][aim + 1];
+        for (int i = 0; i < dp.length; i++) {
+            for (int j = 0; j < dp[0].length; j++) {
+                dp[i][j] = -1;
+            }
+        }
+        return coinMeothProcessDP(arr, 0, aim, dp);
+    }
 
-        if (index == arr.length) //no coins can select
-            return rest == 0 ? 1 : 0;
+    private int coinMeothProcessDP(int[] arr, int index, int rest, int[][] dp) {
+        if (dp[index][rest] != -1) return dp[index][rest];
+
+        if (index == arr.length) { //no coins can select
+            dp[index][rest] = rest == 0 ? 1 : 0;
+            return dp[index][rest];
+        }
 
         int ways = 0;
         for (int zhang = 0; zhang * arr[index] <= rest; zhang++) {
             ways += coinMeothProcess(arr, index + 1, rest - zhang * arr[index]);
         }
+        dp[index][rest] = ways;
         return ways;
     }
 
+    //动态规划法
+    public int coinMeoth3(int[] arr, int aim) {
+        if (arr == null || arr.length == 0 || aim < 0) return 0;
+        int[][] dp = new int[arr.length + 1][aim + 1];
+        for (int i = 0; i < dp.length; i++) {
+            for (int j = 0; j < dp[0].length; j++) {
+                dp[i][j] = -1;
+            }
+        }
+        return coinMeothProcessDP(arr, 0, aim, dp);
+    }
     public static void main(String[] args) {
         Probelem_零钱兑换_方法数问题 dp = new Probelem_零钱兑换_方法数问题();
-        int[] arr = new int[]{1, 5, 10};
-        System.out.println(dp.coinMeoth(arr, 11));
+        int[] arr = new int[]{10, 100, 50};
+        System.out.println(dp.coinMeoth(arr, 1000));
+        System.out.println(dp.coinMeoth2(arr, 1000));
+
     }
 }
