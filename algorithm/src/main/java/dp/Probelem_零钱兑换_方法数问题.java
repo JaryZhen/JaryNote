@@ -37,6 +37,7 @@ public class Probelem_零钱兑换_方法数问题 {
      * 货币问题  arr： 货币种类； aim：目标总面值
      * 求 搞定aim的方法数
      * 暴力方法
+     *
      * @return
      */
     public int coinMeoth(int[] arr, int aim) {
@@ -65,20 +66,29 @@ public class Probelem_零钱兑换_方法数问题 {
                 dp[i][j] = -1;
             }
         }
-        return coinMeothProcessDP(arr, 0, aim, dp);
+
+        int re = coinMeothProcessDP(arr, 0, aim, dp);
+        for (int i = 0; i < dp.length; i++) {
+            for (int j = 0; j < dp[0].length; j++) {
+                //System.out.print(dp[i][j] + " ");
+            }
+            //System.out.println();
+        }
+        return re;
     }
 
     private int coinMeothProcessDP(int[] arr, int index, int rest, int[][] dp) {
         if (dp[index][rest] != -1) return dp[index][rest];
 
-        if (index == arr.length) { //no coins can select
+        if (index >= arr.length) { //no coins can select
             dp[index][rest] = rest == 0 ? 1 : 0;
             return dp[index][rest];
         }
 
         int ways = 0;
         for (int zhang = 0; zhang * arr[index] <= rest; zhang++) {
-            ways += coinMeothProcess(arr, index + 1, rest - zhang * arr[index]);
+            int res = rest - zhang * arr[index];
+            ways += coinMeothProcessDP(arr, index + 1, res, dp);
         }
         dp[index][rest] = ways;
         return ways;
@@ -88,18 +98,28 @@ public class Probelem_零钱兑换_方法数问题 {
     public int coinMeoth3(int[] arr, int aim) {
         if (arr == null || arr.length == 0 || aim < 0) return 0;
         int[][] dp = new int[arr.length + 1][aim + 1];
-        for (int i = 0; i < dp.length; i++) {
-            for (int j = 0; j < dp[0].length; j++) {
-                dp[i][j] = -1;
+        int n = arr.length;
+        dp[n][0] = 1;
+        for (int index = n - 1; index >= 0; index--) {
+            for (int rest = 0; rest <= aim; rest++) {
+                int ways = 0;
+                for (int zhang = 0; zhang * arr[index] <= rest; zhang++) {//枚举行为
+                    int res = rest - zhang * arr[index];
+                    ways += dp[index + 1][res];
+                }
+                dp[index][rest] = ways;
             }
         }
-        return coinMeothProcessDP(arr, 0, aim, dp);
+        return dp[0][aim];
     }
+
     public static void main(String[] args) {
         Probelem_零钱兑换_方法数问题 dp = new Probelem_零钱兑换_方法数问题();
-        int[] arr = new int[]{10, 100, 50};
-        System.out.println(dp.coinMeoth(arr, 1000));
-        System.out.println(dp.coinMeoth2(arr, 1000));
+        int[] arr = new int[]{5, 10, 50, 100};
+        int am = 1000;
+        System.out.println(dp.coinMeoth(arr, am));
+        System.out.println(dp.coinMeoth2(arr, am));
+        System.out.println(dp.coinMeoth3(arr, am));
 
     }
 }
