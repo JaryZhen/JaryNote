@@ -43,7 +43,7 @@ public class ListTest {
         while (head != null) {
             next = head.next;
             head.next = null;
-            if (head.data < val) {
+            if (head.val < val) {
                 if (lessHead == null) {
                     lessHead = head;
                     lessTail = head;
@@ -51,7 +51,7 @@ public class ListTest {
                     lessTail.next = head;
                     lessTail = head;
                 }
-            } else if (head.data == val) {
+            } else if (head.val == val) {
                 if (midHead == null) {
                     midHead = head;
                     midTail = head;
@@ -133,7 +133,7 @@ public class ListTest {
             }
             ListNode indexHe = head;
             while (indexHe != null) {
-                System.out.print(indexHe.data + " -> ");
+                System.out.print(indexHe.val + " -> ");
                 indexHe = indexHe.next;
             }
             System.out.println();

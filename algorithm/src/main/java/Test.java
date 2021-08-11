@@ -21,7 +21,7 @@ public class Test {
         ListNode re = t.reversList(listNode);
         boolean hs = true;
         while (hs) {
-            System.out.println(re.data);
+            System.out.println(re.val);
             re = re.next;
             if (re == null)
                 hs = false;
@@ -79,26 +79,26 @@ public class Test {
     }
 
     public static int[] maxSliding3(int[] nums, int k) {
-        if(nums == null || nums.length < 2) return nums;
+        if (nums == null || nums.length < 2) return nums;
         // 双向队列 保存当前窗口最大值的数组位置 保证队列中数组位置的数值按从大到小排序
         LinkedList<Integer> queue = new LinkedList();
         // 结果数组
-        int[] result = new int[nums.length-k+1];
+        int[] result = new int[nums.length - k + 1];
         // 遍历nums数组
-        for(int i = 0;i < nums.length;i++){
+        for (int i = 0; i < nums.length; i++) {
             // 保证从大到小 如果前面数小则需要依次弹出，直至满足要求
-            while(!queue.isEmpty() && nums[queue.peekLast()] <= nums[i]){
+            while (!queue.isEmpty() && nums[queue.peekLast()] <= nums[i]) {
                 queue.pollLast();
             }
             // 添加当前值对应的数组下标
             queue.addLast(i);
             // 判断当前队列中队首的值是否有效
-            if(queue.peek() <= i-k){
+            if (queue.peek() <= i - k) {
                 queue.poll();
             }
             // 当窗口长度为k时 保存当前窗口中最大值
-            if(i+1 >= k){
-                result[i+1-k] = nums[queue.peek()];
+            if (i + 1 >= k) {
+                result[i + 1 - k] = nums[queue.peek()];
             }
         }
         return result;
@@ -112,7 +112,48 @@ public class Test {
         }
     }
 
+
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        boolean islag = false;
+        ListNode head = new ListNode();
+        ListNode cu = head;
+        while (l1 != null || l2 != null) {
+            int re1 = 0;
+            if (l1 != null) {
+                re1 = (int) l1.val;
+                l1 = l1.next;
+            }
+            int re2 = 0;
+            if (l2 != null) {
+                re2 = (int) l2.val;
+                l2 = l2.next;
+            }
+            int sum = islag ? re1 + re2 + 1 : re1 + re2;
+            int isLa = sum >= 10 ? sum % 10 : sum;
+            ListNode da = new ListNode(isLa);
+            cu.next = da;
+            cu = da;
+            islag = sum >= 10 ? true : false;
+        }
+        if (islag) {
+            cu.next = new ListNode(1);
+        }
+        return head;
+    }
+
     public static void main(String[] args) {
-        maxSliding();
+        Test test = new Test();
+        int[] nums = new int[]{1, 2, 3, 4, 5, 6, 7};
+
+
+        ListNode list1 = new ListNode(2, new ListNode(4, new ListNode(9)));
+        ListNode list2 = new ListNode(5, new ListNode(6, new ListNode(4, new ListNode(9))));
+
+        ListNode re = test.addTwoNumbers(list1, list2);
+        while (re != null) {
+            System.out.print(re.val + " ");
+            re = re.next;
+        }
+
     }
 }
