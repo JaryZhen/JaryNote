@@ -209,7 +209,7 @@ public class Test {
             if (l1.val >= l2.val) {
                 curr.next = l2;
                 l2 = l2.next;
-            }else {
+            } else {
                 curr.next = l1;
                 l1 = l1.next;
             }
@@ -217,28 +217,48 @@ public class Test {
         }
         return head.next;
     }
+
     public ListNode mergeKLists(ListNode[] lists) {
-        ListNode head = lists[0];
-        for (int i = 1; i < lists.length; i++) {
-            head = this.mergeTwoLists(head, lists[i]);
+        ListNode ans = null;
+        for (int i = 0; i < lists.length; ++i) {
+            ans = mergeTwoLists(ans, lists[i]);
         }
-        return head;
+        return ans;
     }
+
+    public ListNode mergeKLists2(ListNode[] lists) {
+        if(lists.length<=0) return null;
+        ListNode ans = processMKL(0, lists.length-1, lists);
+        return ans;
+    }
+
+    ListNode processMKL(int lef, int rig, ListNode[] lists) {
+        if (lef==rig) {
+            return lists[lef];
+        }
+        int mid = lef + (rig - lef) / 2;
+        ListNode leff = processMKL(lef, mid, lists);
+        ListNode rigf = processMKL(mid+1, rig, lists);
+
+        return this.mergeTwoLists(leff, rigf);
+    }
+
 
     public static void main(String[] args) {
         Test test = new Test();
         int[] nums = new int[]{-2, 0, 1, 1, 2};
         ListNode list1 = new ListNode(2, new ListNode(4, new ListNode(9)));
         ListNode list2 = new ListNode(1, new ListNode(2, new ListNode(4, new ListNode(6, new ListNode(7)))));
+        ListNode list3 = new ListNode(2, new ListNode(4, new ListNode(6)));
+        ListNode list4 = new ListNode(2, new ListNode(4, new ListNode(8)));
+        ListNode list5 = new ListNode(2, new ListNode(4, new ListNode(10)));
 
-        ListNode[] nodes = new ListNode[]{list1,list2};
-        ListNode re = test.mergeTwoLists(list1, list2);
+        ListNode[] nodes = new ListNode[]{list1, list2, list3, list4, list5};
+        ListNode re = test.mergeKLists2(nodes);
         while (re != null) {
             System.out.print(re.val + " ");
             re = re.next;
         }
 
-        String str = "ababa";
-        System.out.println(test.mergeKLists(nodes));
     }
 }
