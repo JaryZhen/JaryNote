@@ -113,7 +113,6 @@ public class Test {
         }
     }
 
-
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         boolean islag = false;
         ListNode head = new ListNode();
@@ -178,7 +177,7 @@ public class Test {
 
     public List<String> generateParenthesis(int n) {
         List<String> strings = new ArrayList<>();
-        process("(", n-1, n, "(", strings);
+        process("(", n - 1, n, "(", strings);
         return strings;
     }
 
@@ -190,24 +189,56 @@ public class Test {
         }
 
         if (left > 0)
-            process("(", left-1, right, s + "(", list);
+            process("(", left - 1, right, s + "(", list);
         if (right > 0 && right > left)
-            process(")", left, right-1, s + ")", list);
+            process(")", left, right - 1, s + ")", list);
+    }
+
+    public ListNode mergeTwoLists(ListNode<Integer> l1, ListNode<Integer> l2) {
+        ListNode head = new ListNode();
+        ListNode curr = head;
+        while (l1 != null || l2 != null) {
+            if (l1 == null) {
+                curr.next = l2;
+                break;
+            }
+            if (l2 == null) {
+                curr.next = l1;
+                break;
+            }
+            if (l1.val >= l2.val) {
+                curr.next = l2;
+                l2 = l2.next;
+            }else {
+                curr.next = l1;
+                l1 = l1.next;
+            }
+            curr = curr.next;
+        }
+        return head.next;
+    }
+    public ListNode mergeKLists(ListNode[] lists) {
+        ListNode head = lists[0];
+        for (int i = 1; i < lists.length; i++) {
+            head = this.mergeTwoLists(head, lists[i]);
+        }
+        return head;
     }
 
     public static void main(String[] args) {
         Test test = new Test();
         int[] nums = new int[]{-2, 0, 1, 1, 2};
         ListNode list1 = new ListNode(2, new ListNode(4, new ListNode(9)));
-        ListNode list2 = new ListNode(5, new ListNode(6, new ListNode(4, new ListNode(9, new ListNode(7)))));
+        ListNode list2 = new ListNode(1, new ListNode(2, new ListNode(4, new ListNode(6, new ListNode(7)))));
 
-       /* ListNode re = test.removeNthFromEnd(list2, 1);
+        ListNode[] nodes = new ListNode[]{list1,list2};
+        ListNode re = test.mergeTwoLists(list1, list2);
         while (re != null) {
             System.out.print(re.val + " ");
             re = re.next;
-        }*/
+        }
 
         String str = "ababa";
-        System.out.println(test.generateParenthesis(3));
+        System.out.println(test.mergeKLists(nodes));
     }
 }
