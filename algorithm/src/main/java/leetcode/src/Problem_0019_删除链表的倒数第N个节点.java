@@ -29,4 +29,20 @@ public class Problem_0019_删除链表的倒数第N个节点 {
         return head;
     }
 
+    public basc.ListNode removeNthFromEnd2(basc.ListNode head, int n) {
+        basc.ListNode dumm = new basc.ListNode(0);
+        dumm.next = head;
+        basc.ListNode slow = dumm;
+        basc.ListNode fast = dumm;
+
+        for (int i = 0; i < n+1; i++) {
+            fast = fast.next;
+        }
+        while (fast != null) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        slow.next = slow.next.next;
+        return dumm.next;
+    }
 }

@@ -176,20 +176,38 @@ public class Test {
         }
     }
 
+    public List<String> generateParenthesis(int n) {
+        List<String> strings = new ArrayList<>();
+        process("(", n-1, n, "(", strings);
+        return strings;
+    }
+
+    void process(String kuo, int left, int right, String s, List<String> list) {
+        System.out.println("curr:  " + s);
+        if (left == right && left == 0) {
+            list.add(s);
+            return;
+        }
+
+        if (left > 0)
+            process("(", left-1, right, s + "(", list);
+        if (right > 0 && right > left)
+            process(")", left, right-1, s + ")", list);
+    }
+
     public static void main(String[] args) {
         Test test = new Test();
         int[] nums = new int[]{-2, 0, 1, 1, 2};
-        /*
         ListNode list1 = new ListNode(2, new ListNode(4, new ListNode(9)));
-        ListNode list2 = new ListNode(5, new ListNode(6, new ListNode(4, new ListNode(9))));
+        ListNode list2 = new ListNode(5, new ListNode(6, new ListNode(4, new ListNode(9, new ListNode(7)))));
 
-        ListNode re = test.addTwoNumbers(list1, list2);
+       /* ListNode re = test.removeNthFromEnd(list2, 1);
         while (re != null) {
             System.out.print(re.val + " ");
             re = re.next;
-        }
-*/
+        }*/
 
         String str = "ababa";
+        System.out.println(test.generateParenthesis(3));
     }
 }
