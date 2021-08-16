@@ -10,7 +10,8 @@ import java.util.List;
 public class Problem_0017_电话号码的字母组合 {
 
     public static void main(String[] args) {
-        List<String> list = new Problem_0017_电话号码的字母组合().letterCombinations("23");
+        List<String> list = new Problem_0017_电话号码的字母组合()
+                .letterCombinations("23");
         for (int i = 0; i < list.size(); i++) {
             System.out.println(list.get(i));
         }

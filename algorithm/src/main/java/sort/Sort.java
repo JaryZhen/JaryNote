@@ -143,7 +143,7 @@ public class Sort {
     }
 
     /**
-     * quick sort 传统方式
+     * 快排方式
      *
      * @param arr
      */
@@ -210,7 +210,7 @@ public class Sort {
         //quickSort(array);
         //selectionSort(array);
         //insertionSort(array);
-        //mergeSort(array);
+        mergeSort(array);
         /*
         System.out.println("newzland: ");
         Arrays.stream(newzLand(array, 0, array.length - 1)).forEach(System.out::println);

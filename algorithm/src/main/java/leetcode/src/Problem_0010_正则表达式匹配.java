@@ -26,21 +26,15 @@ public class Problem_0010_正则表达式匹配 {
     private boolean process4(char[] str, char[] pattern, int si, int pi) {
         if (str.length == si && pattern.length == pi)
             return true;
-
         if (str.length == si)
             return (pi + 1 < pattern.length && pattern[pi + 1] == '*' && process4(str, pattern, si, pi + 2));
-
         if (pattern.length == pi) {
             return false;
         }
-
         if (pi + 1 >= pattern.length || pattern[pi + 1] != '*')
             return ((str[si] == pattern[pi]) || (pattern[pi] == '.')) && process4(str, pattern, si + 1, pi + 1);
-
-
         if (((str[si] == pattern[pi]) || pattern[pi] == '.') && process4(str, pattern, si + 1, pi))
             return true;
-
         return process4(str, pattern, si, pi + 2);
     }
 
@@ -49,7 +43,6 @@ public class Problem_0010_正则表达式匹配 {
             if (str[i] == '.' || str[i] == '*')
                 return false;
         }
-
         for (int i = 0; i < pattern.length; i++) {
             if (pattern[i] == '*' && (i == 0 || pattern[i - 1] == '*'))
                 return false;

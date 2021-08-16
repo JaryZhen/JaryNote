@@ -1,29 +1,30 @@
 package leetcode.src;
 
+import java.util.HashMap;
+
 /**
- * @author cuilihuan
+ * @author Jary
  * @data 2020/11/18 21:49
  */
 public class Problem_0003_无重复字符的最长子串 {
-    //abcabcbb
-    public int lengthOfLongestSubstring(String s) {
-        if (s == null || s.length() == 0) {
+
+    public int lengthOfLongestSubstring(String array) {
+        char[] chars = array.toCharArray();
+        int max = 0;
+        if (array == null || array.length() == 0)
             return 0;
+        HashMap<Character, Integer> map = new HashMap();
+        int start = 0;
+        for (int i = 0; i < chars.length; i++) {
+            if (map.containsKey(chars[i])) {
+                int c = map.get(chars[i]);
+                if (c >= start)
+                    start = map.get(chars[i]) + 1;
+            }
+            map.put(chars[i], i);
+            max = Math.max(max, i - start + 1);
         }
-        char[] string = s.toCharArray();
-        //用数组代替map集合 可以减少取的时间
-        int[] map = new int[256];
-        for (int i = 0; i < map.length; i++) {
-            map[i] = -1;
-        }
-        int maxLen = 0;
-        int pre = -1;
-        for (int i = 0; i < string.length; i++) {
-            pre = Math.max(pre, map[string[i] ]);
-            maxLen = Math.max(i-pre, maxLen);
-            map[string[i]] = i;
-        }
-        return maxLen;
+        return max;
     }
 
     public static void main(String[] args) {
