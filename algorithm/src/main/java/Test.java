@@ -1,6 +1,7 @@
 import basc.ListNode;
 
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -317,7 +318,7 @@ public class Test {
                 }
             } else {
                 lef = mid + 1;
-                if (lef> nums.length-1){
+                if (lef > nums.length - 1) {
                     lef--;
                     break;
                 }
@@ -326,9 +327,32 @@ public class Test {
         return lower ? nums[lef] == target ? lef : -1 : nums[rig] == target ? rig : -1;
     }
 
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> res = new ArrayList<>();
+        processCS(candidates, 0, target, res, new ArrayList<>(), 0);
+        return res;
+    }
+
+    private void processCS(int[] candidates, int index, int target, List<List<Integer>> lists, List<Integer> list, int sum) {
+        if (index >= candidates.length)
+            return;
+        if (sum == target) {
+            lists.add(new ArrayList<>(list));
+            return;
+        }
+        if (sum > target) return;
+
+        list.add(candidates[index]);
+        sum = sum + candidates[index];
+        processCS(candidates, index, target, lists, list, sum);
+        list.remove(list.size() - 1);
+        sum = sum - candidates[index];
+        processCS(candidates, index + 1, target, lists, list, sum);
+    }
+
     public static void main(String[] args) {
         Test test = new Test();
-        int[] nums = new int[]{2,2};
+        int[] nums = new int[]{2, 3, 5};
         ListNode list1 = new ListNode(2, new ListNode(4, new ListNode(9)));
         ListNode list2 = new ListNode(1, new ListNode(2, new ListNode(4, new ListNode(6, new ListNode(7)))));
         ListNode list3 = new ListNode(2, new ListNode(4, new ListNode(6)));
@@ -341,11 +365,6 @@ public class Test {
             System.out.print(re.val + " ");
             re = re.next;
         }*/
-
-        int[] ress = test.searchRange(nums, 3);
-        System.out.println(ress[0]);
-        System.out.println(ress[1]);
-
-
+        System.out.println(test.combinationSum(nums, 8));
     }
 }
