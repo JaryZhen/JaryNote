@@ -227,20 +227,40 @@ public class Test {
     }
 
     public ListNode mergeKLists2(ListNode[] lists) {
-        if(lists.length<=0) return null;
-        ListNode ans = processMKL(0, lists.length-1, lists);
+        if (lists.length <= 0) return null;
+        ListNode ans = processMKL(0, lists.length - 1, lists);
         return ans;
     }
 
     ListNode processMKL(int lef, int rig, ListNode[] lists) {
-        if (lef==rig) {
+        if (lef == rig) {
             return lists[lef];
         }
         int mid = lef + (rig - lef) / 2;
         ListNode leff = processMKL(lef, mid, lists);
-        ListNode rigf = processMKL(mid+1, rig, lists);
+        ListNode rigf = processMKL(mid + 1, rig, lists);
 
         return this.mergeTwoLists(leff, rigf);
+    }
+
+    public int longestValidParentheses(String s) {
+        int maxans = 0;
+        Deque<Integer> stack = new LinkedList<Integer>();
+        stack.push(-1);
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '(') {
+                stack.push(i);
+            } else {
+                stack.pop();
+                if (stack.isEmpty()) {
+                    stack.push(i);
+                } else {
+                    int len = i - stack.peek();
+                    maxans = Math.max(maxans, len);
+                }
+            }
+        }
+        return maxans;
     }
 
 
@@ -255,10 +275,12 @@ public class Test {
 
         ListNode[] nodes = new ListNode[]{list1, list2, list3, list4, list5};
         ListNode re = test.mergeKLists2(nodes);
-        while (re != null) {
+       /* while (re != null) {
             System.out.print(re.val + " ");
             re = re.next;
-        }
+        }*/
+
+        System.out.println(test.longestValidParentheses("()())"));
 
     }
 }
