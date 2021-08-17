@@ -264,9 +264,38 @@ public class Test {
     }
 
 
+    public int search(int[] nums, int target) {
+        int start = 0;
+        int end = nums.length - 1;
+        int mid;
+        while (start <= end) {
+            mid = start + (end - start) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            }
+            //前半部分有序,注意此处用小于等于
+            if (nums[start] <= nums[mid]) {
+                //target在前半部分
+                if (target >= nums[start] && target < nums[mid]) {
+                    end = mid - 1;
+                } else {
+                    start = mid + 1;
+                }
+            } else {//后半部分有序,注意此处用小于等于
+                if (target <= nums[end] && target > nums[mid]) {
+                    start = mid + 1;
+                } else {
+                    end = mid - 1;
+                }
+            }
+        }
+        return -1;
+    }
+
+
     public static void main(String[] args) {
         Test test = new Test();
-        int[] nums = new int[]{-2, 0, 1, 1, 2};
+        int[] nums = new int[]{4,5,6,7,8,9,1,2};
         ListNode list1 = new ListNode(2, new ListNode(4, new ListNode(9)));
         ListNode list2 = new ListNode(1, new ListNode(2, new ListNode(4, new ListNode(6, new ListNode(7)))));
         ListNode list3 = new ListNode(2, new ListNode(4, new ListNode(6)));
@@ -280,7 +309,7 @@ public class Test {
             re = re.next;
         }*/
 
-        System.out.println(test.longestValidParentheses("()())"));
+        System.out.println(test.search(nums,8));
 
     }
 }
