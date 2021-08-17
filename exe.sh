@@ -5,7 +5,7 @@ git add .
 
 git status
 
-git commit -m "add dp 最长有效括号"
+git commit -m "add 有序数组中 target的第一个和最后一个 --- 写是写出来了 但看不懂自己写的"
 
 git status
 

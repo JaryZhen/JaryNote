@@ -263,7 +263,7 @@ public class Test {
         return maxans;
     }
 
-
+    //33
     public int search(int[] nums, int target) {
         int start = 0;
         int end = nums.length - 1;
@@ -292,10 +292,43 @@ public class Test {
         return -1;
     }
 
+    //34
+    public int[] searchRange(int[] nums, int target) {
+        int lef = processSR(nums, target, true);
+        int rir = processSR(nums, target, false);
+        return new int[]{lef, rir};
+    }
+
+    int processSR(int[] nums, int target, boolean lower) {
+        if (nums == null || nums.length < 1)
+            return -1;
+        int lef = 0, rig = nums.length - 1;
+        while (lef <= rig) {
+            int mid = lef + (rig - lef) / 2;
+            if (nums[mid] == target) {
+                if (lower)
+                    rig = mid - 1;
+                else lef = mid + 1;
+            } else if (nums[mid] > target) {
+                rig = mid - 1;
+                if (rig < 0) {
+                    rig++;
+                    break;
+                }
+            } else {
+                lef = mid + 1;
+                if (lef> nums.length-1){
+                    lef--;
+                    break;
+                }
+            }
+        }
+        return lower ? nums[lef] == target ? lef : -1 : nums[rig] == target ? rig : -1;
+    }
 
     public static void main(String[] args) {
         Test test = new Test();
-        int[] nums = new int[]{4,5,6,7,8,9,1,2};
+        int[] nums = new int[]{2,2};
         ListNode list1 = new ListNode(2, new ListNode(4, new ListNode(9)));
         ListNode list2 = new ListNode(1, new ListNode(2, new ListNode(4, new ListNode(6, new ListNode(7)))));
         ListNode list3 = new ListNode(2, new ListNode(4, new ListNode(6)));
@@ -309,7 +342,10 @@ public class Test {
             re = re.next;
         }*/
 
-        System.out.println(test.search(nums,8));
+        int[] ress = test.searchRange(nums, 3);
+        System.out.println(ress[0]);
+        System.out.println(ress[1]);
+
 
     }
 }
