@@ -351,11 +351,45 @@ public class Test {
         processCS(candidates, index + 1, target, lists, list, sum);
     }
 
+    public void rotate(int[][] matrix) {
+        int n = matrix.length;
+        for (int i = 0; i < n / 2; ++i) {
+            for (int j = 0; j < (n + 1) / 2; ++j) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[n - j - 1][i];
+                matrix[n - j - 1][i] = matrix[n - i - 1][n - j - 1];
+                matrix[n - i - 1][n - j - 1] = matrix[j][n - i - 1];
+                matrix[j][n - i - 1] = temp;
+            }
+        }
+    }
 
+    public List<List<String>> groupAnagrams(String[] strs) {
+        HashMap<String, List<String>> map = new HashMap<>();
+        for (int i = 0; i < strs.length; i++) {
+            String s = sort(strs[i]);
+            if (map.containsKey(s)) {
+                List<String> strings = map.get(s);
+                strings.add(strs[i]);
+            } else {
+                List<String> list = new ArrayList<>();
+                list.add(strs[i]);
+                map.put(s, list);
+            }
+        }
+        return map.values().stream().collect(Collectors.toList());
+    }
+
+    String sort(String s) {
+        char[] chars = s.toCharArray();
+        Arrays.sort(chars);
+        return String.valueOf(chars);
+    }
 
     public static void main(String[] args) {
         Test test = new Test();
-        int[] nums = new int[]{4,2,0,3,2,5}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
+        int[] nums = new int[]{1, 2, 3}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
+        int[][] mar = new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
         ListNode list1 = new ListNode(2, new ListNode(4, new ListNode(9)));
         ListNode list2 = new ListNode(1, new ListNode(2, new ListNode(4, new ListNode(6, new ListNode(7)))));
         ListNode list3 = new ListNode(2, new ListNode(4, new ListNode(6)));
@@ -368,6 +402,7 @@ public class Test {
             System.out.print(re.val + " ");
             re = re.next;
         }*/
-        //System.out.println(test.trap(nums));
+        test.rotate(mar);
+
     }
 }

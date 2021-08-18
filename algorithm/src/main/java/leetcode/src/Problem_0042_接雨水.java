@@ -47,7 +47,7 @@ public class Problem_0042_接雨水 {
                     int mid_index = index.pop();
                     int first = stack.peek();
                     int first_index = index.peek();
-                    if (mid > first) {
+                    if (mid > first) {//构成不了槽
                         stack.push(mid);
                         index.push(mid_index);
                         break;
@@ -59,7 +59,6 @@ public class Problem_0042_接雨水 {
                 stack.push(curr);
                 index.push(i);
             }
-
         }
         return are;
     }
