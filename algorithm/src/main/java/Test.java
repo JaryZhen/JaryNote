@@ -327,6 +327,7 @@ public class Test {
         return lower ? nums[lef] == target ? lef : -1 : nums[rig] == target ? rig : -1;
     }
 
+    //39
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> res = new ArrayList<>();
         processCS(candidates, 0, target, res, new ArrayList<>(), 0);
@@ -350,9 +351,11 @@ public class Test {
         processCS(candidates, index + 1, target, lists, list, sum);
     }
 
+
+
     public static void main(String[] args) {
         Test test = new Test();
-        int[] nums = new int[]{2, 3, 5};
+        int[] nums = new int[]{4,2,0,3,2,5}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
         ListNode list1 = new ListNode(2, new ListNode(4, new ListNode(9)));
         ListNode list2 = new ListNode(1, new ListNode(2, new ListNode(4, new ListNode(6, new ListNode(7)))));
         ListNode list3 = new ListNode(2, new ListNode(4, new ListNode(6)));
@@ -365,6 +368,6 @@ public class Test {
             System.out.print(re.val + " ");
             re = re.next;
         }*/
-        System.out.println(test.combinationSum(nums, 8));
+        //System.out.println(test.trap(nums));
     }
 }
