@@ -5,7 +5,7 @@ git add .
 
 git status
 
-git commit -m "add  leetcode 55"
+git commit -m "很啰嗦"
 
 git status
 

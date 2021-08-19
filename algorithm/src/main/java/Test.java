@@ -396,7 +396,7 @@ public class Test {
     }
 
     public boolean canJump(int[] nums) {
-        if (nums.length<=1) return false;
+        if (nums.length <= 1) return false;
         int pre = 0;
         for (int s : nums) {
             if (s > 0) {
@@ -412,10 +412,11 @@ public class Test {
         return true;
     }
 
+
     public static void main(String[] args) {
         Test test = new Test();
-        int[] nums = new int[]{2, 0,0}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
-        int[][] mar = new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+        int[] nums = new int[]{2, 0, 0}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
+        int[][] mar = new int[][]{{1, 4}, {0, 4}};
         ListNode list1 = new ListNode(2, new ListNode(4, new ListNode(9)));
         ListNode list2 = new ListNode(1, new ListNode(2, new ListNode(4, new ListNode(6, new ListNode(7)))));
         ListNode list3 = new ListNode(2, new ListNode(4, new ListNode(6)));
@@ -428,7 +429,6 @@ public class Test {
             System.out.print(re.val + " ");
             re = re.next;
         }*/
-        test.rotate(mar);
-        System.out.println(test.canJump(nums));
+
     }
 }
