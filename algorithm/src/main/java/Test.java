@@ -412,11 +412,25 @@ public class Test {
         return true;
     }
 
+    public int climbStairs(int n) {
+        if(n<=2){
+            return n;
+        }
+        int i1 = 1;
+        int i2 = 2;
+        for(int i=3;i<=n;i++){
+            int temp = i1+i2;
+            i1 = i2;
+            i2 = temp;
+        }
+        return i2;
+    }
+
 
     public static void main(String[] args) {
         Test test = new Test();
         int[] nums = new int[]{2, 0, 0}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
-        int[][] mar = new int[][]{{1, 4}, {0, 4}};
+        int[][] mar = new int[][]{{1, 3, 1}, {1, 5, 1}, {4, 2, 1}};
         ListNode list1 = new ListNode(2, new ListNode(4, new ListNode(9)));
         ListNode list2 = new ListNode(1, new ListNode(2, new ListNode(4, new ListNode(6, new ListNode(7)))));
         ListNode list3 = new ListNode(2, new ListNode(4, new ListNode(6)));
@@ -430,5 +444,6 @@ public class Test {
             re = re.next;
         }*/
 
+        System.out.println(test.minPathSum(mar));
     }
 }
