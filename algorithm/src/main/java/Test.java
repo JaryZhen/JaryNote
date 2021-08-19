@@ -445,7 +445,7 @@ public class Test {
 
         for (int i = 1; i < dp.length; i++) {
             for (int j = 1; j < dp[0].length; j++) {
-                if (a[i-1] == b[j-1]) {
+                if (a[i - 1] == b[j - 1]) {
                     dp[i][j] = dp[i - 1][j - 1];
                 } else {
                     dp[i][j] = Math.min(Math.min(dp[i - 1][j], dp[i][j - 1]), dp[i - 1][j - 1]) + 1;
@@ -477,9 +477,30 @@ public class Test {
         return dp[w1.length][w2.length];
     }
 
+    void swop(int[] arr, int i, int j) {
+        int tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+    }
+
+    public void sortColors(int[] nums) {
+        int tm = 1;
+        int low = -1, mid = 0;
+        int more = nums.length;
+        while (mid < more) {
+            if (nums[mid] > tm) {
+                swop(nums, mid, --more);
+            } else if (nums[mid] < tm) {
+                swop(nums, ++low, mid++);
+            } else {
+                mid++;
+            }
+        }
+    }
+
     public static void main(String[] args) {
         Test test = new Test();
-        int[] nums = new int[]{2, 0, 0}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
+        int[] nums = new int[]{1, 0, 2, 0, 1, 1, 1, 0, 2, 0, 0,1}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
         int[][] mar = new int[][]{{1, 3, 1}, {1, 5, 1}, {4, 2, 1}};
         ListNode list1 = new ListNode(2, new ListNode(4, new ListNode(9)));
         ListNode list2 = new ListNode(1, new ListNode(2, new ListNode(4, new ListNode(6, new ListNode(7)))));
@@ -494,10 +515,10 @@ public class Test {
             re = re.next;
         }*/
 
-        String w1 = "umonoult";//zoologicoarchaeologist
-        String w2 = "ul";
-        System.out.println(test.minDistance(w1, w2));
-        System.out.println(test.minDistance2(w1, w2));
+        test.sortColors(nums);
+        for (int a: nums){
+            System.out.print(a+" ");
+        }
 
     }
 }

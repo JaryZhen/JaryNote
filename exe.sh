@@ -5,7 +5,7 @@ git add .
 
 git status
 
-git commit -m "编剧问题整明白了"
+git commit -m "经典荷兰国旗问题 快速排序核心"
 
 git status
 
