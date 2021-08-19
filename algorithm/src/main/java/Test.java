@@ -413,19 +413,69 @@ public class Test {
     }
 
     public int climbStairs(int n) {
-        if(n<=2){
+        if (n <= 2) {
             return n;
         }
         int i1 = 1;
         int i2 = 2;
-        for(int i=3;i<=n;i++){
-            int temp = i1+i2;
+        for (int i = 3; i <= n; i++) {
+            int temp = i1 + i2;
             i1 = i2;
             i2 = temp;
         }
         return i2;
     }
 
+
+    public int minDistance(String word1, String word2) {
+        char[] a = word1.toCharArray();
+        char[] b = word2.toCharArray();
+        if (a.length < 1)
+            return b.length;
+        if (b.length < 1)
+            return a.length;
+
+        int[][] dp = new int[a.length + 1][b.length + 1];
+        for (int i = 1; i < dp.length; i++) {
+            dp[i][0] = i;
+        }
+        for (int i = 1; i < dp[0].length; i++) {
+            dp[0][i] = i;
+        }
+
+        for (int i = 1; i < dp.length; i++) {
+            for (int j = 1; j < dp[0].length; j++) {
+                if (a[i-1] == b[j-1]) {
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = Math.min(Math.min(dp[i - 1][j], dp[i][j - 1]), dp[i - 1][j - 1]) + 1;
+                }
+            }
+        }
+
+        return dp[a.length][b.length];
+    }
+
+    public int minDistance2(String word1, String word2) {
+        char[] w1 = word1.toCharArray();
+        char[] w2 = word2.toCharArray();
+        int[][] dp = new int[w1.length + 1][w2.length + 1];
+        for (int i = 1; i < dp.length; i++) {
+            dp[i][0] = i;
+        }
+        for (int i = 1; i < dp[0].length; i++) {
+            dp[0][i] = i;
+        }
+        for (int i = 1; i < w1.length + 1; i++) {
+            for (int j = 1; j < w2.length + 1; j++) {
+                if (w1[i - 1] == w2[j - 1]) {
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else
+                    dp[i][j] = Math.min(Math.min(dp[i][j - 1], dp[i - 1][j]), dp[i - 1][j - 1]) + 1;
+            }
+        }
+        return dp[w1.length][w2.length];
+    }
 
     public static void main(String[] args) {
         Test test = new Test();
@@ -444,6 +494,10 @@ public class Test {
             re = re.next;
         }*/
 
-        System.out.println(test.minPathSum(mar));
+        String w1 = "umonoult";//zoologicoarchaeologist
+        String w2 = "ul";
+        System.out.println(test.minDistance(w1, w2));
+        System.out.println(test.minDistance2(w1, w2));
+
     }
 }

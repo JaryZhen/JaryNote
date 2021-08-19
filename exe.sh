@@ -5,7 +5,7 @@ git add .
 
 git status
 
-git commit -m "很啰嗦"
+git commit -m "编剧问题整明白了"
 
 git status
 
