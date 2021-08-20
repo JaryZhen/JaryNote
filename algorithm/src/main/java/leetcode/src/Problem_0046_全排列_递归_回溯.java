@@ -9,7 +9,7 @@ import java.util.List;
  * @author cuilihuan
  * @data 2020/11/28 21:03
  */
-public class Problem_0046_全排列 {
+public class Problem_0046_全排列_递归_回溯 {
     public static void main(String[] args) {
 
     }
@@ -44,5 +44,27 @@ public class Problem_0046_全排列 {
         int temp = nums[i];
         nums[i] = nums[index];
         nums[index] = temp;
+    }
+    // 回溯
+    public List<List<Integer>> permute2(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        int[] visited = new int[nums.length];
+        backtrack(res, nums, new ArrayList<Integer>(), visited);
+        return res;
+    }
+
+    private void backtrack(List<List<Integer>> res, int[] nums, ArrayList<Integer> tmp, int[] visited) {
+        if (tmp.size() == nums.length) {
+            res.add(new ArrayList<>(tmp));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (visited[i] == 1) continue;
+            visited[i] = 1;
+            tmp.add(nums[i]);
+            backtrack(res, nums, tmp, visited);
+            visited[i] = 0;
+            tmp.remove(tmp.size() - 1);
+        }
     }
 }

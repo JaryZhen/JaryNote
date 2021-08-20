@@ -498,9 +498,10 @@ public class Test {
         }
     }
 
+
     public static void main(String[] args) {
         Test test = new Test();
-        int[] nums = new int[]{1, 0, 2, 0, 1, 1, 1, 0, 2, 0, 0,1}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
+        int[] nums = new int[]{8, 5, 9}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
         int[][] mar = new int[][]{{1, 3, 1}, {1, 5, 1}, {4, 2, 1}};
         ListNode list1 = new ListNode(2, new ListNode(4, new ListNode(9)));
         ListNode list2 = new ListNode(1, new ListNode(2, new ListNode(4, new ListNode(6, new ListNode(7)))));
@@ -514,11 +515,5 @@ public class Test {
             System.out.print(re.val + " ");
             re = re.next;
         }*/
-
-        test.sortColors(nums);
-        for (int a: nums){
-            System.out.print(a+" ");
-        }
-
     }
 }
