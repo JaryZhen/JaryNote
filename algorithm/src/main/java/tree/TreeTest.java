@@ -1,8 +1,6 @@
 package tree;
 
 import basc.TreeNode;
-import com.sun.jmx.remote.internal.ArrayQueue;
-import sun.security.timestamp.TSRequest;
 
 import java.util.*;
 
@@ -285,16 +283,47 @@ public class TreeTest {
         return res;
     }
 
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null)
+            return true;
+
+        int lev = 1;
+        boolean is = true;
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int n = queue.size();
+            int[] tm = new int[(int) Math.pow(2, lev)];
+            int k = 0;
+            for (int i = 0; i < n; i++) {
+                TreeNode c = queue.poll();
+                if (c.left != null) {
+                    queue.add(c.left);
+                    tm[k++] = c.left.val;
+                } else
+                    tm[k++] = Integer.MAX_VALUE;
+                if (c.right != null) {
+                    queue.add(c.right);
+                    tm[k++] = c.right.val;
+                } else
+                    tm[k++] = Integer.MAX_VALUE;
+            }
+            ++lev;
+            for (int i = 0; i < tm.length / 2; i++) {
+                if (tm[i] != tm[tm.length - 1 - i]) {
+                    is = false;
+                    break;
+                }
+            }
+        }
+        return is;
+    }
+
     public static void main(String[] args) {
-        TreeNode las = new TreeNode(99);
-        TreeNode la = new TreeNode(null, las, 88);
-        TreeNode left_left = new TreeNode(3);
-        TreeNode left_right = new TreeNode(5);
-        TreeNode right_left = new TreeNode(6);
-        TreeNode right_right = new TreeNode(13);
-        TreeNode left_2 = new TreeNode(left_left, left_right, 4);
-        TreeNode right_2 = new TreeNode(right_left, right_right, 12);
-        TreeNode head = new TreeNode(left_2, right_2, 8);
+        TreeTest test = new TreeTest();
+
+        String[] s = new String[]{"2", null};
+        TreeNode head = test.createTreeNode(s);
         /*
               8
             /   \
@@ -318,12 +347,38 @@ public class TreeTest {
         // TreeNode node = desTree(serTreePre(head));
 
         TheBigTree bigTree = new TheBigTree();
-        System.out.println(bigTree.ifFull(head));
-        System.out.println(bigTree.maxDistens(head));
-        System.out.println(bigTree.maxBST(head));
+        //System.out.println(bigTree.ifFull(head));
+        //System.out.println(bigTree.maxDistens(head));
+        //System.out.println(bigTree.maxBST(head));
 
         //System.out.println(findAllparentPath(head, left_left));
         //System.out.println(list);
+        System.out.println(test.isSymmetric(head));
+    }
+
+    private Map<Integer, Integer> indexMap;
+
+    public TreeNode myBuildTree(int[] preorder, int[] inorder, int preorder_left, int preorder_right, int inorder_left, int inorder_right) {
+        if (preorder_left > preorder_right) {
+            return null;
+        }
+        int preorder_root = preorder_left;
+        int inorder_root = indexMap.get(preorder[preorder_root]);
+        TreeNode root = new TreeNode(preorder[preorder_root]);
+        int size_left_subtree = inorder_root - inorder_left;
+        root.left = myBuildTree(preorder, inorder, preorder_left + 1, preorder_left + size_left_subtree, inorder_left, inorder_root - 1);
+        root.right = myBuildTree(preorder, inorder, preorder_left + size_left_subtree + 1, preorder_right, inorder_root + 1, inorder_right);
+        return root;
+    }
+
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        int n = preorder.length;
+        // 构造哈希映射，帮助我们快速定位根节点
+        indexMap = new HashMap<Integer, Integer>();
+        for (int i = 0; i < n; i++) {
+            indexMap.put(inorder[i], i);
+        }
+        return myBuildTree(preorder, inorder, 0, n - 1, 0, n - 1);
     }
 
 }
