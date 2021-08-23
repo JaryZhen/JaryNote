@@ -515,5 +515,8 @@ public class Test {
             System.out.print(re.val + " ");
             re = re.next;
         }*/
+
+        char[][] strin = new char[][]{{'A', 'B', 'C', 'E'}, {'S', 'F', 'C', 'S'}, {'A', 'D', 'E', 'E'}};
+        System.out.println(test.exist(strin, "ABCCED"));
     }
 }
