@@ -498,25 +498,57 @@ public class Test {
         }
     }
 
+    public int maximalRectangle(int[][] matrix) {
+        int rows = matrix.length;
+        if (rows == 0) return 0;
+        int columns = matrix[0].length;
+        int[][] dp = new int[rows][columns];
+        //求长度
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                if (matrix[i][j] == 1) {
+                    dp[i][j] = j == 0 ? 1 : dp[i][j - 1] + 1;
+                }
+            }
+        }
+        int area = 0;
+        //求面积
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (matrix[i][j] == 0) continue;
+                int len = dp[i][j];
+                for (int k = i; k >= 0 && matrix[k][j] == 1; k--) {//求高
+                    len = Math.min(len, dp[k][j]);//得到长度
+                    area = Math.max(area, (i - k + 1) * len);
+                }
+            }
+        }
+        return area;
+    }
+
 
     public static void main(String[] args) {
         Test test = new Test();
-        int[] nums = new int[]{8, 5, 9}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
-        int[][] mar = new int[][]{{1, 3, 1}, {1, 5, 1}, {4, 2, 1}};
+        int[] nums = new int[]{0, 9}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
+        int[][] mar = new int[][]{
+                {0, 0, 1, 0, 0},
+                {0, 1, 1, 1, 1},
+                {1, 0, 1, 1, 1},
+                {1, 0, 1, 0, 0},
+                {1, 0, 0, 0, 0},
+                {1, 0, 0, 0, 0},
+                {1, 0, 0, 0, 0}};
         ListNode list1 = new ListNode(2, new ListNode(4, new ListNode(9)));
         ListNode list2 = new ListNode(1, new ListNode(2, new ListNode(4, new ListNode(6, new ListNode(7)))));
-        ListNode list3 = new ListNode(2, new ListNode(4, new ListNode(6)));
-        ListNode list4 = new ListNode(2, new ListNode(4, new ListNode(8)));
-        ListNode list5 = new ListNode(2, new ListNode(4, new ListNode(10)));
 
-        ListNode[] nodes = new ListNode[]{list1, list2, list3, list4, list5};
-        ListNode re = test.mergeKLists2(nodes);
+        //ListNode[] nodes = new ListNode[]{list1, list2};
+        // ListNode re = test.mergeKLists2(nodes);
        /* while (re != null) {
             System.out.print(re.val + " ");
             re = re.next;
         }*/
-
         char[][] strin = new char[][]{{'A', 'B', 'C', 'E'}, {'S', 'F', 'C', 'S'}, {'A', 'D', 'E', 'E'}};
-        System.out.println(test.exist(strin, "ABCCED"));
+        System.out.println(test.maximalRectangle(mar));
+
     }
 }
