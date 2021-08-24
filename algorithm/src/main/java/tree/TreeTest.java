@@ -1,5 +1,6 @@
 package tree;
 
+import basc.ListNode;
 import basc.TreeNode;
 
 import java.util.*;
@@ -344,7 +345,21 @@ public class TreeTest {
         return myBuildTree(preorder, inorder, 0, n - 1, 0, n - 1);
     }
 
+    public void flatten(TreeNode root) {
+        TreeNode s = new TreeNode(null, null, root.val);
+        dfsFla(root, s);
+    }
 
+    TreeNode dfsFla(TreeNode root, TreeNode list) {
+        if (root == null)
+            return list;
+        System.out.println(root.val);
+        list.right = new TreeNode(null, null, root.val);
+        list = list.right;
+        TreeNode listNode = dfsFla(root.left, list);
+        TreeNode listNode1 = dfsFla(root.right, listNode);
+        return listNode1;
+    }
 
     public static void main(String[] args) {
         TreeTest test = new TreeTest();
@@ -382,6 +397,7 @@ public class TreeTest {
         //System.out.println(findAllparentPath(head, left_left));
         //System.out.println(list);
         System.out.println(test.isSymmetric(head));
+        test.flatten(head);
     }
 
 
