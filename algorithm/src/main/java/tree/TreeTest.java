@@ -362,27 +362,76 @@ public class TreeTest {
     }
 
 
-    public int maxPathSum(TreeNode root) {
+    class MaxPathSum {
+        int max;
+        boolean wan;
 
-        int max = dfsMax(root, 0);
-        return max;
+        public MaxPathSum(int max, boolean wan) {
+            this.max = max;
+            this.wan = wan;
+        }
+
+        public int getMax() {
+            return max;
+        }
+
+        public void setMax(int max) {
+            this.max = max;
+        }
+
+        public boolean isWan() {
+            return wan;
+        }
+
+        public void setWan(boolean wan) {
+            this.wan = wan;
+        }
     }
 
-    private int dfsMax(TreeNode root, int max) {
+    public int maxPathSum(TreeNode root) {
+
+        MaxPathSum max = dfsMax(root, new MaxPathSum(0, true));
+        return max.max;
+    }
+
+    private MaxPathSum dfsMax(TreeNode root, MaxPathSum max) {
+        if (root == null) {
+            return max;
+        }
+        if (!max.isWan())
+            return max;
+
+        int m = root.val;
+        boolean is = max.isWan();
+        if (root.val + max.getMax() >= root.val) {
+            m = root.val + max.getMax();
+            is = true;
+        } else
+            is = false;
+
+        MaxPathSum le = dfsMax(root.left, new MaxPathSum(m, is));
+        MaxPathSum lr = dfsMax(root.right, le);
+        return lr;
+    }
+    private int maxPathSum = Integer.MIN_VALUE;
+
+    private int recur(TreeNode root) {
         if (root == null) {
             return 0;
         }
-        int m = root.val > max ? root.val : max;
-        int le = dfsMax(root.left, m);
-        int lr = dfsMax(root.right, le);
-        return lr;
+        int l = recur(root.left), r = recur(root.right);
+        int res = root.val + Math.max(0, l) + Math.max(0, r);
+        maxPathSum = Math.max(maxPathSum, res);
+
+        return Math.max(Math.max(l, r), 0) + root.val;
     }
+
 
     public static void main(String[] args) {
         TreeTest test = new TreeTest();
 
-        int[] a = new int[]{1,2,3};
-        int[] b = new int[]{2,1,3};
+        int[] a = new int[]{-10, 9, 20, 15, 7};
+        int[] b = new int[]{9, -10, 15, 20, 7};
         TreeNode head = test.buildTree(a, b);
         /*
               8

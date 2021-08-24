@@ -527,9 +527,40 @@ public class Test {
         return area;
     }
 
+/*
+        动态规划算法，dp[i]表示s前i个字符能否拆分
+        转移方程：dp[j] = dp[i] && check(s[i+1, j]);
+        check(s[i+1, j])就是判断i+1到j这一段字符是否能够拆分
+        其实，调整遍历顺序，这等价于s[i+1, j]是否是wordDict中的元素
+        这个举个例子就很容易理解。
+        假如wordDict=["apple", "pen", "code"],s = "applepencode";
+        dp[8] = dp[5] + check("pen")
+        翻译一下：前八位能否拆分取决于前五位能否拆分，加上五到八位是否属于字典
+        （注意：i的顺序是从j-1 -> 0哦~
+    */
+
+    public HashMap<String, Boolean> hash = new HashMap<>();
+
+    public boolean wordBreak(String s, List<String> wordDict) {
+        boolean[] dp = new boolean[s.length()+1];
+        dp[0] = true;
+        for (int i = 0; i <= s.length(); i++) {
+            for (int j = i - 1; j >= 0; j--) {
+                String sub = s.substring(j, i);
+                dp[i] = dp[j] && check(sub, wordDict);
+                if (dp[i]) break;
+            }
+        }
+        return dp[s.length()];
+    }
+
+    public boolean check(String s, List<String> d) {
+        return d.contains(s);
+    }
+
     public static void main(String[] args) {
         Test test = new Test();
-        int[] nums = new int[]{7, 6, 4, 3, 1}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
+        int[] nums = new int[]{-4, -4, 2, -6, 9, 6, 8, -6, -9, -1, 9, 5, 2, -6, 0}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
         int[][] mar = new int[][]{
                 {0, 0, 1, 0, 0},
                 {0, 1, 1, 1, 1},
@@ -549,5 +580,10 @@ public class Test {
             System.out.print(re.val + " ");
             re = re.next;
         }*/
+
+
+        String s = "catsandog";
+        List<String> wordDict = Arrays.asList("cats", "dog", "sand", "and", "cat");
+        System.out.println(test.wordBreak(s, wordDict));
     }
 }
