@@ -21,6 +21,12 @@ public class TreeNode {
         this.val = data;
     }
 
+    public TreeNode(int data, TreeNode left, TreeNode right) {
+        this.left = left;
+        this.right = right;
+        this.val = data;
+    }
+
     @Override
     public String toString() {
         return "val:" + val;

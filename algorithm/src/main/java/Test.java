@@ -527,11 +527,9 @@ public class Test {
         return area;
     }
 
-
-
     public static void main(String[] args) {
         Test test = new Test();
-        int[] nums = new int[]{0, 9}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
+        int[] nums = new int[]{7, 6, 4, 3, 1}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
         int[][] mar = new int[][]{
                 {0, 0, 1, 0, 0},
                 {0, 1, 1, 1, 1},
@@ -540,6 +538,8 @@ public class Test {
                 {1, 0, 0, 0, 0},
                 {1, 0, 0, 0, 0},
                 {1, 0, 0, 0, 0}};
+        char[][] strin = new char[][]{{'A', 'B', 'C', 'E'}, {'S', 'F', 'C', 'S'}, {'A', 'D', 'E', 'E'}};
+
         ListNode list1 = new ListNode(2, new ListNode(4, new ListNode(9)));
         ListNode list2 = new ListNode(1, new ListNode(2, new ListNode(4, new ListNode(6, new ListNode(7)))));
 
@@ -549,8 +549,5 @@ public class Test {
             System.out.print(re.val + " ");
             re = re.next;
         }*/
-        char[][] strin = new char[][]{{'A', 'B', 'C', 'E'}, {'S', 'F', 'C', 'S'}, {'A', 'D', 'E', 'E'}};
-        System.out.println(test.maximalRectangle(mar));
-
     }
 }

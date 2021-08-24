@@ -361,11 +361,28 @@ public class TreeTest {
         return listNode1;
     }
 
+
+    public int maxPathSum(TreeNode root) {
+
+        int max = dfsMax(root, 0);
+        return max;
+    }
+
+    private int dfsMax(TreeNode root, int max) {
+        if (root == null) {
+            return 0;
+        }
+        int m = root.val > max ? root.val : max;
+        int le = dfsMax(root.left, m);
+        int lr = dfsMax(root.right, le);
+        return lr;
+    }
+
     public static void main(String[] args) {
         TreeTest test = new TreeTest();
 
-        int[] a = new int[]{8, 4, 3, 5, 12, 6, 88, 99, 13};
-        int[] b = new int[]{3, 4, 5, 8, 6, 88, 99, 12, 13};
+        int[] a = new int[]{1,2,3};
+        int[] b = new int[]{2,1,3};
         TreeNode head = test.buildTree(a, b);
         /*
               8
@@ -396,8 +413,8 @@ public class TreeTest {
 
         //System.out.println(findAllparentPath(head, left_left));
         //System.out.println(list);
-        System.out.println(test.isSymmetric(head));
-        test.flatten(head);
+        System.out.println(test.maxPathSum(head));
+
     }
 
 
