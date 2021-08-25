@@ -1,8 +1,6 @@
 import basc.ListNode;
-import basc.TreeNode;
 
 import java.util.*;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -668,7 +666,7 @@ public class Test {
         int preMax = Math.max(nums[0], nums[1]);
 
         for (int i = 2; i < nums.length; i++) {
-            int curr = Math.max(pre+ nums[i], preMax);
+            int curr = Math.max(pre + nums[i], preMax);
             pre = preMax;
             preMax = curr;
         }
@@ -685,6 +683,87 @@ public class Test {
         return max;
     }
 
+    public boolean canFinish(int numCourses, int[][] ints) {
+        HashSet<Integer> set = new HashSet();
+        HashMap<Integer, String> mapL = new HashMap();
+
+        for (int i = 0; i < ints.length; i++) {
+            int key = ints[i][0];
+            if (mapL.containsKey(key))
+                mapL.put(key, mapL.get(key) + "-" + ints[i][1]);
+            else mapL.put(key, ints[i][1] + "");
+        }
+        for (int i = 0; i < ints.length; i++) {
+            int key = ints[i][0];
+            processCanF(key, set, mapL);
+
+        }
+
+        return false;
+    }
+
+    void processCanF(Integer key, HashSet<Integer> set, HashMap<Integer, String> mapL) {
+        if (set.contains(key))
+            return;
+        String[] va = mapL.get(key).split("-");
+        if (va.length < 1) {
+            set.add(key);
+        } else {
+            for (String s : va) {
+                processCanF(Integer.valueOf(s), set, mapL);
+            }
+        }
+    }
+
+
+    class Trie {
+        private Trie[] children;
+        private boolean isEnd;
+
+        public Trie() {
+            children = new Trie[26];
+            isEnd = false;
+        }
+
+        public void insert(String word) {
+            Trie node = this;
+            for (int i = 0; i < word.length(); i++) {
+                char ch = word.charAt(i);
+                int index = ch - 'a';
+                if (node.children[index] == null) {
+                    node.children[index] = new Trie();
+                }
+                node = node.children[index];
+            }
+            node.isEnd = true;
+        }
+
+        public boolean search(String word) {
+            Trie node = searchPrefix(word);
+            return node != null && node.isEnd;
+        }
+
+        public boolean startsWith(String prefix) {
+            return searchPrefix(prefix) != null;
+        }
+
+        private Trie searchPrefix(String prefix) {
+            Trie node = this;
+            for (int i = 0; i < prefix.length(); i++) {
+                char ch = prefix.charAt(i);
+                int index = ch - 'a';
+                if (node.children[index] == null) {
+                    return null;
+                }
+                node = node.children[index];
+            }
+            return node;
+        }
+    }
+
+    public boolean isLand(int[][] grid, int i, int j) {
+        return i >= 0 && i < grid.length && j >= 0 && j < grid[0].length && grid[i][j] == 1;
+    }
 
     public static void main(String[] args) {
         Test test = new Test();

@@ -5,7 +5,7 @@ git add .
 
 git status
 
-git commit -m "not that bad"
+git commit -m "Trie"
 
 git status
 
