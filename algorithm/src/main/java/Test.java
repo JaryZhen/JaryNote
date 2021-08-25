@@ -658,9 +658,37 @@ public class Test {
         return res;
     }
 
+    public int rob2(int[] nums) {
+        if (nums.length == 1)
+            return nums[0];
+        if (nums.length == 2)
+            return Math.max(nums[0], nums[1]);
+
+        int pre = nums[0];
+        int preMax = Math.max(nums[0], nums[1]);
+
+        for (int i = 2; i < nums.length; i++) {
+            int curr = Math.max(pre+ nums[i], preMax);
+            pre = preMax;
+            preMax = curr;
+        }
+        return preMax;
+    }
+
+    public int rob(int[] nums) {
+        int pre = 0, max = 0, preMax;
+        for (int num : nums) {
+            preMax = max;
+            max = Math.max(pre + num, max);
+            pre = preMax;
+        }
+        return max;
+    }
+
+
     public static void main(String[] args) {
         Test test = new Test();
-        int[] nums = new int[]{-3,-6,2,-4,3}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
+        int[] nums = new int[]{2, 1, 1, 2}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
         int[][] mar = new int[][]{
                 {0, 0, 1, 0, 0},
                 {0, 1, 1, 1, 1},
@@ -680,6 +708,6 @@ public class Test {
             System.out.print(re.val + " ");
             re = re.next;
         }*/
-        System.out.println(test.maxProduct(nums));
+        System.out.println(test.rob2(nums));
     }
 }

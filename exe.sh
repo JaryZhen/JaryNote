@@ -5,7 +5,7 @@ git add .
 
 git status
 
-git commit -m "max product"
+git commit -m "not that bad"
 
 git status
 
