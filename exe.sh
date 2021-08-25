@@ -5,7 +5,7 @@ git add .
 
 git status
 
-git commit -m "dong tai gui hua "
+git commit -m "sort list "
 
 git status
 

@@ -542,7 +542,7 @@ public class Test {
     public HashMap<String, Boolean> hash = new HashMap<>();
 
     public boolean wordBreak(String s, List<String> wordDict) {
-        boolean[] dp = new boolean[s.length()+1];
+        boolean[] dp = new boolean[s.length() + 1];
         dp[0] = true;
         for (int i = 0; i <= s.length(); i++) {
             for (int j = i - 1; j >= 0; j--) {
@@ -557,6 +557,77 @@ public class Test {
     public boolean check(String s, List<String> d) {
         return d.contains(s);
     }
+
+    public boolean hasCycle(ListNode head) {
+        if (head == null || head.next == null || head.next.next == null)
+            return true;
+        ListNode slow = head.next;
+        ListNode fast = head.next.next;
+
+        while (slow != null && fast != null) {
+            if (slow == fast) return true;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return false;
+    }
+
+    public ListNode sortList(ListNode head) {
+        return process(head, null);
+    }
+
+    private  ListNode process(ListNode head, ListNode tail) {
+        if (head == null)
+            return head;
+        if (head.next == tail) {
+            head.next = null;
+            return head;
+        }
+
+        ListNode slow = head, fast = head;
+        while (fast != tail) {
+            slow = slow.next;
+            fast = fast.next;
+            if (fast != tail) {
+                fast = fast.next;
+            }
+        }
+
+        ListNode left = process(head, slow);
+        ListNode right = process(slow.next, tail);
+       return mergeTwoLists(left,right);
+    }
+
+    /**
+     * 归并排序—— 二分的意思
+     * 将两段排序好的数组结合成一个排序数组
+     *
+     * @param left
+     * @param right
+     * @return
+     */
+    private static void merge(int[] arr, int left, int mid, int right) {
+        int[] help = new int[right - left + 1];
+        int i = 0;
+        int p1 = left;
+        int p2 = mid + 1;
+        while (p1 <= mid && p2 <= right) {
+            //从两个数组中选取较小的数放入中间数组
+            help[i++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
+        }
+        //将剩余的部分放入中间数组
+        while (p1 <= mid) {
+            help[i++] = arr[p1++];
+        }
+        while (p2 <= right) {
+            help[i++] = arr[p2++];
+        }
+        //将中间数组复制回原数组
+        for (int j = 0; j < help.length; j++) {
+            arr[left + j] = help[j];
+        }
+    }
+
 
     public static void main(String[] args) {
         Test test = new Test();
@@ -580,10 +651,6 @@ public class Test {
             System.out.print(re.val + " ");
             re = re.next;
         }*/
-
-
-        String s = "catsandog";
-        List<String> wordDict = Arrays.asList("cats", "dog", "sand", "and", "cat");
-        System.out.println(test.wordBreak(s, wordDict));
+        test.sortList(list1);
     }
 }
