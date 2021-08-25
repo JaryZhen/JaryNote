@@ -576,7 +576,7 @@ public class Test {
         return process(head, null);
     }
 
-    private  ListNode process(ListNode head, ListNode tail) {
+    private ListNode process(ListNode head, ListNode tail) {
         if (head == null)
             return head;
         if (head.next == tail) {
@@ -595,7 +595,7 @@ public class Test {
 
         ListNode left = process(head, slow);
         ListNode right = process(slow.next, tail);
-       return mergeTwoLists(left,right);
+        return mergeTwoLists(left, right);
     }
 
     /**
@@ -628,10 +628,39 @@ public class Test {
         }
     }
 
+    public int maxProduct(int[] nums) {
+        int len = nums.length;
+        if (len == 0) {
+            return 0;
+        }
+
+        // dp[i][0]：以 nums[i] 结尾的连续子数组的最小值
+        // dp[i][1]：以 nums[i] 结尾的连续子数组的最大值
+        int[][] dp = new int[len][2];
+        dp[0][0] = nums[0];
+        dp[0][1] = nums[0];
+        for (int i = 1; i < len; i++) {
+            int curr = nums[i];
+            if (curr >= 0) {
+                dp[i][0] = Math.min(curr, curr * dp[i - 1][0]);
+                dp[i][1] = Math.max(curr, curr * dp[i - 1][1]);
+            } else {
+                dp[i][0] = Math.min(curr, curr * dp[i - 1][1]);
+                dp[i][1] = Math.max(curr, curr * dp[i - 1][0]);
+            }
+        }
+
+        // 只关心最大值，需要遍历
+        int res = dp[0][1];
+        for (int i = 1; i < len; i++) {
+            res = Math.max(res, dp[i][1]);
+        }
+        return res;
+    }
 
     public static void main(String[] args) {
         Test test = new Test();
-        int[] nums = new int[]{-4, -4, 2, -6, 9, 6, 8, -6, -9, -1, 9, 5, 2, -6, 0}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
+        int[] nums = new int[]{-3,-6,2,-4,3}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
         int[][] mar = new int[][]{
                 {0, 0, 1, 0, 0},
                 {0, 1, 1, 1, 1},
@@ -651,6 +680,6 @@ public class Test {
             System.out.print(re.val + " ");
             re = re.next;
         }*/
-        test.sortList(list1);
+        System.out.println(test.maxProduct(nums));
     }
 }

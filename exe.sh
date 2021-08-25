@@ -5,7 +5,7 @@ git add .
 
 git status
 
-git commit -m "sort list "
+git commit -m "max product"
 
 git status
 
