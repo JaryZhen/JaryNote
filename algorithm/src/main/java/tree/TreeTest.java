@@ -427,6 +427,22 @@ public class TreeTest {
         return Math.max(Math.max(l, r), 0) + root.val;
     }
 
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        return dfsLCA(root, p, q);
+    }
+
+    TreeNode dfsLCA(TreeNode root, TreeNode p, TreeNode q) {
+        if (root.val == q.val || root.val == p.val)
+            return root;
+
+        TreeNode lef = root.left == null ? null : dfsLCA(root.left, p, q);
+        TreeNode rig = root.right == null ? null : dfsLCA(root.right, p, q);
+        if (lef != null && rig != null)
+            return root;
+        if (lef != null) return lef;
+        if (rig != null) return rig;
+        return null;
+    }
 
     public static void main(String[] args) {
         TreeTest test = new TreeTest();
@@ -451,7 +467,7 @@ public class TreeTest {
         //System.out.println(findAllparentPath(head, left_left));
         //System.out.println(list);
         //bfsTreePrint(test.invertTree(head));
-
+        System.out.println(test.lowestCommonAncestor(head, new TreeNode(-10), new TreeNode(7)));
     }
 
 
