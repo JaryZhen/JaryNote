@@ -497,34 +497,6 @@ public class Test {
         }
     }
 
-    public int maximalRectangle(int[][] matrix) {
-        int rows = matrix.length;
-        if (rows == 0) return 0;
-        int columns = matrix[0].length;
-        int[][] dp = new int[rows][columns];
-        //求长度
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[0].length; j++) {
-                if (matrix[i][j] == 1) {
-                    dp[i][j] = j == 0 ? 1 : dp[i][j - 1] + 1;
-                }
-            }
-        }
-        int area = 0;
-        //求面积
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                if (matrix[i][j] == 0) continue;
-                int len = dp[i][j];
-                for (int k = i; k >= 0 && matrix[k][j] == 1; k--) {//求高
-                    len = Math.min(len, dp[k][j]);//得到长度
-                    area = Math.max(area, (i - k + 1) * len);
-                }
-            }
-        }
-        return area;
-    }
-
 /*
         动态规划算法，dp[i]表示s前i个字符能否拆分
         转移方程：dp[j] = dp[i] && check(s[i+1, j]);
@@ -765,9 +737,101 @@ public class Test {
         return i >= 0 && i < grid.length && j >= 0 && j < grid[0].length && grid[i][j] == 1;
     }
 
+    public int maximalRectangle(char[][] matrix) {
+        int rows = matrix.length;
+        if (rows == 0) return 0;
+        int columns = matrix[0].length;
+        int[][] dp = new int[rows][columns];
+        //求长度
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                if (matrix[i][j] == '1') {
+                    dp[i][j] = j == 0 ? 1 : dp[i][j - 1] + 1;
+                }
+            }
+        }
+        int area = 0;
+        //求面积
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (matrix[i][j] == '0') continue;
+                int len = dp[i][j];
+                for (int k = i; k >= 0 && matrix[k][j] == '1'; k--) {//求高
+                    len = Math.min(len, dp[k][j]);//得到长度
+                    area = Math.max(area, (i - k + 1) * len);
+                }
+            }
+        }
+        return area;
+    }
+
+    public int maximalSquare(char[][] matrix) {
+        int rows = matrix.length;
+        if (rows == 0) return 0;
+        int columns = matrix[0].length;
+        int[][] dp = new int[rows][columns];
+
+        int are = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (matrix[i][j] == '1') {
+                    if (j == 0 || i == 0) {
+                        dp[i][j] = 1;
+                        are = Math.max(are, 1);
+                    } else {
+                        dp[i][j] = Math.min(Math.min(dp[i - 1][j - 1], dp[i - 1][j]), dp[i][j - 1]) + 1;
+                        are = Math.max(are, dp[i][j] * dp[i][j]);
+                    }
+
+                }
+            }
+        }
+        return are;
+    }
+
+    public boolean isPalindrome(ListNode head) {
+        if (head == null || head.next == null)
+            return true;
+        if (head.next.next == null)
+            return head.val == head.next.val;
+        Stack<Integer> stack = new Stack<>();
+        ListNode<Integer> slow = head.next;
+
+        ListNode fast = head.next.next;
+
+        stack.add((int) head.val);
+        stack.add(slow.val);
+
+        int n = 2;
+        while (fast != null) {
+            if (fast.next == null) {
+                n = n + 1;
+                break;
+            } else {
+                fast = fast.next.next;
+                n = n + 2;
+                slow = slow.next;
+                stack.add(slow.val);
+            }
+        }
+
+        while (fast.next != null && fast.next.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+
+        stack.pop();
+        if (n % 2 == 1) slow = slow.next;
+        while (slow != null) {
+            if (stack.pop() != slow.val) return false;
+            slow = slow.next;
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
         Test test = new Test();
-        int[] nums = new int[]{2, 1, 1, 2}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
+        int[] nums = new int[]{2, 1, 1, 2, 3, 4}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
         int[][] mar = new int[][]{
                 {0, 0, 1, 0, 0},
                 {0, 1, 1, 1, 1},
@@ -776,10 +840,19 @@ public class Test {
                 {1, 0, 0, 0, 0},
                 {1, 0, 0, 0, 0},
                 {1, 0, 0, 0, 0}};
+
+        char[][] chars = new char[][]{
+                {'1', '0', '1', '1', '0', '1'},
+                {'1', '1', '1', '1', '1', '1'},
+                {'0', '1', '1', '0', '1', '1'},
+                {'1', '1', '1', '0', '1', '0'},
+                {'0', '1', '1', '1', '1', '1'},
+                {'1', '1', '0', '1', '1', '1'}};
+
         char[][] strin = new char[][]{{'A', 'B', 'C', 'E'}, {'S', 'F', 'C', 'S'}, {'A', 'D', 'E', 'E'}};
 
         ListNode list1 = new ListNode(2, new ListNode(4, new ListNode(9)));
-        ListNode list2 = new ListNode(1, new ListNode(2, new ListNode(4, new ListNode(6, new ListNode(7)))));
+        ListNode list2 = new ListNode(1, new ListNode(2, new ListNode(22, new ListNode(1))));
 
         //ListNode[] nodes = new ListNode[]{list1, list2};
         // ListNode re = test.mergeKLists2(nodes);
@@ -787,6 +860,6 @@ public class Test {
             System.out.print(re.val + " ");
             re = re.next;
         }*/
-        System.out.println(test.rob2(nums));
+        System.out.println(test.isPalindrome(list2));
     }
 }

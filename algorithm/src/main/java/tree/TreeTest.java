@@ -413,6 +413,7 @@ public class TreeTest {
         MaxPathSum lr = dfsMax(root.right, le);
         return lr;
     }
+
     private int maxPathSum = Integer.MIN_VALUE;
 
     private int recur(TreeNode root) {
@@ -433,18 +434,6 @@ public class TreeTest {
         int[] a = new int[]{-10, 9, 20, 15, 7};
         int[] b = new int[]{9, -10, 15, 20, 7};
         TreeNode head = test.buildTree(a, b);
-        /*
-              8
-            /   \
-           4     12
-          / \    / \
-         3   5  6  13
-                 \
-                 88
-                   \
-                    99
-
-        */
 
         bfsTreePrint(head);
 
@@ -455,14 +444,13 @@ public class TreeTest {
 
         // TreeNode node = desTree(serTreePre(head));
 
-        TheBigTree bigTree = new TheBigTree();
         //System.out.println(bigTree.ifFull(head));
         //System.out.println(bigTree.maxDistens(head));
         //System.out.println(bigTree.maxBST(head));
 
         //System.out.println(findAllparentPath(head, left_left));
         //System.out.println(list);
-        System.out.println(test.maxPathSum(head));
+        //bfsTreePrint(test.invertTree(head));
 
     }
 
