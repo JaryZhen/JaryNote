@@ -5,7 +5,7 @@ git add .
 
 git status
 
-git commit -m "Trie"
+git commit -m "暴力 解得"
 
 git status
 
