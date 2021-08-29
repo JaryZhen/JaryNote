@@ -1,4 +1,4 @@
-package swordforoffer.problem02;
+package swordforoffer.problem02_Singleton;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

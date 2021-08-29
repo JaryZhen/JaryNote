@@ -1,4 +1,4 @@
-package swordforoffer.problem02;
+package swordforoffer.problem02_Singleton;
 
 /**
  * Created by Jary on 2017/8/18 0018.

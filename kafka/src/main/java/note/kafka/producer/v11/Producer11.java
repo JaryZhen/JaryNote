@@ -18,7 +18,8 @@ public class Producer11 extends Thread {
     private final Boolean isAsync;
 
     public static void main(String[] args) {
-        new Producer11(KafkaProperties.TOPIC_a, false).start();
+        new Producer11(KafkaProperties.TOPIC_a, false)
+                .start();
     }
 
     public Producer11(String topic, Boolean isAsync) {
@@ -48,26 +49,37 @@ public class Producer11 extends Thread {
     public void run() {
         Random ran1 = new Random();
         int key = 1;
+        int v=1;
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
         while (true) {
 
             try {
-                Thread.sleep(2000);
                 long startTime = System.currentTimeMillis();
-                String data = String.format("" +
+                String valeu_tmp = String.format("" +
                         "{\"role\":\"TEACHER\"," +
                         "\"user_type\":1," +
                         "\"local_ping\":46," +
                         "\"line\":\"Video\"," +
                         "\"server_rtt\":170," +
-                        "\"classroom\":\"jz7b72b624a3384a43b28b29662d95caa2\"," +
+                        "\"classroom\":\"jz-" + key + "\"," +
                         "\"full_ping\":216," +
-                        "\"timestamp\":1572839989492}");
+                        "\"timestamp\":" + (v) + "}");
 
-                String valeu = String.format(
+                String valeu = String.format("" +
+                        "{\"age\":\"TEACHER\"," +
+                        "\"sdfss\":1," +
+                        "\"local_ping\":46," +
+                        "\"line\":\"Video\"," +
+                        "\"server_rtt\":170," +
+                        "\"name\":\"jz-" + key + "\"," +
+                        "\"sad\":216," +
+                        "\"timestamp\":" + (v) + "}");
+
+
+                String valeu1 = String.format(
                         "{\"colName\":\"" + format.format(startTime) + "\"," +
-                        "\"tm\":" + startTime + "}");
+                                "\"tm\":" + startTime + "}");
 
                 //data;///"Suct_Pres_Status="+key;//ran1.nextInt(100);
                 //+" pressure2="+ran1.nextInt(60);
@@ -82,8 +94,11 @@ public class Producer11 extends Thread {
                     System.out.println("Sent message: " + key + ", " + valeu);
                     Future<RecordMetadata> a = producer.send(new ProducerRecord<>(topic, key, valeu));
 
-                    Thread.sleep(50);
+                    Thread.sleep(0);
                     key++;
+                    v++;
+                    if (key == 4)
+                        key = 1;
                     System.out.println(a.isDone() + ", topic=" + a.get().topic() + " , partition=" + a.get().partition() + ", offset=" + a.get().offset());
                 }
 

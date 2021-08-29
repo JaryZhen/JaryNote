@@ -3,7 +3,7 @@ package note.kafka;
 
 public class KafkaProperties {
     //public static final String HOSTNAME = "192.168.1.55";
-    public static final String HOSTNAME = "localhost";
+    public static final String HOSTNAME = ""; //
 
     public static final int ZK_PORT = 2222;
 
@@ -12,7 +12,7 @@ public class KafkaProperties {
 
     public static final String TOPIC = "timeline-router-log1";
     public static final String TOPIC_V11_S = "s2";
-    public static final String TOPIC_a ="Suct_Data";
+    public static final String TOPIC_a ="user_platform_stage_3306";
 
 
     public static final int KAFKA_SERVER_PORT = 9092;
