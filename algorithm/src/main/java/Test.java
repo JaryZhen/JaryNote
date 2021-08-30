@@ -940,6 +940,31 @@ public class Test {
         return dp[amount];
     }
 
+    public int[] topKFrequent(int[] nums, int k) {
+        HashMap<Integer, Integer> map = new HashMap();
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(nums[i]))
+                map.put(nums[i], map.get(nums[i]) + 1);
+            else map.put(nums[i], 1);
+        }
+        PriorityQueue<int[]> queue = new PriorityQueue(new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return 0;
+            }
+        });
+
+        for (int a : map.keySet()) {
+            queue.add(new int[]{a, map.get(a)});
+        }
+
+        int[] ret = new int[k];
+        for (int i = 0; i < k; ++i) {
+            ret[i] = queue.poll()[0];
+        }
+        return ret;
+    }
+
     public static void main(String[] args) {
         Test test = new Test();
         int[] nums = new int[]{474, 83, 3, 404}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1

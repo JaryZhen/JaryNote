@@ -478,12 +478,28 @@ public class TreeTest {
         return node;
     }
 
+    public int rob(TreeNode root) {
+        return Math.max(dfsRob(root)[0], dfsRob(root)[1]);
+    }
+
+    int[] dfsRob(TreeNode node) {
+        if (node == null)
+            return new int[]{0, 0};
+        int[] le = dfsRob(node.left);
+        int[] ri = dfsRob(node.right);
+
+        int yes = node.val ;
+        int no = Math.max(le[0], le[1]) + Math.max(ri[0], ri[1]);
+        return new int[]{yes, no};
+    }
+
+
 
     public static void main(String[] args) {
         TreeTest test = new TreeTest();
 
-        int[] a = new int[]{-10, 9, 20, 15, 7};
-        int[] b = new int[]{9, -10, 15, 20, 7};
+        int[] a = new int[]{10, 9, 20, 15, 7};
+        int[] b = new int[]{9, 10, 15, 20, 7};
         TreeNode head = test.buildTree(a, b);
 
         bfsTreePrint(head);
@@ -503,7 +519,7 @@ public class TreeTest {
         //System.out.println(list);
         //bfsTreePrint(test.invertTree(head));
 
-        test.deserialize(test.serialize(head));
+        System.out.println(test.rob(head));
     }
 
 
