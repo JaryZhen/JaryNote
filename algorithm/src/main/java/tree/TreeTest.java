@@ -444,6 +444,41 @@ public class TreeTest {
         return null;
     }
 
+
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        return dfsSer(root, "");
+    }
+
+    private String dfsSer(TreeNode root, String ser) {
+        if (root == null) {
+            ser = ser + "#" + "null";
+            return ser;
+        }
+        return dfsSer(root.right, dfsSer(root.left, ser + "#" + root.val));
+    }
+
+
+    int index = 1;
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        return dfsDer(new TreeNode(), data.split("#"));
+    }
+
+    private TreeNode dfsDer(TreeNode node, String[] list) {
+        String da = list[index++];
+        if ("null".equals(da)) {
+            node = null;
+            return node;
+        }
+        node = new TreeNode(Integer.valueOf(da));
+        node.left = dfsDer(new TreeNode(), list);
+        node.right = dfsDer(new TreeNode(), list);
+        return node;
+    }
+
+
     public static void main(String[] args) {
         TreeTest test = new TreeTest();
 
@@ -467,7 +502,8 @@ public class TreeTest {
         //System.out.println(findAllparentPath(head, left_left));
         //System.out.println(list);
         //bfsTreePrint(test.invertTree(head));
-        System.out.println(test.lowestCommonAncestor(head, new TreeNode(-10), new TreeNode(7)));
+
+        test.deserialize(test.serialize(head));
     }
 
 

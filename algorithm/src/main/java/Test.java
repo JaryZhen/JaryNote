@@ -852,9 +852,55 @@ public class Test {
         return dp[n];
     }
 
+    public void moveZeroes(int[] nums) {
+        int slow = 0;
+        int fast = 0;
+        while (fast < nums.length) {
+            if (nums[slow] == 0) {
+                swop(nums, slow, fast++);
+            } else {
+                slow++;
+                if (slow > fast) fast++;
+            }
+        }
+    }
+
+    public int findDuplicate(int[] nums) {
+        int slow = nums[0];
+        int fast = nums[slow];
+
+        while (slow != fast) {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        }
+        slow = 0;
+        while (slow != fast) {
+            slow = nums[slow];
+            fast = nums[fast];
+        }
+        return slow;
+    }
+
+    public int lengthOfLIS(int[] nums) {
+        if (nums.length <= 1)
+            return nums.length;
+        int[] dp = new int[nums.length];
+        dp[0] = 1;
+        int rema=1;
+        for (int i = 1; i < nums.length; i++) {
+            int max = 0;
+            for (int j = 0; j <= i; j++) {
+                max = Math.max(max, nums[i] > nums[j] ? dp[j] + 1 : 1);
+            }
+            dp[i] = max;
+            rema = Math.max(rema, dp[i]);
+        }
+        return rema;
+    }
+
     public static void main(String[] args) {
         Test test = new Test();
-        int[] nums = new int[]{2, 1, 1, 2, 3, 4}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
+        int[] nums = new int[]{4, 111, 1, 3, 8, 9}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
         int[][] mar = new int[][]{
                 {0, 0, 1, 0, 0},
                 {0, 1, 1, 1, 1},
@@ -883,8 +929,6 @@ public class Test {
             System.out.print(re.val + " ");
             re = re.next;
         }*/
-        System.out.println(test.numSquares(16));
-
-
+        System.out.println(test.lengthOfLIS(nums));
     }
 }
