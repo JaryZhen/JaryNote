@@ -886,7 +886,7 @@ public class Test {
             return nums.length;
         int[] dp = new int[nums.length];
         dp[0] = 1;
-        int rema=1;
+        int rema = 1;
         for (int i = 1; i < nums.length; i++) {
             int max = 0;
             for (int j = 0; j <= i; j++) {
@@ -898,9 +898,51 @@ public class Test {
         return rema;
     }
 
+    public int maxProfit(int[] prices) {
+
+        int[][] dp = new int[prices.length][2];
+        // o: 不持有
+        // 1: 持有 fei冷冻
+        dp[0][0] = 0;
+        dp[0][1] = -prices[0];
+        dp[0][2] = 0;
+
+        for (int i = 0; i < prices.length; i++) {
+            dp[i][0] = Math.max(dp[i - 1][1] + prices[i], dp[i - 1][0]);
+            dp[i][1] = dp[i - 1][0] - prices[i];
+            dp[i][2] = dp[i - 1][0] - prices[i];
+        }
+        return dp[prices.length][0];
+    }
+
+    public int coinChange(int[] coins, int amount) {
+        int[] dp = new int[amount + 1];
+        Arrays.fill(dp, -1);
+        for (int i = 0; i < coins.length; i++) {
+            if (coins[i] > amount) continue;
+            dp[coins[i]] = 1;
+        }
+        for (int i = 1; i < dp.length; i++) {
+            if (dp[i] == 1) continue;
+            int le = 1;
+            int ri = i - 1;
+            int min = Integer.MAX_VALUE;
+            while (le <= ri) {
+                if (dp[le] == -1 || dp[ri] == -1) {
+                    le++;
+                    ri--;
+                    continue;
+                }
+                min = Math.min(dp[le++] + dp[ri--], min);
+            }
+            dp[i] = min == Integer.MAX_VALUE ? -1 : min;
+        }
+        return dp[amount];
+    }
+
     public static void main(String[] args) {
         Test test = new Test();
-        int[] nums = new int[]{4, 111, 1, 3, 8, 9}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
+        int[] nums = new int[]{474, 83, 3, 404}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
         int[][] mar = new int[][]{
                 {0, 0, 1, 0, 0},
                 {0, 1, 1, 1, 1},
@@ -929,6 +971,6 @@ public class Test {
             System.out.print(re.val + " ");
             re = re.next;
         }*/
-        System.out.println(test.lengthOfLIS(nums));
+        System.out.println(test.coinChange(nums, 264));
     }
 }
