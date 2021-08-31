@@ -5,7 +5,7 @@ git add .
 
 git status
 
-git commit -m " fell that bad"
+git commit -m "another quick sort"
 
 git status
 

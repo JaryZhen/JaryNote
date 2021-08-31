@@ -965,17 +965,92 @@ public class Test {
         return ret;
     }
 
+    public String decodeString(String s) {
+        Stack<String> ch = new Stack<>();
+        ch.add("");
+        for (int i = 0; i < s.length(); i++) {
+            char cur = s.charAt(i);
+            if (s.charAt(i) == ']') {
+                String c = ch.pop();
+                ch.pop();
+                int n = Integer.valueOf(ch.pop());
+                String tem = ch.pop();
+                for (int j = 0; j < n; j++) {
+                    tem = tem + c;
+                }
+                ch.push(tem);
+            } else {
+                String ss = "";
+                while (Character.isLetter(cur)) {
+                    ss = ss + cur;
+                    cur = s.charAt(++i);
+                }
+                ch.add(ss);
+            }
+        }
+        return ch.pop();
+    }
+
+    public List<Integer> findDisappearedNumbers(int[] nums) {
+        for (int i = 0; i < nums.length; i++) {
+            int tmp = nums[i];
+            nums[tmp - 1] = tmp * 10;
+        }
+        List a = new ArrayList();
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > nums.length) a.add(i + 1);
+        }
+        return a;
+    }
+
+    public int[][] reconstructQueue(int[][] people) {
+        quickSort(people, 0, people.length - 1);
+        List<int[]> list = new ArrayList<>();
+        for (int[] p : people)
+            list.add(p[1], p);
+
+        return list.toArray(new int[0][2]);
+    }
+
+    private void quickSort(int[][] arr, int left, int right) {
+        if (left >= right) return;
+        int pivot = partition(arr, left, right);
+        quickSort(arr, left, pivot - 1);
+        quickSort(arr, pivot + 1, right);
+    }
+
+    private int partition(int[][] arr, int l, int r) {
+        int[] pivot = arr[l];
+        while (l < r) {
+            while (l < r) {
+                if (arr[r][0] > pivot[0] || arr[r][0] == pivot[0] && arr[r][1] < pivot[1]) {
+                    arr[l++] = arr[r];
+                    break;
+                }
+                r--;
+            }
+            while (l < r) {
+                if (arr[l][0] < pivot[0] || arr[l][0] == pivot[0] && arr[l][1] > pivot[1]) {
+                    arr[r--] = arr[l];
+                    break;
+                }
+                l++;
+            }
+        }
+        arr[l] = pivot;
+        return l;
+    }
+
     public static void main(String[] args) {
         Test test = new Test();
-        int[] nums = new int[]{474, 83, 3, 404}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
+        int[] nums = new int[]{4, 3, 2, 7, 8, 2, 3, 1}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
         int[][] mar = new int[][]{
-                {0, 0, 1, 0, 0},
-                {0, 1, 1, 1, 1},
-                {1, 0, 1, 1, 1},
-                {1, 0, 1, 0, 0},
-                {1, 0, 0, 0, 0},
-                {1, 0, 0, 0, 0},
-                {1, 0, 0, 0, 0}};
+                {7, 0},
+                {4, 4},
+                {7, 1},
+                {5, 0},
+                {6, 1},
+                {5, 2}};
 
         char[][] chars = new char[][]{
                 {'1', '0', '1', '1', '0', '1'},
@@ -996,6 +1071,6 @@ public class Test {
             System.out.print(re.val + " ");
             re = re.next;
         }*/
-        System.out.println(test.coinChange(nums, 264));
+        System.out.println(test.reconstructQueue(mar));
     }
 }
