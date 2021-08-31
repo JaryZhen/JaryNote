@@ -208,6 +208,20 @@ public class DPTest {
         return 0; //Math.max(res1, res2);
     }
 
+    public int maxValue2(int[] weight, int[] value, int target) {
+        int[] dp = new int[target + 1];
+        for (int i = 1; i <= weight.length; i++) {
+            // 从大到小遍历
+            for (int j = target; j >= 0; j--) {
+                if (j >= value[i - 1]) {
+                    dp[j] = Math.max(dp[j], dp[j - value[i - 1]] + weight[i - 1]);
+                }
+            }
+        }
+        System.out.println(dp[target]);
+        return dp[target];
+    }
+
     /**
      * 给定一组牌 ，能从左右两头挑选
      * A，B人，最大值

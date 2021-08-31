@@ -1004,7 +1004,7 @@ public class Test {
     }
 
     public int[][] reconstructQueue(int[][] people) {
-        quickSort(people, 0, people.length - 1);
+        // quickSort(people, 0, people.length - 1);
         List<int[]> list = new ArrayList<>();
         for (int[] p : people)
             list.add(p[1], p);
@@ -1041,6 +1041,101 @@ public class Test {
         return left;
     }
 
+    public int[][] reconstructQueue2(int[][] people) {
+        Arrays.sort(people, new Comparator<int[]>() {
+            public int compare(int[] person1, int[] person2) {
+                if (person1[0] != person2[0]) {
+                    return person2[0] - person1[0];
+                } else {
+                    return person1[1] - person2[1];
+                }
+            }
+        });
+        List<int[]> ans = new ArrayList<int[]>();
+        for (int[] person : people) {
+            ans.add(person[1], person);
+        }
+        return ans.toArray(new int[ans.size()][]);
+    }
+
+    public boolean canPartition(int[] nums) {
+        int sum = 0;
+        for (int i : nums) {
+            sum += i;
+        }
+        if ((sum & 1) == 1) {
+            return false;
+        }
+        int length = nums.length;
+        int target = sum >> 1;
+        //dp[j]表示前i个元素可以找到相加等于j情况
+        boolean[] dp = new boolean[target + 1];
+        //对于第一个元素，只有当j=nums[0]时，才恰好填充满
+        if (nums[0] <= target) {
+            dp[nums[0]] = true;
+        }
+
+        for (int i = 1; i < length; i++) {
+            //j由右往左直到nums[i]
+            for (int j = target; j >= nums[i]; j--) {
+                //只有两种情况，要么放，要么不放
+                //取其中的TRUE值
+                dp[j] = dp[j] || dp[j - nums[i]];
+            }
+            //一旦满足，结束，因为只需要找到一组值即可
+            if (dp[target]) {
+                return dp[target];
+            }
+        }
+        return dp[target];
+    }
+
+    public int zeroOneKnapsack(int[] weights, int[] values, int target) {
+        int N = weights.length;
+        int[][] dp = new int[N + 1][target + 1];
+        for (int i = 1; i <= N; i++) {
+            int w = weights[i - 1], v = values[i - 1];//每个物品的体积和价值
+            for (int j = 1; j <= target; j++) {
+                if (j >= w) {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - w] + v);
+                } else {
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+        return dp[N][target];
+    }
+
+    public int maxValue(int[] weights, int[] values, int targ) {
+        int[] dp = new int[targ + 1];
+        for (int i = 1; i <= weights.length; i++) {
+            int w = weights[i - 1];
+            int v = values[i - 1];//每个物品的体积和价值
+            for (int j = targ; j >= w; j--) {
+                dp[j] = Math.max(dp[j], dp[j - w] + v);
+            }
+        }
+        return dp[targ];
+    }
+
+    public int maxValue2(int[] weight, int[] value, int bag) {
+        //从开头开始
+        return processMaxValue(weight, value, 0, 0, bag, 0);
+    }
+
+    private int processMaxValue(int[] weight, int[] value, int index, int currentBag, int bag, int maxValue) {
+        if (currentBag >= bag) {
+            return maxValue;
+        }
+        if (index > value.length)
+            return maxValue;
+
+        //int res1 = processMaxValue(weight, value, index + 1, currentBag + weight[index] , bag);
+        //int res2 = processMaxValue(weight, value, index + 1, currentBag + weight[index + 1], bag);
+
+        return 0; //Math.max(res1, res2);
+    }
+
     public static void main(String[] args) {
         Test test = new Test();
         int[] nums = new int[]{4, 3, 2, 7, 8, 2, 3, 1}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
@@ -1071,6 +1166,13 @@ public class Test {
             System.out.print(re.val + " ");
             re = re.next;
         }*/
-        System.out.println(test.reconstructQueue(mar));
+
+        int[] weght = new int[]{1, 3, 4}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
+        int[] value = new int[]{15, 20, 30}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
+        System.out.println(test.maxValue(weght, value, 4));
+        System.out.println(test.zeroOneKnapsack(weght, value, 4));
+
+        System.out.println(test.maxValue2(weght, value, 4));
+
     }
 }

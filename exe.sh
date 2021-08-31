@@ -5,7 +5,7 @@ git add .
 
 git status
 
-git commit -m "another quick sort"
+git commit -m "0 1 pag"
 
 git status
 
