@@ -1019,26 +1019,26 @@ public class Test {
         quickSort(arr, pivot + 1, right);
     }
 
-    private int partition(int[][] arr, int l, int r) {
-        int[] pivot = arr[l];
-        while (l < r) {
-            while (l < r) {
-                if (arr[r][0] > pivot[0] || arr[r][0] == pivot[0] && arr[r][1] < pivot[1]) {
-                    arr[l++] = arr[r];
+    private int partition(int[][] arr, int left, int right) {
+        int[] pivot = arr[left];
+        while (left < right) {
+            while (left < right) {
+                if (arr[right][0] > pivot[0] || arr[right][0] == pivot[0] && arr[right][1] < pivot[1]) {
+                    arr[left++] = arr[right];
                     break;
                 }
-                r--;
+                right--;
             }
-            while (l < r) {
-                if (arr[l][0] < pivot[0] || arr[l][0] == pivot[0] && arr[l][1] > pivot[1]) {
-                    arr[r--] = arr[l];
+            while (left < right) {
+                if (arr[left][0] < pivot[0] || arr[left][0] == pivot[0] && arr[left][1] > pivot[1]) {
+                    arr[right--] = arr[left];
                     break;
                 }
-                l++;
+                left++;
             }
         }
-        arr[l] = pivot;
-        return l;
+        arr[left] = pivot;
+        return left;
     }
 
     public static void main(String[] args) {
