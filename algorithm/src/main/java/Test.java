@@ -1090,6 +1090,7 @@ public class Test {
         return dp[target];
     }
 
+    //背包问题
     public int zeroOneKnapsack(int[] weights, int[] values, int target) {
         int N = weights.length;
         int[][] dp = new int[N + 1][target + 1];
@@ -1107,7 +1108,7 @@ public class Test {
         return dp[N][target];
     }
 
-    public int maxValue(int[] weights, int[] values, int targ) {
+    public int zeroOneKnapsack_dp(int[] weights, int[] values, int targ) {
         int[] dp = new int[targ + 1];
         for (int i = 1; i <= weights.length; i++) {
             int w = weights[i - 1];
@@ -1119,28 +1120,43 @@ public class Test {
         return dp[targ];
     }
 
-    public int maxValue2(int[] weight, int[] value, int bag) {
+    public int zeroOneKnapsack_Rec(int[] weight, int[] value, int bag) {
         //从开头开始
         return processMaxValue(weight, value, 0, 0, bag, 0);
     }
 
-    private int processMaxValue(int[] weight, int[] value, int index, int currentBag, int bag, int maxValue) {
+    private int processMaxValue(int[] weight, int[] value,
+                                int index,
+                                int currentBag,
+                                int bag, int maxValue) {
         if (currentBag >= bag) {
             return maxValue;
         }
-        if (index > value.length)
+        if (index >= value.length)
             return maxValue;
 
-        //int res1 = processMaxValue(weight, value, index + 1, currentBag + weight[index] , bag);
-        //int res2 = processMaxValue(weight, value, index + 1, currentBag + weight[index + 1], bag);
-
-        return 0; //Math.max(res1, res2);
+        int res1 = processMaxValue(weight, value, index + 1, currentBag + weight[index], bag, maxValue + value[index]);
+        int res2 = processMaxValue(weight, value, index + 1, currentBag, bag, maxValue);
+        return Math.max(res1, res2);
     }
 
+    public int findTargetSumWays(int[] nums, int target) {
+        return dfsFS(nums, 0, 0, target);
+    }
+
+    int dfsFS(int[] arr, int index, int sum, int target) {
+        if (index >= arr.length) {
+            if (sum == target) return 1;
+            else return 0;
+        }
+        int le = dfsFS(arr, index + 1, sum + arr[index], target);
+        int re = dfsFS(arr, index + 1, sum - arr[index], target);
+        return le + re;
+    }
 
     public static void main(String[] args) {
         Test test = new Test();
-        int[] nums = new int[]{4, 3, 2, 7, 8, 2, 3, 1}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
+        int[] nums = new int[]{1, 1, 1, 1, 1}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
         int[][] mar = new int[][]{
                 {7, 0},
                 {4, 4},
@@ -1167,14 +1183,19 @@ public class Test {
        /* while (re != null) {
             System.out.print(re.val + " ");
             re = re.next;
+
+            cbaebabacd
         }*/
 
         int[] weght = new int[]{4, 3, 1}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
         int[] value = new int[]{30, 20, 15}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
-        System.out.println(test.maxValue(weght, value, 4));
+        System.out.println(test.zeroOneKnapsack_dp(weght, value, 4));
         System.out.println(test.zeroOneKnapsack(weght, value, 4));
 
-        System.out.println(test.maxValue2(weght, value, 4));
+        System.out.println(test.zeroOneKnapsack_Rec(weght, value, 4));
+
+        //System.out.println(test.findTargetSumWays(nums, 1));
+
 
     }
 }

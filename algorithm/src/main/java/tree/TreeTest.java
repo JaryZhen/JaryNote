@@ -508,35 +508,48 @@ public class TreeTest {
      * 如果此前有和为currSum-target,而当前的和又为currSum,两者的差就肯定为target了
      * 所以前缀和对于当前路径来说是唯一的，当前记录的前缀和，在回溯结束，回到本层时去除，保证其不影响其他分支的结果
      *
-     * @param node           树节点
-     * @param prefixSumCount 前缀和Map
-     * @param target         目标值
-     * @param currSum        当前路径和
+     * @param node      树节点
+     * @param prefixMsp 前缀和Map
+     * @param target    目标值
+     * @param currSum   当前路径和
      * @return 满足题意的解
      */
-    private int recursionPathSum(TreeNode node, Map<Integer, Integer> prefixSumCount, int target, int currSum) {
+    private int recursionPathSum(TreeNode node, Map<Integer, Integer> prefixMsp, int target, int currSum) {
         if (node == null) {
             return 0;
         }
         int res = 0;
         currSum += node.val;
-        res += prefixSumCount.getOrDefault(currSum - target, 0);
-        prefixSumCount.put(currSum, prefixSumCount.getOrDefault(currSum, 0) + 1);
-        res += recursionPathSum(node.left, prefixSumCount, target, currSum);
-        res += recursionPathSum(node.right, prefixSumCount, target, currSum);
+        int a = currSum - target;
+        res += prefixMsp.getOrDefault(a, 0);
+
+        prefixMsp.put(currSum, prefixMsp.getOrDefault(currSum, 0) + 1);
+
+        res += recursionPathSum(node.left, prefixMsp, target, currSum);
+        res += recursionPathSum(node.right, prefixMsp, target, currSum);
 
         // 4.回到本层，恢复状态，去除当前节点的前缀和数量
-        prefixSumCount.put(currSum, prefixSumCount.get(currSum) - 1);
+        prefixMsp.put(currSum, prefixMsp.get(currSum) - 1);
         return res;
     }
 
+    public boolean isValidBST(TreeNode head, int lowe, int uper) {
+        if (head == null) return true;
+        if (head.val < lowe || head.val > uper )
+            return false;
+        boolean le = isValidBST(head.left, lowe, head.val);
+        boolean ri = isValidBST(head.right, head.val, uper);
+        return le && ri;
+    }
 
     public static void main(String[] args) {
         TreeTest test = new TreeTest();
 
-        int[] a = new int[]{10, 5, 20, 15, 7};
-        int[] b = new int[]{5, 10, 15, 20, 7};
-        TreeNode head = test.buildTree(a, b);
+        int[] a = new int[]{10, 5, 20, 15, 5, 10};
+        int[] b = new int[]{5, 10, 15, 20, 5, 10};
+        TreeNode head = new TreeNode(10, new TreeNode(5),
+                new TreeNode(20, new TreeNode(15),
+                        new TreeNode(5, null, new TreeNode(10))));
 
         bfsTreePrint(head);
 

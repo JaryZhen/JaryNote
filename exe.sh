@@ -5,7 +5,7 @@ git add .
 
 git status
 
-git commit -m "回todo溯 "
+git commit -m "get down zero one package"
 
 git status
 
