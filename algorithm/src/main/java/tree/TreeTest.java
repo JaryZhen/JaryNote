@@ -535,11 +535,38 @@ public class TreeTest {
 
     public boolean isValidBST(TreeNode head, int lowe, int uper) {
         if (head == null) return true;
-        if (head.val < lowe || head.val > uper )
+        if (head.val < lowe || head.val > uper)
             return false;
         boolean le = isValidBST(head.left, lowe, head.val);
         boolean ri = isValidBST(head.right, head.val, uper);
         return le && ri;
+    }
+
+
+    public TreeNode convertBST(TreeNode root) {
+        dfsCBST(root, 0);
+        return root;
+    }
+
+    public int dfsCBST(TreeNode root, int v) {
+        if (root == null)
+            return 0;
+        int ri = dfsCBST(root.right, v);
+        root.val = root.val + v + ri;
+        int le = dfsCBST(root.left, root.val);
+
+        return le;
+    }
+
+    public int diameterOfBinaryTree(TreeNode root) {
+        return dfsH(root.left)+ dfsH(root.right);
+    }
+
+    int dfsH(TreeNode treeNode) {
+        if (treeNode == null) return 0;
+        int le = dfsH(treeNode.left) + 1;
+        int re = dfsH(treeNode.right) + 1;
+        return le > re ? le : re;
     }
 
     public static void main(String[] args) {
@@ -547,9 +574,14 @@ public class TreeTest {
 
         int[] a = new int[]{10, 5, 20, 15, 5, 10};
         int[] b = new int[]{5, 10, 15, 20, 5, 10};
-        TreeNode head = new TreeNode(10, new TreeNode(5),
-                new TreeNode(20, new TreeNode(15),
-                        new TreeNode(5, null, new TreeNode(10))));
+
+        TreeNode head = new TreeNode(4,
+                new TreeNode(2,
+                        new TreeNode(1),
+                        new TreeNode(3)),
+                new TreeNode(8,
+                        new TreeNode(6),
+                        new TreeNode(9)));
 
         bfsTreePrint(head);
 
@@ -568,7 +600,7 @@ public class TreeTest {
         //System.out.println(list);
         //bfsTreePrint(test.invertTree(head));
 
-        System.out.println(test.pathSum(head, 15));
+        System.out.println(test.convertBST(head));
     }
 
 
