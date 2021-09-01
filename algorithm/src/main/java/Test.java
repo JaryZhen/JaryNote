@@ -1095,6 +1095,7 @@ public class Test {
         int[][] dp = new int[N + 1][target + 1];
         for (int i = 1; i <= N; i++) {
             int w = weights[i - 1], v = values[i - 1];//每个物品的体积和价值
+
             for (int j = 1; j <= target; j++) {
                 if (j >= w) {
                     dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - w] + v);
@@ -1136,6 +1137,7 @@ public class Test {
         return 0; //Math.max(res1, res2);
     }
 
+
     public static void main(String[] args) {
         Test test = new Test();
         int[] nums = new int[]{4, 3, 2, 7, 8, 2, 3, 1}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
@@ -1167,8 +1169,8 @@ public class Test {
             re = re.next;
         }*/
 
-        int[] weght = new int[]{1, 3, 4}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
-        int[] value = new int[]{15, 20, 30}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
+        int[] weght = new int[]{4, 3, 1}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
+        int[] value = new int[]{30, 20, 15}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
         System.out.println(test.maxValue(weght, value, 4));
         System.out.println(test.zeroOneKnapsack(weght, value, 4));
 
