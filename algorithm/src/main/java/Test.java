@@ -1154,9 +1154,39 @@ public class Test {
         return le + re;
     }
 
+
+    public int findUnsortedSubarray(int[] nums) {
+        if (nums.length <= 1)
+            return 0;
+        if (nums.length == 2)
+            return nums[0] <= nums[1] ? 0 : 2;
+
+        int start = 0;
+        int end = nums.length - 1;
+        while (start < end) {
+            int min = Integer.MAX_VALUE;
+            int max = Integer.MIN_VALUE;
+            for (int k = start + 1; k < end; k++) {
+                min = Math.min(min, nums[k]);
+                max = Math.max(max, nums[k]);
+            }
+            if (nums[start] > min && nums[end] < max)
+                break;
+            if (nums[start] >= nums[end])
+                break;
+            if (nums[start] <= min)
+                start++;
+            if (nums[end] >= max) {
+                end--;
+            }
+        }
+
+        return start == end ? 0 : end - start + 1;
+    }
+
     public static void main(String[] args) {
         Test test = new Test();
-        int[] nums = new int[]{1, 1, 1, 1, 1}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
+        int[] nums = new int[]{2,6,4,8,10,9,15}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
         int[][] mar = new int[][]{
                 {7, 0},
                 {4, 4},
@@ -1178,23 +1208,14 @@ public class Test {
         ListNode list1 = new ListNode(2, new ListNode(4, new ListNode(9)));
         ListNode list2 = new ListNode(1, new ListNode(2, new ListNode(22, new ListNode(1))));
 
-        //ListNode[] nodes = new ListNode[]{list1, list2};
-        // ListNode re = test.mergeKLists2(nodes);
-       /* while (re != null) {
-            System.out.print(re.val + " ");
-            re = re.next;
-
-            cbaebabacd
-        }*/
-
         int[] weght = new int[]{4, 3, 1}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
         int[] value = new int[]{30, 20, 15}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
-        System.out.println(test.zeroOneKnapsack_dp(weght, value, 4));
-        System.out.println(test.zeroOneKnapsack(weght, value, 4));
+        // System.out.println(test.zeroOneKnapsack_dp(weght, value, 4));
+        //System.out.println(test.zeroOneKnapsack(weght, value, 4));
 
-        System.out.println(test.zeroOneKnapsack_Rec(weght, value, 4));
+        //System.out.println(test.zeroOneKnapsack_Rec(weght, value, 4));
 
-        //System.out.println(test.findTargetSumWays(nums, 1));
+        System.out.println(test.findUnsortedSubarray(nums));
 
 
     }
