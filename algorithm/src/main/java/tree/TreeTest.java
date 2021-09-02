@@ -559,7 +559,7 @@ public class TreeTest {
     }
 
     public int diameterOfBinaryTree(TreeNode root) {
-        return dfsH(root.left)+ dfsH(root.right);
+        return dfsH(root.left) + dfsH(root.right);
     }
 
     int dfsH(TreeNode treeNode) {
@@ -567,6 +567,27 @@ public class TreeTest {
         int le = dfsH(treeNode.left) + 1;
         int re = dfsH(treeNode.right) + 1;
         return le > re ? le : re;
+    }
+
+    public TreeNode mergeTrees(TreeNode root1, TreeNode root2) {
+        return dfsMT(new TreeNode(), root1, root2);
+    }
+
+    TreeNode dfsMT(TreeNode root, TreeNode r1, TreeNode r2) {
+        if (r1 == null && r2 == null)
+            return null;
+
+        int val = 0;
+        if (r1 != null) {
+            val += r1.val;
+        }
+        if (r2 != null)
+            val += r2.val;
+
+        root = new TreeNode(val);
+        root.left = dfsMT(root, r1 == null ? null : r1.left, r2 == null ? null : r2.left);
+        root.right = dfsMT(root, r1 == null ? null : r1.right, r2 == null ? null : r2.right);
+        return root;
     }
 
     public static void main(String[] args) {
@@ -583,6 +604,11 @@ public class TreeTest {
                         new TreeNode(6),
                         new TreeNode(9)));
 
+        TreeNode head2 = new TreeNode(4,
+                null,
+                new TreeNode(8,
+                        new TreeNode(6),
+                        new TreeNode(9)));
         bfsTreePrint(head);
 
         //dfsTree(head);
@@ -600,7 +626,7 @@ public class TreeTest {
         //System.out.println(list);
         //bfsTreePrint(test.invertTree(head));
 
-        System.out.println(test.convertBST(head));
+        System.out.println(test.mergeTrees(head, head2));
     }
 
 

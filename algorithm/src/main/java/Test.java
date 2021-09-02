@@ -1184,9 +1184,23 @@ public class Test {
         return start == end ? 0 : end - start + 1;
     }
 
+    public int[] dailyTemperatures(int[] tem) {
+        int[] big = new int[tem.length];
+        big[tem.length - 1] = 0;
+        for (int i = tem.length - 2; i >= 0; i--) {
+            big[i] = 0;
+            for (int j = i + 1; j < tem.length; j++) {
+                if (tem[i] < tem[j]) {
+                    big[i] = j - i;
+                    break;
+                }
+            }
+        }
+        return big;
+    }
     public static void main(String[] args) {
         Test test = new Test();
-        int[] nums = new int[]{2,6,4,8,10,9,15}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
+        int[] nums = new int[]{73,74,75,71,69,72,76,73}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
         int[][] mar = new int[][]{
                 {7, 0},
                 {4, 4},
@@ -1215,7 +1229,7 @@ public class Test {
 
         //System.out.println(test.zeroOneKnapsack_Rec(weght, value, 4));
 
-        System.out.println(test.findUnsortedSubarray(nums));
+        System.out.println(test.dailyTemperatures(nums));
 
 
     }
