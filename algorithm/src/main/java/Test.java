@@ -1198,9 +1198,43 @@ public class Test {
         }
         return big;
     }
+
+    public void reverseString(char[] s) {
+
+        int st = 0;
+        int ed = s.length - 1;
+        while (st != ed) {
+            swop(s, st++, ed--);
+        }
+    }
+
+    void swop(char[] arr, int a, int b) {
+        char tmp = arr[a];
+        arr[a] = arr[b];
+        arr[b] = tmp;
+    }
+
+    public ListNode rotateRight(ListNode head, int k) {
+        int count = 1;
+        ListNode le = head;
+        ListNode ri = head;
+        while (count != k + 1) {
+            count++;
+            ri = ri.next;
+        }
+        while (ri.next != null) {
+            le = le.next;
+            ri = ri.next;
+        }
+        ListNode neHead = le.next;
+        le.next = null;
+        ri.next = head;
+        return neHead;
+    }
+
     public static void main(String[] args) {
         Test test = new Test();
-        int[] nums = new int[]{73,74,75,71,69,72,76,73}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
+        int[] nums = new int[]{73, 74, 75, 71, 69, 72, 76, 73}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
         int[][] mar = new int[][]{
                 {7, 0},
                 {4, 4},
@@ -1231,6 +1265,6 @@ public class Test {
 
         System.out.println(test.dailyTemperatures(nums));
 
-
+        System.out.println(test.rotateRight(list2,2));
     }
 }
