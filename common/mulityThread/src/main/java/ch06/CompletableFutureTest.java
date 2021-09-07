@@ -9,31 +9,51 @@ import java.util.concurrent.ExecutionException;
  * @Author: Jary
  * @Date: 2020/2/10 11:38 AM
  */
-public class CompletableFutureTest implements Runnable {
+public class CompletableFutureTest {
 
-    CompletableFuture<Integer> re = null;
+    public class CompletableFutur implements Runnable {
+        CompletableFuture<Integer> re = null;
 
-    public CompletableFutureTest(CompletableFuture<Integer> re) {
-        this.re = re;
+        public CompletableFutur(CompletableFuture<Integer> re) {
+            this.re = re;
+        }
+
+        @Override
+        public void run() {
+            int myRe = 0;
+            try {
+                myRe = re.get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            System.out.println(myRe);
+        }
     }
 
-    @Override
-    public void run() {
-        int myRe = 0;
+    public void test() {
+        final CompletableFuture<Integer> fu = new CompletableFuture<>();
+        new Thread(new CompletableFutur(fu)).start();
         try {
-            myRe = re.get();
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
         }
-        System.out.println(myRe);
+        fu.complete(60);
     }
 
-    public static void main(String[] args) throws InterruptedException {
-        final CompletableFuture<Integer> fu = new CompletableFuture<>();
-        new Thread(new CompletableFutureTest(fu)).start();
-        Thread.sleep(1000);
-        fu.complete(60);
+    public Integer call(Integer pa) {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return pa * pa;
+    }
+
+    public static void main(String[] args) {
+        CompletableFutureTest ct = new CompletableFutureTest();
+        ct.test();
     }
 }
