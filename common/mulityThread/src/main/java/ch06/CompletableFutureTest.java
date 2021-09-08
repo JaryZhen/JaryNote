@@ -54,6 +54,23 @@ public class CompletableFutureTest {
 
     public static void main(String[] args) {
         CompletableFutureTest ct = new CompletableFutureTest();
-        ct.test();
+        CompletableFuture<Void> fu = CompletableFuture
+                .runAsync(() -> ct.call(22))
+                .supplyAsync(() -> ct.call(2))
+                .thenApply(i -> i + 1)
+                .thenApply(i -> i + 1)
+                .thenCompose((i) -> CompletableFuture
+                        .supplyAsync(() -> ct.call(i))
+                        .thenAccept(System.out::println)
+                );
+
+        try {
+            fu.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
     }
 }
