@@ -1232,9 +1232,28 @@ public class Test {
         return neHead;
     }
 
+    public int search1(int[] nums, int target) {
+        return binse(nums, 0, nums.length - 1, target);
+    }
+
+    private int binse(int[] num, int left, int right, int target) {
+        if (left > right)
+            return -1;
+
+        int mid = left + (right - left) / 2;
+        if (num[mid] == target)
+            return mid;
+
+        int rele = binse(num, left, mid - 1, target);
+        int ri = binse(num, mid + 1, right, target);
+
+        return rele != -1 ? rele : ri;
+    }
+
+
     public static void main(String[] args) {
         Test test = new Test();
-        int[] nums = new int[]{73, 74, 75, 71, 69, 72, 76, 73}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
+        int[] nums = new int[]{5}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
         int[][] mar = new int[][]{
                 {7, 0},
                 {4, 4},
@@ -1265,6 +1284,6 @@ public class Test {
 
         System.out.println(test.dailyTemperatures(nums));
 
-        System.out.println(test.rotateRight(list2,2));
+        System.out.println(test.search1(nums, 5));
     }
 }
