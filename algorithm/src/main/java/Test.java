@@ -1250,10 +1250,25 @@ public class Test {
         return rele != -1 ? rele : ri;
     }
 
+    public int rob4(int[] nums) {
+        if (nums.length == 1)
+            return nums[0];
+        if (nums.length == 2)
+            return Math.max(nums[0], nums[1]);
+        int[] dp = new int[nums.length];
+        dp[0] = nums[0];
+        dp[1] = Math.max(nums[0], nums[1]);
+
+        for (int i = 2; i < nums.length; i++) {
+            dp[i] = Math.max(dp[i - 1], dp[i - 2] + nums[i]);
+        }
+        return dp[nums.length - 1];
+    }
+
 
     public static void main(String[] args) {
         Test test = new Test();
-        int[] nums = new int[]{5}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
+        int[] nums = new int[]{10,15,20}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
         int[][] mar = new int[][]{
                 {7, 0},
                 {4, 4},
@@ -1280,10 +1295,7 @@ public class Test {
         // System.out.println(test.zeroOneKnapsack_dp(weght, value, 4));
         //System.out.println(test.zeroOneKnapsack(weght, value, 4));
 
-        //System.out.println(test.zeroOneKnapsack_Rec(weght, value, 4));
-
-        System.out.println(test.dailyTemperatures(nums));
-
-        System.out.println(test.search1(nums, 5));
+        System.out.println(test.zeroOneKnapsack_Rec(weght, value, 4));
     }
 }
+
