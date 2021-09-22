@@ -1266,9 +1266,37 @@ public class Test {
     }
 
 
+    public boolean checkInclusion(String s1, String s2) {
+        int n = s1.length(), m = s2.length();
+        if (n > m) {
+            return false;
+        }
+        int[] cnt1 = new int[26];
+        int[] cnt2 = new int[26];
+        for (int i = 0; i < n; ++i) {
+            int c1 = s1.charAt(i) - 'a';
+            int c2 = s2.charAt(i) - 'a';
+            cnt1[c1] = cnt1[c1] + 1;
+            cnt2[c2] = cnt2[c2] + 1;
+        }
+        if (Arrays.equals(cnt1, cnt2)) {
+            return true;
+        }
+        for (int i = n; i < m; ++i) {
+            int c2 = s2.charAt(i) - 'a';
+            int c2n = s2.charAt(i - n) - 'a';
+            cnt2[c2] = cnt2[c2] + 1;
+            cnt2[c2n] = cnt2[c2n] - 1;
+            if (Arrays.equals(cnt1, cnt2)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         Test test = new Test();
-        int[] nums = new int[]{10,15,20}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
+        int[] nums = new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4}; //4,2,0,3,2,5  0,1,0,2,1,0,1,3,2,1,2,1
         int[][] mar = new int[][]{
                 {7, 0},
                 {4, 4},
@@ -1295,7 +1323,7 @@ public class Test {
         // System.out.println(test.zeroOneKnapsack_dp(weght, value, 4));
         //System.out.println(test.zeroOneKnapsack(weght, value, 4));
 
-        System.out.println(test.zeroOneKnapsack_Rec(weght, value, 4));
+        System.out.println(test.maxSubArray(nums));
     }
 }
 

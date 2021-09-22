@@ -128,8 +128,7 @@ public class Sort {
         int less = L - 1; // 小于区域
         int more = R + 1;// 大于区域
         int index = L;
-        int mid = L + (R - L) / 2;
-        int belt = arr[mid]; // 基准值
+        int belt = arr[L + (R - L) / 2]; // 基准值
         while (index < more) {
             if (arr[index] == belt)
                 index++;
