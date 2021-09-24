@@ -18,7 +18,7 @@ public class Producer11 extends Thread {
     private final Boolean isAsync;
 
     public static void main(String[] args) {
-        new Producer11(KafkaProperties.TOPIC_a, false).start();
+        new Producer11(KafkaProperties.TOPIC_a, true).start();
     }
 
     public Producer11(String topic, Boolean isAsync) {
@@ -47,13 +47,13 @@ public class Producer11 extends Thread {
     @Override
     public void run() {
         Random ran1 = new Random();
-        int key = 1;
+        int key = 2;
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
         while (true) {
 
             try {
-                Thread.sleep(2000);
+                Thread.sleep(0);
                 long startTime = System.currentTimeMillis();
                 String data = String.format("" +
                         "{\"role\":\"TEACHER\"," +
@@ -69,20 +69,17 @@ public class Producer11 extends Thread {
                         "{\"colName\":\"" + format.format(startTime) + "\"," +
                         "\"tm\":" + startTime + "}");
 
-                //data;///"Suct_Pres_Status="+key;//ran1.nextInt(100);
-                //+" pressure2="+ran1.nextInt(60);
+                //System.out.println("Sent message: " + key + ": " + data);
+
                 //异步方式发送
                 if (isAsync) {
                     // Send asynchronously
-                    System.out.println("Sent message: " + key + ": " + valeu);
                     producer.send(new ProducerRecord<>(topic, key, valeu), new DemoCallBack(startTime, key, valeu));
+
                 } else { // Send synchronously
 
                     int partition = key % 2;
-                    System.out.println("Sent message: " + key + ", " + valeu);
                     Future<RecordMetadata> a = producer.send(new ProducerRecord<>(topic, key, valeu));
-
-                    Thread.sleep(50);
                     key++;
                     System.out.println(a.isDone() + ", topic=" + a.get().topic() + " , partition=" + a.get().partition() + ", offset=" + a.get().offset());
                 }
@@ -111,8 +108,7 @@ public class Producer11 extends Thread {
         public void onCompletion(RecordMetadata metadata, Exception exception) {
             long elapsedTime = System.currentTimeMillis() - startTime;
             if (metadata != null) {
-                System.out.println(
-                        "message(" + key + ", " + message + ") sent to partition(" + metadata.partition() + "), " + "offset(" + metadata.offset() + ") in " + elapsedTime + " ms");
+                System.out.println("asyc message(" + key + ", " + message + ") sent to partition(" + metadata.partition() + "), " + "offset(" + metadata.offset() + ") in " + elapsedTime + " ms");
             } else {
                 exception.printStackTrace();
             }
