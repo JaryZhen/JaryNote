@@ -18,7 +18,7 @@ public class Producer11 extends Thread {
     private final Boolean isAsync;
 
     public static void main(String[] args) {
-        new Producer11(KafkaProperties.TOPIC_a, true).start();
+        new Producer11(KafkaProperties.TOPIC_vk, false).start();
     }
 
     public Producer11(String topic, Boolean isAsync) {
@@ -53,7 +53,7 @@ public class Producer11 extends Thread {
         while (true) {
 
             try {
-                Thread.sleep(0);
+                Thread.sleep(2000);
                 long startTime = System.currentTimeMillis();
                 String data = String.format("" +
                         "{\"role\":\"TEACHER\"," +
@@ -61,15 +61,15 @@ public class Producer11 extends Thread {
                         "\"local_ping\":46," +
                         "\"line\":\"Video\"," +
                         "\"server_rtt\":170," +
-                        "\"classroom\":\"jz7b72b624a3384a43b28b29662d95caa2\"," +
-                        "\"full_ping\":216," +
+                        "\"classroom\":\"jzaaa-"+ran1.nextInt(2)+"\"," +
+                        "\"full_ping\":"+key+"," +
                         "\"timestamp\":1572839989492}");
 
-                String valeu = String.format(
+                String valeu = data; /*String.format(
                         "{\"colName\":\"" + format.format(startTime) + "\"," +
                         "\"tm\":" + startTime + "}");
-
-                //System.out.println("Sent message: " + key + ": " + data);
+*/
+                System.out.println(data);
 
                 //异步方式发送
                 if (isAsync) {
@@ -80,6 +80,7 @@ public class Producer11 extends Thread {
 
                     int partition = key % 2;
                     Future<RecordMetadata> a = producer.send(new ProducerRecord<>(topic, key, valeu));
+                    a.get();
                     key++;
                     System.out.println(a.isDone() + ", topic=" + a.get().topic() + " , partition=" + a.get().partition() + ", offset=" + a.get().offset());
                 }
