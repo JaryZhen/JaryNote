@@ -31,7 +31,7 @@
         <java.version>1.8</java.version>
 
         <scala.minor.version>2.11</scala.minor.version>
-        <scala.binary.full.version>${scala.minor.version}.6</scala.binary.full.version>
+        <scala.binary.full.version>${scala.minor.version}.12</scala.binary.full.version>
         <junit.version>4.12</junit.version>
 
         <dubbo.version>2.5.3</dubbo.version>
@@ -206,7 +206,11 @@
                         </execution>
                     </executions>
                 </plugin>
-
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>3.2.4</version>
+                </plugin>
                 <!--protobuf -->
                 <plugin>
                     <groupId>org.xolstice.maven.plugins</groupId>
@@ -237,7 +241,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>1.4</version>
+                    <version>1.7</version>
                     <executions>
                         <execution>
                             <id>add-source</id>
@@ -603,28 +607,13 @@
         <repository>
             <id>nexus</id>
             <name>nexus-releases</name>
-            <url>http://172.24.4.180:8081/repository/maven-releases</url>
         </repository>
         <snapshotRepository>
             <id>nexus</id>
             <name>nexus-snapshots</name>
-            <url>http://172.24.4.180:8081/repository/maven-snapshots</url>
         </snapshotRepository>
     </distributionManagement>-->
     <repositories>
-        <!--<repository>-->
-            <!--<id>nexus</id>-->
-            <!--<url>http://172.24.4.180:8081/repository/maven-public/</url>-->
-            <!--<releases>-->
-                <!--<enabled>false</enabled>-->
-            <!--</releases>-->
-            <!--<snapshots>-->
-                <!--<enabled>true</enabled>-->
-            <!--</snapshots>-->
-        <!--</repository>-->
-       <!-- <repository>
-            <id>growingio</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </repository>-->
+
     </repositories>
 </project>
