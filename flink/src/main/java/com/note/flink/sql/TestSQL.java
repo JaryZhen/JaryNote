@@ -1,19 +1,7 @@
 package com.note.flink.sql;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.flink.api.common.JobID;
-import org.apache.flink.api.java.utils.ParameterTool;
-import org.apache.flink.calcite.shaded.com.google.common.base.Preconditions;
-import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.table.api.*;
-import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
-import org.apache.flink.table.catalog.hive.HiveCatalog;
-import scala.Predef;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @Author: Jary
