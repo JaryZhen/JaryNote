@@ -63,13 +63,16 @@ public class WordCountSQL {
     //     USER DATA TYPES
     // *************************************************************************
 
-    /** Simple POJO containing a word and its respective count. */
+    /**
+     * Simple POJO containing a word and its respective count.
+     */
     public static class WC {
         public String word;
         public long frequency;
 
         // public constructor to make it a Flink POJO
-        public WC() {}
+        public WC() {
+        }
 
         public WC(String word, long frequency) {
             this.word = word;
