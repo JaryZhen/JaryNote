@@ -56,12 +56,12 @@ public class Producer11 extends Thread {
                 Thread.sleep(2000);
                 long startTime = System.currentTimeMillis();
                 String data = String.format("" +
-                        "{\"role\":\"TEACHER\"," +
-                        "\"user_type\":1," +
-                        "\"local_ping\":46," +
-                        "\"line\":\"Video\"," +
-                        "\"server_rtt\":170," +
-                        "\"classroom\":\"jzaaa-"+ran1.nextInt(2)+"\"," +
+                        "{\"role\":\"88\"," +
+                        "\"user_type\":88," +
+                        "\"local_ping\":88," +
+                        "\"line\":\"88\"," +
+                        "\"server_rtt\":88," +
+                        "\"classroom\":\"jzaaa-"+ran1.nextInt(1)+"\"," +
                         "\"full_ping\":"+key+"," +
                         "\"timestamp\":1572839989492}");
 
