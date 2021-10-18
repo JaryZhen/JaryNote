@@ -21,7 +21,7 @@
         <module>thrift</module>
         <module>hazelcast</module>
         <module>undertow</module>
-
+        <module>flink</module>
         <module>Test</module>
         <module>scala</module>
     </modules>
