@@ -186,7 +186,9 @@ public final class UpdatingTopCityExample {
         }
     }
 
-    /** Creates an empty temporary directory for CSV files and returns the absolute path. */
+    /**
+     * Creates an empty temporary directory for CSV files and returns the absolute path.
+     */
     private static String createTemporaryDirectory() throws IOException {
         final Path tempDirectory = Files.createTempDirectory("population");
         return tempDirectory.toString();
