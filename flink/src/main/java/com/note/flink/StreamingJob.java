@@ -1,4 +1,4 @@
-package com.github.jarynote.flink;
+package com.note.flink;
 
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 

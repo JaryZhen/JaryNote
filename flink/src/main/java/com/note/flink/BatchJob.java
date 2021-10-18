@@ -1,5 +1,4 @@
-package com.github.jarynote.flink;
-
+package com.note.flink;
 import org.apache.flink.api.java.ExecutionEnvironment;
 
 /**

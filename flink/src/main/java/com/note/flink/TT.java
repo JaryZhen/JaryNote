@@ -1,4 +1,4 @@
-package com.github.jarynote.flink;
+package com.note.flink;
 
 public class TT {
     public static void main(String[] args) {

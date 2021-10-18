@@ -1,4 +1,4 @@
-package com.github.jarynote.flink;
+package com.note.flink;
 
 import org.apache.flink.api.common.functions.AggregateFunction;
 import org.apache.flink.api.common.functions.FilterFunction;
