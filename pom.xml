@@ -175,31 +175,26 @@
                     <artifactId>scala-maven-plugin</artifactId>
                     <version>3.2.2</version>
                     <configuration>
-                        <scalaVersion>${scala.binary.full.version}</scalaVersion>
+                   <!--     <scalaVersion>${scala.binary.full.version}</scalaVersion>
                         <javacArgs>
                             <javacArg>-source</javacArg>
                             <javacArg>${java.version}</javacArg>
                             <javacArg>-target</javacArg>
                             <javacArg>${java.version}</javacArg>
-                        </javacArgs>
+                        </javacArgs>-->
                     </configuration>
                     <executions>
-                        <execution>
-                            <phase>compile</phase>
-                            <goals>
-                                <goal>compile</goal>
-                            </goals>
-                        </execution>
                         <execution>
                             <id>scala-compile-first</id>
                             <phase>process-resources</phase>
                             <goals>
+                                <goal>add-source</goal>
                                 <goal>compile</goal>
                             </goals>
                         </execution>
                         <execution>
-                            <id>scala-test-compile-first</id>
-                            <phase>process-Test-resources</phase>
+                            <id>scala-test-compile</id>
+                            <phase>process-test-resources</phase>
                             <goals>
                                 <goal>testCompile</goal>
                             </goals>

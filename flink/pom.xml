@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <flink.version>1.13.2</flink.version>
+        <flink.version>1.14.0</flink.version>
         <hivemetastore.hadoop.version>2.7.5</hivemetastore.hadoop.version>
         <hive.version>2.3.4</hive.version>
         <hive-2.2.0-orc-version>1.4.3</hive-2.2.0-orc-version>
@@ -139,7 +139,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-runtime_2.11</artifactId>
+            <artifactId>flink-runtime</artifactId>
             <version>${flink.version}</version>
         </dependency>
         <!--table-->
@@ -170,11 +170,11 @@
             <artifactId>flink-table-planner_${scala.minor.version}</artifactId>
             <version>${flink.version}</version>
         </dependency>
-        <dependency>
+  <!--      <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-table-planner-blink_${scala.minor.version}</artifactId>
             <version>${flink.version}</version>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>org.apache.flink</groupId>
@@ -207,7 +207,7 @@
         </dependency>
 
         <!--test-->
-
+<!--
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-table-common</artifactId>
@@ -238,7 +238,7 @@
             <version>${flink.version}</version>
             <type>test-jar</type>
             <scope>test</scope>
-        </dependency>
+        </dependency>-->
 
     </dependencies>
     <build>
@@ -246,62 +246,21 @@
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
                 <executions>
                     <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <relocations>
-                                <relocation>
-                                    <pattern>org.codehaus.plexus.util</pattern>
-                                    <shadedPattern>org.shaded.plexus.util</shadedPattern>
-                                    <excludes>
-                                        <exclude>org.codehaus.plexus.util.xml.Xpp3Dom</exclude>
-                                        <exclude>org.codehaus.plexus.util.xml.pull.*</exclude>
-                                    </excludes>
-                                </relocation>
-                            </relocations>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <executions>
-                    <!-- Add src/main/scala to eclipse build path -->
-                    <execution>
-                        <id>add-source</id>
-                        <phase>generate-sources</phase>
+                        <id>scala-compile-first</id>
+                        <phase>process-resources</phase>
                         <goals>
                             <goal>add-source</goal>
+                            <goal>compile</goal>
                         </goals>
-                        <configuration>
-                            <sources>
-                                <source>src/main/scala</source>
-                            </sources>
-                        </configuration>
                     </execution>
-                    <!-- Add src/test/scala to eclipse build path -->
                     <execution>
-                        <id>add-test-source</id>
-                        <phase>generate-test-sources</phase>
+                        <id>scala-test-compile</id>
+                        <phase>process-test-resources</phase>
                         <goals>
-                            <goal>add-test-source</goal>
+                            <goal>testCompile</goal>
                         </goals>
-                        <configuration>
-                            <sources>
-                                <source>src/test/scala</source>
-                            </sources>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>

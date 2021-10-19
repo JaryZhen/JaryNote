@@ -70,34 +70,6 @@
   </build>
   <dependencies>
     <dependency>
-      <groupId>org.apache.flink</groupId>
-      <artifactId>flink-table-common</artifactId>
-      <version>1.13.2</version>
-      <type>test-jar</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.flink</groupId>
-      <artifactId>flink-table-api-java</artifactId>
-      <version>1.13.2</version>
-      <type>test-jar</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.flink</groupId>
-      <artifactId>flink-table-planner_2.11</artifactId>
-      <version>1.13.2</version>
-      <type>test-jar</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.flink</groupId>
-      <artifactId>flink-connector-hive_2.11</artifactId>
-      <version>1.13.2</version>
-      <type>test-jar</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>1.16.10</version>
@@ -187,7 +159,7 @@
     <hivemetastore.hadoop.version>2.7.5</hivemetastore.hadoop.version>
     <orc.version>1.5.6</orc.version>
     <hive-2.2.0-orc-version>1.4.3</hive-2.2.0-orc-version>
-    <flink.version>1.13.2</flink.version>
+    <flink.version>1.14.0</flink.version>
     <hive.version>2.3.4</hive.version>
   </properties>
 </project>
