@@ -53,7 +53,7 @@ public class Producer11 extends Thread {
         while (true) {
 
             try {
-                Thread.sleep(2000);
+                Thread.sleep(4000);
                 long startTime = System.currentTimeMillis();
                 String data = String.format("" +
                         "{\"role\":\"88\"," +
