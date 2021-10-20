@@ -1,18 +1,7 @@
 package com.note.flink.sql;
 
-import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.table.api.Table;
-import org.apache.flink.table.api.TableResult;
 import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
-import org.apache.flink.types.Row;
-import org.apache.flink.util.CloseableIterator;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
-
-import java.time.LocalDateTime;
-import java.util.*;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertThat;
 
@@ -22,7 +11,7 @@ import static org.junit.Assert.assertThat;
  * @Date: 2021/10/18 2:39 下午
  */
 public class KafkaTest {
-    static String ks = "CREATE TABLE kafkaSource ("
+    static String source_kafka = "CREATE TABLE kafkaSource ("
             + "  `timestamp-type` STRING METADATA VIRTUAL,"
             + "  `timestamp` TIMESTAMP(3) METADATA,"
             + "  `leader-epoch` INT METADATA VIRTUAL,"
@@ -48,7 +37,7 @@ public class KafkaTest {
             "  'format' = 'json'"
             + ")";
 
-    static String ksink = "CREATE TABLE kafkaSink ("
+    static String sink_kafka = "CREATE TABLE kafkaSink ("
             // + " `offset` BIGINT,"
             + "  role STRING,"
             + "  user_type STRING,"
@@ -65,7 +54,7 @@ public class KafkaTest {
             + " 'format' = 'json'"
             + ")";
 
-    static String ksinkPrim = "CREATE TABLE kafkaSink ("
+    static String sink_kafka_Prim = "CREATE TABLE kafkaSink ("
             // + " `offset` BIGINT,"
             + "  classroom STRING,"
             + "  total bigint,"
@@ -78,7 +67,7 @@ public class KafkaTest {
             + " 'value.format' = 'json'"
             + ")";
 
-    static String print =
+    static String sink_print =
             "CREATE TABLE kafkaSink ( role STRING, " +
                     " user_type STRING, " +
                     " local_ping INT, " +
@@ -106,15 +95,15 @@ public class KafkaTest {
     public static void main(String[] args) throws Exception {
         env = StreamExecutionEnvironment.getExecutionEnvironment();
         tEnv = StreamTableEnvironment.create(env);
-        System.out.println(ks);
-        System.out.println(print);
+        System.out.println(source_kafka);
+        System.out.println(sink_print);
         System.out.println(insert);
         test1();
     }
 
     public static void test1() throws Exception {
-        tEnv.executeSql(ks);
-        tEnv.executeSql(print);
+        tEnv.executeSql(source_kafka);
+        tEnv.executeSql(sink_print);
         tEnv.executeSql(insert);
         //env.execute();
     }
