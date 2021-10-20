@@ -37,8 +37,8 @@ public class KafkaTest {
             + "  server_rtt INT,"
             + "  classroom STRING,"
             + "  full_ping STRING,"
-            + " `timestamp` BIGINT,"
-            + " WATERMARK FOR timestamp AS timestamp - INTERVAL '1' SECOND"
+            + " `ts` TIMESTAMP(3),"
+            + "  WATERMARK FOR `ts` AS `ts` - INTERVAL '1' SECOND"
             + ") WITH (" +
             "  'connector' = 'kafka'," +
             "  'topic' = 'app_inline_room_anticipation_ft_sql_test'," +
@@ -57,14 +57,14 @@ public class KafkaTest {
             + "  server_rtt INT,"
             + "  classroom STRING,"
             + "  full_ping STRING,"
-            + "  `timestamp` BIGINT,"
+            + "  `ts` TIMESTAMP,"
             + "  PRIMARY KEY (classroom) NOT ENFORCED"
             + ") WITH (" +
             "  'connector' = 'upsert-kafka'," +
             "  'topic' = 'app_inline_room_anticipation_ft_sql_test_sink'," +
             "  'properties.bootstrap.servers' = 'localhost:9092',"
-            + " 'key.format' = 'avro',"
-            + " 'value.format' = 'avro'"
+            + " 'key.format' = 'json',"
+            + " 'value.format' = 'json'"
             + ")";
 
     static String print =
@@ -74,13 +74,13 @@ public class KafkaTest {
                     " line INT,  server_rtt INT, " +
                     " classroom STRING, " +
                     " full_ping STRING, " +
-                    " `timestamp` BIGINT" +
+                    " `ts` BIGINT" +
                     ") WITH ( " +
                     " 'connector' = 'print'" +
                     ")";
 
     static String insert = " insert into kafkaSink " +
-            "select role, user_type, local_ping, line, server_rtt, classroom, full_ping, `timestamp` " +
+            "select role, user_type, local_ping, line, server_rtt, classroom, full_ping, `ts` " +
             "from kafkaSource";
 
     static StreamExecutionEnvironment env;

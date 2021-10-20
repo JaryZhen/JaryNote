@@ -33,7 +33,7 @@ public class KafkaTest2 {
             + "  server_rtt INT,"
             + "  classroom STRING,"
             + "  full_ping STRING,"
-            + " `timestamp` BIGINT"
+            + " `ts` BIGINT"
             + ") WITH (" +
             "  'connector' = 'kafka'," +
             "  'topic' = 'app_inline_room_anticipation_ft_sql_test_sink'," +
