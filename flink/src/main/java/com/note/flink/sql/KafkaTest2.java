@@ -7,21 +7,17 @@ import org.apache.flink.table.api.TableResult;
 import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 import org.apache.flink.types.Row;
 import org.apache.flink.util.CloseableIterator;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
 
-import java.time.LocalDateTime;
-import java.util.*;
-import java.util.concurrent.ExecutionException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import static org.junit.Assert.assertThat;
 
 
 /**
  * @Author: Jary
  * @Date: 2021/10/18 2:39 下午
  */
-public class KafkaTest {
+public class KafkaTest2 {
     static String ks = "CREATE TABLE kafkaSource ("
             + "  `timestamp-type` STRING METADATA VIRTUAL,"
             + "  `timestamp` TIMESTAMP(3) METADATA,"
@@ -40,7 +36,7 @@ public class KafkaTest {
             + " `timestamp` BIGINT"
             + ") WITH (" +
             "  'connector' = 'kafka'," +
-            "  'topic' = 'app_inline_room_anticipation_ft_sql_test'," +
+            "  'topic' = 'app_inline_room_anticipation_ft_sql_test_sink'," +
             "  'properties.bootstrap.servers' = 'localhost:9092'," +
             "  'properties.group.id' = 'testGroup'," +
             "  'scan.startup.mode' = 'earliest-offset'," +
@@ -60,8 +56,7 @@ public class KafkaTest {
             + ") WITH (" +
             "  'connector' = 'kafka'," +
             "  'topic' = 'app_inline_room_anticipation_ft_sql_test_sink'," +
-            "  'properties.bootstrap.servers' = 'localhost:9092'," +
-            "  'format' = 'json'" +
+            "  'properties.bootstrap.servers' = 'localhost:9092'" +
             ")";
 
     static String print =
@@ -95,17 +90,16 @@ public class KafkaTest {
     public static void test1() throws Exception {
         tEnv.executeSql(ks);
 
-/*     String sql = "SELECT * FROM kafkaSource";
+        String sql = "SELECT * FROM kafkaSource";
         Table table = tEnv.sqlQuery(sql);
         table.printSchema();
         DataStream<Row> resultDs = tEnv.toChangelogStream(table);
         resultDs.print();
-        */
-        tEnv.executeSql(ksink);
-        tEnv.executeSql(insert);  //从结果表查数据，转存到输出表
+        //tEnv.executeSql(ksink);
+        //tEnv.executeSql(insert);  //从结果表查数据，转存到输出表
         // tEnv.executeSql("insert into output_kafka select * from "+tableResult);  //从结果表查数据，转存到输出表
 
-        //env.execute();
+        env.execute();
     }
 
     public static void test() throws Exception {
