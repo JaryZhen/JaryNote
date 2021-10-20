@@ -37,7 +37,7 @@ public class KafkaTest {
             + "  server_rtt INT,"
             + "  classroom STRING,"
             + "  full_ping STRING,"
-            + " `ts` bigint"
+            + " `ts` timestamp(3)"
            // + "  WATERMARK FOR `ts` AS `ts` - INTERVAL '1' SECOND"
             + ") WITH (" +
             "  'connector' = 'kafka'," +
@@ -57,7 +57,7 @@ public class KafkaTest {
             + "  server_rtt INT,"
             + "  classroom STRING,"
             + "  full_ping STRING,"
-            + "  `ts` bigint"
+            + "  `ts` timestamp(3)"
             + ") WITH (" +
             "  'connector' = 'kafka'," +
             "  'topic' = 'app_inline_room_anticipation_ft_sql_test_sink'," +
@@ -85,7 +85,7 @@ public class KafkaTest {
                     " line INT,  server_rtt INT, " +
                     " classroom STRING, " +
                     " full_ping STRING, " +
-                    " `ts` bigint" +
+                    " `ts` timestamp(3)" +
                     ") WITH ( " +
                     " 'connector' = 'print'" +
                     ")";
@@ -114,7 +114,7 @@ public class KafkaTest {
 
     public static void test1() throws Exception {
         tEnv.executeSql(ks);
-        tEnv.executeSql(ksink);
+        tEnv.executeSql(print);
         tEnv.executeSql(insert);
         //env.execute();
     }
