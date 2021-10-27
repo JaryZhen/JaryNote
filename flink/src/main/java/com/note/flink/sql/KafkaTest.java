@@ -77,7 +77,8 @@ public class KafkaTest {
             "CREATE TABLE kafkaSink ( role STRING, " +
                     " user_type STRING, " +
                     " local_ping INT, " +
-                    " line INT,  server_rtt INT, " +
+                    " line INT,  " +
+                    " server_rtt INT, " +
                     " classroom STRING, " +
                     " full_ping STRING, " +
                     " `ts` timestamp(3)" +
@@ -110,8 +111,8 @@ public class KafkaTest {
 
     public static void test1() throws Exception {
         tEnv.executeSql(source_kafka);
-        tEnv.executeSql(sink_kafka_Prim);
-        tEnv.executeSql(insert_kafka_Prim);
+        tEnv.executeSql(sink_print);
+        tEnv.executeSql(insert);
         //env.execute();
 
     }
