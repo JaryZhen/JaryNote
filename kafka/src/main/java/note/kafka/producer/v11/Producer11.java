@@ -6,7 +6,9 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
@@ -61,9 +63,9 @@ public class Producer11 extends Thread {
                         "\"local_ping\":88," +
                         "\"line\":\"88\"," +
                         "\"server_rtt\":88," +
-                        "\"classroom\":\"jzaaa-"+ran1.nextInt(1)+"\"," +
+                        "\"classroom\":\"jzaaa-"+ran1.nextInt(3)+"\"," +
                         "\"full_ping\":"+key+"," +
-                        "\"timestamp\":1572839989492}");
+                        "\"ts\":\""+ new Timestamp(System.currentTimeMillis()) +"\"}");
 
                 String valeu = data; /*String.format(
                         "{\"colName\":\"" + format.format(startTime) + "\"," +

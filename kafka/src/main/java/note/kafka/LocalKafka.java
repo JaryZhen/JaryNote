@@ -68,7 +68,7 @@ public class LocalKafka {
              */
             props.setProperty("log.cleanup.policy", "delete");//
             props.setProperty("log.retention.minutes", "1");// 过期时间 minutes hours
-            props.setProperty("log.segment.delete.delay.ms","30000");//日志文件被真正删除前的保留时间 默认为1分钟
+            props.setProperty("log.segment.delete.delay.ms","3000");//日志文件被真正删除前的保留时间 默认为1分钟
 
             props.setProperty("log.retention.check.interval.ms", "5000");//过期check时间
             props.setProperty("log.cleanup.interval.mins","1"); //每隔一段时间多久调用一次清理的步骤
