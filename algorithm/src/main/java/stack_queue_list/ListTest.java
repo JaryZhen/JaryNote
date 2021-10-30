@@ -127,7 +127,9 @@ public class ListTest {
             int lage = new Random().nextInt(15);
             System.out.print("size: " + (lage + 1) + ": ");
             for (int i = 0; i < lage; i++) {
-                ListNode temp = new ListNode(new Random().nextInt(15), null, null);
+                ListNode temp = new ListNode(
+                        new Random().nextInt(15),
+                        null, null);
                 tail.next = temp;
                 tail = temp;
             }

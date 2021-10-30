@@ -99,19 +99,18 @@ public class Sort {
      */
     private static void merge(int[] arr, int left, int mid, int right) {
         int[] help = new int[right - left + 1];
-        int i = 0;
+        int index = 0;
         int p1 = left;
         int p2 = mid + 1;
         while (p1 <= mid && p2 <= right) {
-            //从两个数组中选取较小的数放入中间数组
-            help[i++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
+            if (arr[p1] > arr[p2]) help[index++] = arr[p2++];
+            else help[index++] = arr[p1++];
         }
-        //将剩余的部分放入中间数组
         while (p1 <= mid) {
-            help[i++] = arr[p1++];
+            help[index++] = arr[p1++];
         }
         while (p2 <= right) {
-            help[i++] = arr[p2++];
+            help[index++] = arr[p2++];
         }
         //将中间数组复制回原数组
         for (int j = 0; j < help.length; j++) {
@@ -138,7 +137,7 @@ public class Sort {
                 swop(arr, index, --more);
         }
         // swop(arr, more, R)
-        return new int[]{less + 1, more - 1};//more)
+        return new int[]{less, more};//more)
     }
 
     /**
@@ -153,8 +152,8 @@ public class Sort {
     public static void processQuick2(int[] arr, int L, int R) {
         if (L >= R) return;
         int[] middle = newzLand(arr, L, R);
-        processQuick2(arr, L, middle[0] - 1);
-        processQuick2(arr, middle[1] + 1, R);
+        processQuick2(arr, L, middle[0] );
+        processQuick2(arr, middle[1], R);
     }
 
     static int heapSize = 0;
@@ -206,10 +205,10 @@ public class Sort {
         //int[] array = new int[]{1, 2, 3, 4, 5, 6, 7, 0};
         System.out.println(Arrays.toString(array));
         //bubbleSort(array);
-        //quickSort(array);
+        quickSort(array);
         //selectionSort(array);
         //insertionSort(array);
-        mergeSort(array);
+        //mergeSort(array);
         /*
         System.out.println("newzland: ");
         Arrays.stream(newzLand(array, 0, array.length - 1)).forEach(System.out::println);
@@ -217,7 +216,7 @@ public class Sort {
         */
         //quickSort(array);
         // heapSor(array);
-        Arrays.sort(array);
+        //Arrays.sort(array);
         System.out.println(Arrays.toString(array));
 
     }
