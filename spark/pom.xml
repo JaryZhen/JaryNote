@@ -12,7 +12,6 @@
     <artifactId>spark</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>akka</module>
         <module>sparkdemo</module>
         <module>dig</module>
     </modules>
