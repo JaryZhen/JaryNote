@@ -10,11 +10,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>akka</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>akka-master</module>
+        <module>akka-worker</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-        <akka.version>2.5.17</akka.version>
+        <akka.version>2.5.32</akka.version>
         <scala.version>2.11</scala.version>
     </properties>
 
