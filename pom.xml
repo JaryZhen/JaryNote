@@ -24,6 +24,7 @@
         <module>flink</module>
         <module>Test</module>
         <module>scala</module>
+        <module>akka</module>
     </modules>
 
     <properties>
