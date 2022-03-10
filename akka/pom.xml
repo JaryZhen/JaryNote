@@ -14,6 +14,7 @@
     <modules>
         <module>akka-master</module>
         <module>akka-worker</module>
+        <module>actor-github</module>
     </modules>
 
     <properties>
