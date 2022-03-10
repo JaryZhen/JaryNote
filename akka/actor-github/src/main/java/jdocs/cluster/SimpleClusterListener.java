@@ -1,40 +1,30 @@
 /*
- * Copyright (C) 2018-2022 Lightbend Inc. <https://www.lightbend.com>
+ * Copyright (C) 2018-2019 Lightbend Inc. <https://www.lightbend.com>
  */
 
-package cluster;
+package jdocs.cluster;
 
 import akka.actor.AbstractActor;
 import akka.cluster.Cluster;
-import akka.cluster.ClusterEvent.CurrentClusterState;
+import akka.cluster.ClusterEvent;
 import akka.cluster.ClusterEvent.MemberEvent;
-import akka.cluster.ClusterEvent.MemberUp;
 import akka.cluster.ClusterEvent.MemberRemoved;
+import akka.cluster.ClusterEvent.MemberUp;
 import akka.cluster.ClusterEvent.UnreachableMember;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
 
-public class SimpleClusterListener2 extends AbstractActor {
+public class SimpleClusterListener extends AbstractActor {
   LoggingAdapter log = Logging.getLogger(getContext().getSystem(), this);
-  // #join
   Cluster cluster = Cluster.get(getContext().getSystem());
-  // #join
 
   // subscribe to cluster changes
   @Override
   public void preStart() {
-    // #join
-    cluster.join(cluster.selfAddress());
-    // #join
-
     // #subscribe
-    cluster.subscribe(getSelf(), MemberEvent.class, UnreachableMember.class);
+    cluster.subscribe(
+        getSelf(), ClusterEvent.initialStateAsEvents(), MemberEvent.class, UnreachableMember.class);
     // #subscribe
-
-    // #register-on-memberup
-    cluster.registerOnMemberUp(
-        () -> cluster.subscribe(getSelf(), MemberEvent.class, UnreachableMember.class));
-    // #register-on-memberup
   }
 
   // re-subscribe when restart
@@ -46,11 +36,6 @@ public class SimpleClusterListener2 extends AbstractActor {
   @Override
   public Receive createReceive() {
     return receiveBuilder()
-        .match(
-            CurrentClusterState.class,
-            state -> {
-              log.info("Current members: {}", state.members());
-            })
         .match(
             MemberUp.class,
             mUp -> {
@@ -68,7 +53,7 @@ public class SimpleClusterListener2 extends AbstractActor {
             })
         .match(
             MemberEvent.class,
-            event -> {
+            message -> {
               // ignore
             })
         .build();
