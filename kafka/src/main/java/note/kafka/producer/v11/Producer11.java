@@ -6,7 +6,9 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
@@ -20,6 +22,7 @@ public class Producer11 extends Thread {
     public static void main(String[] args) {
         new Producer11(KafkaProperties.TOPIC_a, false)
                 .start();
+        new Producer11(KafkaProperties.TOPIC_vk, false).start();
     }
 
     public Producer11(String topic, Boolean isAsync) {
@@ -80,21 +83,34 @@ public class Producer11 extends Thread {
                 String valeu1 = String.format(
                         "{\"colName\":\"" + format.format(startTime) + "\"," +
                                 "\"tm\":" + startTime + "}");
+                Thread.sleep(4000);
+                String data = String.format("" +
+                        "{\"role\":\"88\"," +
+                        "\"user_type\":88," +
+                        "\"local_ping\":88," +
+                        "\"line\":\"88\"," +
+                        "\"server_rtt\":88," +
+                        "\"classroom\":\"jzaaa-"+ran1.nextInt(3)+"\"," +
+                        "\"full_ping\":"+key+"," +
+                        "\"ts\":\""+ new Timestamp(System.currentTimeMillis()) +"\"}");
 
-                //data;///"Suct_Pres_Status="+key;//ran1.nextInt(100);
-                //+" pressure2="+ran1.nextInt(60);
+                 /*String.format(
+                        "{\"colName\":\"" + format.format(startTime) + "\"," +
+                        "\"tm\":" + startTime + "}");
+*/
+                System.out.println(data);
+
                 //异步方式发送
                 if (isAsync) {
                     // Send asynchronously
-                    System.out.println("Sent message: " + key + ": " + valeu);
                     producer.send(new ProducerRecord<>(topic, key, valeu), new DemoCallBack(startTime, key, valeu));
+
                 } else { // Send synchronously
 
                     int partition = key % 2;
-                    System.out.println("Sent message: " + key + ", " + valeu);
                     Future<RecordMetadata> a = producer.send(new ProducerRecord<>(topic, key, valeu));
-
                     Thread.sleep(0);
+                    a.get();
                     key++;
                     v++;
                     if (key == 4)
@@ -126,8 +142,7 @@ public class Producer11 extends Thread {
         public void onCompletion(RecordMetadata metadata, Exception exception) {
             long elapsedTime = System.currentTimeMillis() - startTime;
             if (metadata != null) {
-                System.out.println(
-                        "message(" + key + ", " + message + ") sent to partition(" + metadata.partition() + "), " + "offset(" + metadata.offset() + ") in " + elapsedTime + " ms");
+                System.out.println("asyc message(" + key + ", " + message + ") sent to partition(" + metadata.partition() + "), " + "offset(" + metadata.offset() + ") in " + elapsedTime + " ms");
             } else {
                 exception.printStackTrace();
             }

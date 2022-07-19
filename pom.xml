@@ -21,11 +21,11 @@
         <module>thrift</module>
         <module>hazelcast</module>
         <module>undertow</module>
-
         <module>Test</module>
         <module>scala</module>
         <module>rocketmq</module>
         <module>flink</module>
+        <module>akka</module>
     </modules>
 
     <properties>
@@ -33,7 +33,7 @@
         <java.version>1.8</java.version>
 
         <scala.minor.version>2.11</scala.minor.version>
-        <scala.binary.full.version>${scala.minor.version}.6</scala.binary.full.version>
+        <scala.binary.full.version>${scala.minor.version}.12</scala.binary.full.version>
         <junit.version>4.12</junit.version>
 
         <dubbo.version>2.5.3</dubbo.version>
@@ -45,7 +45,7 @@
 
         <protobuf.version>3.0.2</protobuf.version>
         <!--<grpc.version>1.7.0</grpc.version> -->
-        <grpc.version>1.0.0</grpc.version>
+        <grpc.version>1.7.0</grpc.version>
 
         <!--livy dome -->
         <livy-api>0.3.0</livy-api>
@@ -177,38 +177,37 @@
                     <artifactId>scala-maven-plugin</artifactId>
                     <version>3.2.2</version>
                     <configuration>
-                        <scalaVersion>${scala.binary.full.version}</scalaVersion>
+                   <!--     <scalaVersion>${scala.binary.full.version}</scalaVersion>
                         <javacArgs>
                             <javacArg>-source</javacArg>
                             <javacArg>${java.version}</javacArg>
                             <javacArg>-target</javacArg>
                             <javacArg>${java.version}</javacArg>
-                        </javacArgs>
+                        </javacArgs>-->
                     </configuration>
                     <executions>
-                        <execution>
-                            <phase>compile</phase>
-                            <goals>
-                                <goal>compile</goal>
-                            </goals>
-                        </execution>
                         <execution>
                             <id>scala-compile-first</id>
                             <phase>process-resources</phase>
                             <goals>
+                                <goal>add-source</goal>
                                 <goal>compile</goal>
                             </goals>
                         </execution>
                         <execution>
-                            <id>scala-test-compile-first</id>
-                            <phase>process-Test-resources</phase>
+                            <id>scala-test-compile</id>
+                            <phase>process-test-resources</phase>
                             <goals>
                                 <goal>testCompile</goal>
                             </goals>
                         </execution>
                     </executions>
                 </plugin>
-
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>3.2.4</version>
+                </plugin>
                 <!--protobuf -->
                 <plugin>
                     <groupId>org.xolstice.maven.plugins</groupId>
@@ -239,7 +238,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>1.4</version>
+                    <version>1.7</version>
                     <executions>
                         <execution>
                             <id>add-source</id>
@@ -605,28 +604,12 @@
         <repository>
             <id>nexus</id>
             <name>nexus-releases</name>
-            <url>http://172.24.4.180:8081/repository/maven-releases</url>
         </repository>
         <snapshotRepository>
             <id>nexus</id>
             <name>nexus-snapshots</name>
-            <url>http://172.24.4.180:8081/repository/maven-snapshots</url>
         </snapshotRepository>
     </distributionManagement>-->
     <repositories>
-        <!--<repository>-->
-            <!--<id>nexus</id>-->
-            <!--<url>http://172.24.4.180:8081/repository/maven-public/</url>-->
-            <!--<releases>-->
-                <!--<enabled>false</enabled>-->
-            <!--</releases>-->
-            <!--<snapshots>-->
-                <!--<enabled>true</enabled>-->
-            <!--</snapshots>-->
-        <!--</repository>-->
-       <!-- <repository>
-            <id>growingio</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </repository>-->
     </repositories>
 </project>

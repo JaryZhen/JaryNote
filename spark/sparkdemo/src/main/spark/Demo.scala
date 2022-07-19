@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 import java.beans.Transient
 import java.util.Properties
+=======
+package main.spark
+
+import org.apache.spark.sql.{SQLContext, SparkSession}
+>>>>>>> f6009d72fe1610872cd837c7e549b484255188aa
 
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
 import org.apache.spark.sql.{SQLContext, SparkSession}
@@ -18,16 +24,23 @@ object Demo {
     val sc = spark.sparkContext
     val ssc = new SQLContext(sc)
 
+<<<<<<< HEAD
 
     @Transient
+=======
+>>>>>>> f6009d72fe1610872cd837c7e549b484255188aa
     val data = Array(1, 2, 3, 4, 5)
     val distData = sc.parallelize(data)
 
     val counts = distData.map(word => (word, 1))
+<<<<<<< HEAD
       .reduceByKey(_ + _).collect()
 
 
 
 
+=======
+      counts.reduceByKey(_ + _).foreach(print(_))
+>>>>>>> f6009d72fe1610872cd837c7e549b484255188aa
   }
 }

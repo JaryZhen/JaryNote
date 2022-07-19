@@ -16,8 +16,10 @@ public class SemaphoreDemo  implements Runnable{
         try {
             sm.acquire();
             Thread.sleep(2000);
-            System.out.println(Thread.currentThread().getId() +" done!");
+            System.out.println(Thread.currentThread().getId() +" doing!");
             sm.release();
+            System.out.println(Thread.currentThread().getId() +" done!");
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -26,7 +28,7 @@ public class SemaphoreDemo  implements Runnable{
     public static void main(String[] args) throws InterruptedException {
         ExecutorService exec = Executors.newFixedThreadPool(20);
         final  SemaphoreDemo sd = new SemaphoreDemo();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 20; i++) {
             exec.submit(sd);
         }
     }

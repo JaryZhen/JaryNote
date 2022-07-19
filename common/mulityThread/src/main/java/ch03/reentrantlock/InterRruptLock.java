@@ -21,7 +21,7 @@ public class InterRruptLock implements Runnable {
             if (lock == 1) {
                 lock1.lockInterruptibly();
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -30,7 +30,7 @@ public class InterRruptLock implements Runnable {
             } else {
                 lock2.lockInterruptibly();
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -40,7 +40,7 @@ public class InterRruptLock implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
-            // 查询当前线程是否保持此锁�?
+            // 查询当前线程是否保持此锁?
             if (lock1.isHeldByCurrentThread()) {
                 lock1.unlock();
             }
@@ -58,7 +58,7 @@ public class InterRruptLock implements Runnable {
         Thread thread2 = new Thread(intLock2, "线程2");
         thread1.start();
         thread2.start();
-        Thread.sleep(9000);
+        Thread.sleep(1000);
         thread2.interrupt(); // 中断线程2
     }
 }
