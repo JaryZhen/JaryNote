@@ -25,6 +25,7 @@
         <module>Test</module>
         <module>scala</module>
         <module>rocketmq</module>
+        <module>flink</module>
     </modules>
 
     <properties>
