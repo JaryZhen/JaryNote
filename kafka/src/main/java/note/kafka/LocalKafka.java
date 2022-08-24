@@ -77,6 +77,7 @@ public class LocalKafka {
             KafkaServerStartable kafka = new KafkaServerStartable(kafkaConfig);
             kafka.startup();
             System.out.println("start kafka ok numPartion: " + kafka.serverConfig().numPartitions());
+            System.out.println(KafkaProperties.BOOTSTRAP_SERVERS);
         }
     }
 
